@@ -1,0 +1,44 @@
+server:
+  port: 8000
+
+  
+
+
+
+spring:
+  cache:
+    type: none
+  thymeleaf:
+    cache: false  security:    oauth2:      client:        registration:          login-client:
+            client-id: clientapp
+            client-secret: password123
+            client-name: Auth Server
+            scope: role_user
+            provider: customprovider
+            redirect-uri: http://localhost:8000/login/oauth2/code/
+            authorization-grant-type: authorization_code
+            client-authentication-method: basic
+        provider:          customprovider:
+            token-uri: http://localhost:9999/auth/oauth/token
+            authorization-uri: http://localhost:9999/auth/oauth/authorize
+            user-info-uri: http://localhost:9999/auth/user/me
+            user-name-attribute: name
+
+
+#feign:#  compression:#    request:#      enabled: true
+#      mime-types: application/json
+#    response:#      enabled: true              
+#security:
+#  oauth2:
+#    resource:
+#      jwt:
+#        key-value: |
+#          -----BEGIN PUBLIC KEY-----
+#          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgDmJI8YsHdO1df+woZfE
+#          48EO+oXaZXdEylKqUh393d9OojvtFJaC4JiLYjVVMTl76Ze0iz26Uu6cCb26sWrV
+#          19icUV+2skv9lBnRAAdwZnjzsbZcNcjHbeNTVouQPiwDU/wnRKAhAPQHTQ22K2tl
+#          L0awu7xHYEnso69RAgJqB1pCqCEKsEbfXjBLgqHTLj6N5VYuDCioxNEFMXMAjaVw
+#          Opv1eyHsuGq5VDfCNr6WhIT/Ns9Ld4/H5RreOqgsPN2YudxlGiX04WIf536MaIz9
+#          58GdtgaQ/dUzT7R885ydyA7VKtSYrAqX2cGDgoRRNiisYzw4c6e9CXDg1fUYVZtN
+#          lQIDAQAB
+#          -----END PUBLIC KEY-----
