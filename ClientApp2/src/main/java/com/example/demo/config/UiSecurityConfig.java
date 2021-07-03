@@ -23,7 +23,7 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 				 * .and()
 				 */
        // .oauth2ResourceServer()
-        .oauth2Login();
+        .oauth2Login().and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
 
     /*@Bean
