@@ -1,17 +1,29 @@
 package com.example.demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
 @EnableWebSecurity
 public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Value("${auth.server.domain}")
+	private String authServerDomain;
+	
+	
+	@Autowired
+    ClientRegistrationRepository clientRegistrationRepository;
 	
     
     @Override
     public void configure(HttpSecurity http) throws Exception {
+    	
+    	System.out.println("authServerDomain " + authServerDomain);
+    	
     	http.authorizeRequests()
         .antMatchers("/login**","/","oauth2/authorization**")
         .permitAll()
@@ -23,7 +35,18 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 				 * .and()
 				 */
        // .oauth2ResourceServer()
-        .oauth2Login().and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
+        .oauth2Login().and().logout()
+        //.logoutSuccessHandler(oidcLogoutSuccessHandler())
+        .logoutSuccessUrl(authServerDomain+"/revoke-token")
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .deleteCookies("JSESSIONID");
+    }
+    
+    private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() { 
+        OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+        successHandler.setPostLogoutRedirectUri("http://localhost:8000/");
+        return successHandler;
     }
 
     /*@Bean
