@@ -40,9 +40,9 @@ public class CandidateService {
 	}
 
 	public ResponseEntity<ResponseDto> getUserEmail(String userName) {
-		HttpEntity<String> httpEntity = new HttpEntity<String>(userName);
+		//HttpEntity<String> httpEntity = new HttpEntity<String>();
 
-		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/getEmailByUserName", HttpMethod.GET,httpEntity, ResponseDto.class);
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/getEmailByUserName?username="+userName, HttpMethod.GET,null, ResponseDto.class);
 
 		return responseDto;
 	}

@@ -69,7 +69,8 @@ public class AppController {
     	
     	model.addAttribute("user",principal.getName());
     	
-        return "securedPage";
+        return "dashboard";
+    	//return "securedPage";
     }
     @RequestMapping("/")
     public String index(Model model, Principal principal) {
