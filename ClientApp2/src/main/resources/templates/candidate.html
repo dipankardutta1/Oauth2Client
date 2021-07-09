@@ -47,8 +47,7 @@ footer {
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/candidateProfile">Candidate
 						Service</a></li>
-				<li><a href="#">Search</a></li>
-				<li><a href="#">Candidate List</a></li>
+				
 				<li><a href="#">Home</a></li>
 			</ul>
 		</div>
@@ -59,9 +58,9 @@ footer {
 				<h4>Candidate Section</h4>
 				<ul class="nav nav-pills nav-stacked">
 					<li class="active"><a href="/getAddress">Address</a></li>
-					<li><a href="@{/getExperience}">Experience</a></li>
-					<li><a href="@{/getEducation}">Education</a></li>
-					<li><a href="@{getWorkAuth}">Work Authorization</a></li>
+					<li><a href="/getExperience">Experience</a></li>
+					<li><a href="/getEducation">Education</a></li>
+					
 				</ul>
 				<br>
 
@@ -71,8 +70,9 @@ footer {
 				<div class="panel panel-default">
 					<div class="panel-heading">Candidate Information</div>
 					<div class="panel-body">
-						<form class="form-horizontal" action="#" th:action="@{/register}" method="post" th:object="${candidateDto}">
-							<hr>
+						<form class="form-horizontal" action="#" th:action="@{/saveCandidateProfile}"
+							method="post" th:object="${candidateDto}">
+
 							<ul class="nav nav-pills">
 								<li class="active"><a data-toggle="pill" href="#basic">General</a></li>
 								<li><a data-toggle="pill" href="#profile1">Profile1</a></li>
@@ -80,14 +80,16 @@ footer {
 
 							</ul>
 							<hr>
-							
+							<hr>
+
 							<div class="tab-content">
 								<div id="basic" class="tab-pane fade in active">
 									<div class="form-group">
 										<label class="control-label col-sm-2" for="candidateId">Candidate
 											Id:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{candidateId}" disabled  class="form-control" id="candidateId"
+											<input type="text" th:field="*{candidateId}" disabled
+												class="form-control" id="candidateId"
 												placeholder="Candidate Id">
 										</div>
 									</div>
@@ -95,7 +97,8 @@ footer {
 										<label class="control-label col-sm-2" for="aliasName">Alias
 											Name:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{aliasName}" class="form-control" id="aliasName"
+											<input type="text" th:field="*{aliasName}"
+												class="form-control" id="aliasName"
 												placeholder="Enter AliasName">
 										</div>
 									</div>
@@ -103,7 +106,8 @@ footer {
 										<label class="control-label col-sm-2" for="firstName">First
 											Name:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{firstName}" class="form-control" id="firstName"
+											<input type="text" th:field="*{firstName}"
+												class="form-control" id="firstName"
 												placeholder="Enter First Name">
 										</div>
 									</div>
@@ -111,7 +115,8 @@ footer {
 										<label class="control-label col-sm-2" for="middleName">Middle
 											Name:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{middleName}" class="form-control" id="middleName"
+											<input type="text" th:field="*{middleName}"
+												class="form-control" id="middleName"
 												placeholder="Enter Middle Name">
 										</div>
 									</div>
@@ -119,7 +124,8 @@ footer {
 										<label class="control-label col-sm-2" for="lastName">Last
 											Name:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+											<input type="text" th:field="*{lastName}"
+												class="form-control" id="lastName"
 												placeholder="Enter Last Name">
 										</div>
 									</div>
@@ -127,7 +133,8 @@ footer {
 										<label class="control-label col-sm-2" for="profileTitle">Profile
 											Title:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" th:field="*{profileTitle}" class="form-control" id="profileTitle"
+											<input type="text" th:field="*{profileTitle}"
+												class="form-control" id="profileTitle"
 												placeholder="Enter Profile Title">
 										</div>
 									</div>
@@ -138,7 +145,8 @@ footer {
 										<label class="control-label col-sm-2" for="interViewMode">InterView
 											Mode:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<select class="form-control" id="interViewMode" th:field="*{interViewMode}">
+											<select class="form-control" id="interViewMode"
+												th:field="*{interViewMode}">
 												<option th:value="'Skype'" th:text="Skype"></option>
 												<option th:value="'Zoom'" th:text="Zoom"></option>
 												<option th:value="'Webex'" th:text="Webex"></option>
@@ -148,20 +156,21 @@ footer {
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-sm-2" for="interviewStatuses" >Interview
+										<label class="control-label col-sm-2" for="interviewStatuses">Interview
 											Statuses :</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<select class="form-control" id="interviewStatuses" th:field="*{interviewStatuses}">
+											<select class="form-control" id="interviewStatuses"
+												th:field="*{interviewStatuses}">
 												<option th:value="'Scheduled'" th:text="Scheduled"></option>
-												
+
 												<option th:value="'POReceived'" th:text="POReceived"></option>
-												
+
 												<option th:value="'ProjectStarted'" th:text="ProjectStarted"></option>
-												
+
 												<option th:value="'Rejected'" th:text="Rejected"></option>
-												
+
 												<option th:value="'Pending'" th:text="Pending"></option>
-													
+
 
 											</select>
 										</div>
@@ -170,7 +179,8 @@ footer {
 										<label class="control-label col-sm-2" for="password">Password
 											:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="password" th:field="*{password}" class="form-control" id="password"
+											<input type="password" th:field="*{password}"
+												class="form-control" id="password"
 												placeholder="Enter Password">
 										</div>
 									</div>
@@ -178,7 +188,7 @@ footer {
 										<label class="control-label col-sm-2" for="altPassword">Alternate
 											Password :</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="password"  class="form-control" id="altPassword"
+											<input type="password" class="form-control" id="altPassword"
 												placeholder="Enter Alternate Password">
 										</div>
 									</div>
@@ -186,113 +196,126 @@ footer {
 										<label class="control-label col-sm-2" for="birthDate">BirthDate
 											:</label>
 										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<div class='input-group date' id='birthDate'>
-												<input type='text' class="form-control" /> <span
-													class="input-group-addon"> <span
-													class="glyphicon glyphicon-calendar"></span>
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="workExperience">Work
-											Experience :</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control" id="workExperience"
-												placeholder="Enter Profile Title">
+											<input type="date" th:field="*{birthDate}" id="birthDate"
+												name="birthDate"> <span
+												class="glyphicon glyphicon-calendar"></span>
+
 										</div>
 									</div>
 								</div>
-								<div id="profile2" class="tab-pane fade">
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="releventExperience">Relevent
-											Experience :</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control"
-												id="releventExperience" placeholder="Relevent Experience">
-										</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="workExperience">Work
+										Experience :</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="text" th:field="*{workExperience}"
+											class="form-control" id="workExperience"
+											placeholder="Enter Work Experience">
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="comment">comment
-											:</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control" id="comment"
-												placeholder="Enter comment">
-										</div>
+								</div>
+							
+					<div id="profile2" class="tab-pane fade">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="releventExperience">Relevent
+										Experience :</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="text" th:field="*{releventExperience}"
+											class="form-control" id="releventExperience"
+											placeholder="Relevent Experience">
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="hiringType">HiringType
-											:</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<select class="form-control" id="hiringType">
-												<option>W2</option>
-												<option>C2C</option>
-												<option>C2H</option>
-											</select>
-										</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="comment">comment
+										:</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="text" th:field="*{comment}" class="form-control"
+											id="comment" placeholder="Enter comment">
 									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="hiringType">HiringType
+										:</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<select class="form-control" id="hiringType"
+											th:field="*{hiringType}">
+											<option th:value="'W2'" th:text="W2"></option>
+											<option th:value="'C2C'" th:text="C2C"></option>
+											<option th:value="'C2H'" th:text="C2H"></option>
 
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="email">email
-											:</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control" id="email"
-												placeholder="Enter Email">
-										</div>
+
+										</select>
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="alternateEmail">Alternate
-											Email :</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control" id="alternateEmail"
-												placeholder="Enter Alternate Email">
-										</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="email">email
+										:</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="email" class="form-control" th:field="*{email}"
+											id="email" placeholder="Enter Email">
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="coverLetter">Cover
-											Letter :</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											<input type="text" class="form-control" id="coverLetter"
-												placeholder="Enter Cover Letter">
-										</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="alternateEmail">Alternate
+										Email :</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="text" th:field="*{alternateEmail}"
+											class="form-control" id="alternateEmail"
+											placeholder="Enter Alternate Email">
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-2" for="summary">Summary
-											 :</label>
-										<div class="col-xs-4 col-sm-4 col-lg-4">
-											
-												<textarea class="form-control" rows="5" id="summary" placeholder="Enter Summary"></textarea>
-												
-										</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="coverLetter">Cover
+										Letter :</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+										<input type="text" th:field="*{coverLetter}"
+											class="form-control" id="coverLetter"
+											placeholder="Enter Cover Letter">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="summary">Summary
+										:</label>
+									<div class="col-xs-4 col-sm-4 col-lg-4">
+
+										<textarea class="form-control" th:field="*{summary}" rows="5"
+											id="summary" placeholder="Enter Summary"></textarea>
+
 									</div>
 								</div>
 							</div>
-							<hr>
-							<button type="submit" class="btn btn-success">Submit</button>
-						</form>
-
 					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+
+					</form>
+					<hr>
+
+
 				</div>
-
-
-
-
-
 			</div>
+
+
+
+
+
 		</div>
+	</div>
 	</div>
 
 	<footer class="container-fluid">
 		<p>Footer Text</p>
 	</footer>
-	<script th:src="@{src=webjars/jquery/1.9.1/jquery.min.js}"></script>
+	<!-- <script th:src="@{src=webjars/jquery/1.9.1/jquery.min.js}"></script>
 	<script th:src="@{src=webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
-	
+	 -->
+	<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 	<script type="text/javascript">
 		$(function() {
-			$('#birthDate').datetimepicker();
+
+			$('#birthDate').data("DateTimePicker").FUNCTION();
 		});
 	</script>
-	
+
 </body>
 </html>

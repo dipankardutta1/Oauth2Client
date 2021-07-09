@@ -1,16 +1,23 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +36,16 @@ public class AppController {
 	/*
 	 * @Autowired private WebClient webClient;
 	 */
+	
+	@InitBinder
+	private void dateBinder(WebDataBinder binder) {
+	    //The date format to parse or output your dates
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	    //Create a new CustomDateEditor
+	    CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+	    //Register it as custom editor for the Date type
+	    binder.registerCustomEditor(Date.class, editor);
+	}
 
     @GetMapping("/foos")
     public String getFoos(Model model) {
@@ -60,23 +77,33 @@ public class AppController {
     @RequestMapping("/candidateProfile/{user}")
     public String candidateProfile(Model model,@PathVariable("user")String user) {
     	
-    	
     	CandidateDto candidateDto=new CandidateDto();
-    	//candidateDto=null;
-    	/*candidateDto=candidateService.findCandidateByEmail("dipankar0007@gmail.com");
+    	/*CandidateDto candidateDto=new CandidateDto();
+    	
+    	ResponseEntity<ResponseDto> responseDto1=candidateService.getUserEmail(user);
+    	String email=(String) responseDto1.getBody().getOutput();
+    	candidateDto=candidateService.findCandidateByEmail(email);
     	
     	if(candidateDto==null) {
     		model.addAttribute("candidateDto",candidateDto);
     		return "candidate";
+    	}else {
+    		model.addAttribute("candidateDto",candidateDto);
     	}
-    	*/model.addAttribute("candidateDto",candidateDto);
-    	
-    	
+    	*/
+    	ResponseEntity<ResponseDto> responseDto1=candidateService.getUserEmail(user);
+    	String email=(String) responseDto1.getBody().getOutput();
+    	System.out.print(email);
+    	model.addAttribute("candidateDto",candidateDto);
         return "candidate";
     }
+   
+
     
     @RequestMapping("/saveCandidateProfile")
-    public String saveCandidateProfile() {
+    public String saveCandidateProfile(CandidateDto candidateDto) {
+    	
+    	ResponseEntity<ResponseDto> responseDto=candidateService.saveCandidate(candidateDto);
     	
         return "candidate";
     }
