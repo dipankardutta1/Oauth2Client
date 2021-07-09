@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,5 +24,11 @@ public class CandidateService {
 		return candidateDtos;
 	}
 	
-
+	public CandidateDto findCandidateByEmail(String email) {
+		
+		CandidateDto candidateDto = (CandidateDto) restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+email, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput();
+    	
+		return candidateDto;
+	}
+	
 }

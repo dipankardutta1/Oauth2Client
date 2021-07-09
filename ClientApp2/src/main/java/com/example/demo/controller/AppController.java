@@ -4,12 +4,16 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.FooModel;
@@ -40,20 +44,59 @@ public class AppController {
     	
     	
     	
-    	List<CandidateDto> candidateDtos = candidateService.findAllCandidates();
+    	//List<CandidateDto> candidateDtos = candidateService.findAllCandidates();
     	
-    	model.addAttribute("candidateDtos", candidateDtos);
+    	//model.addAttribute("candidateDtos", candidateDtos);
     	
-    	System.out.println(principal.getName() + candidateDtos);
+    	model.addAttribute("user",principal.getName());
     	
         return "securedPage";
     }
     @RequestMapping("/")
     public String index(Model model, Principal principal) {
+    	
         return "index";
+    }
+    @RequestMapping("/candidateProfile/{user}")
+    public String candidateProfile(Model model,@PathVariable("user")String user) {
+    	
+    	
+    	CandidateDto candidateDto=new CandidateDto();
+    	//candidateDto=null;
+    	/*candidateDto=candidateService.findCandidateByEmail("dipankar0007@gmail.com");
+    	
+    	if(candidateDto==null) {
+    		model.addAttribute("candidateDto",candidateDto);
+    		return "candidate";
+    	}
+    	*/model.addAttribute("candidateDto",candidateDto);
+    	
+    	
+        return "candidate";
+    }
+    
+    @RequestMapping("/saveCandidateProfile")
+    public String saveCandidateProfile() {
+    	
+        return "candidate";
     }
     
     
+    
+    
+    
+    @RequestMapping("/getAddress")
+    public String getAddress() {
+        return "address.html";
+    }
+    @RequestMapping("/getExperience")
+    public String getExperience() {
+        return "experience.html";
+    }
+    @RequestMapping("/getEducation")
+    public String getEducation() {
+        return "education.html";
+    }
     
 	/*
 	 * @GetMapping("/login") public String getLoginPage(Model model) {
