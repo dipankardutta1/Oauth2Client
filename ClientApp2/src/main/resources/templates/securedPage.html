@@ -1,37 +1,81 @@
-<!DOCTYPE html>  
-<html xmlns:th="http://www.thymeleaf.org">  
-<head>  
-    <meta charset="UTF-8">  
-    <title>Secured Page</title>  
-</head>  
-<body>  
-    <h1>Secured Page</h1>  
-    <span th:text="${#authentication.name}"></span>  
-    
-    
-    <div th:if="${candidateDtos != null}">
-    
-    	<table>
-		    <thead>
-		        <tr>
-		            <th> NAME </th>
-		            <th> Profile Title </th>
-		        </tr>
-		    </thead>
-		    <tbody>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Secured Page</title>
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+<body>
+	<!-- <h1>Secured Page</h1>
+	<span th:text="${#authentication.name}"></span>
+
+
+	<div th:if="${candidateDtos != null}">
+
+		<table>
+			<thead>
+				<tr>
+					<th>NAME</th>
+					<th>Profile Title</th>
+				</tr>
+			</thead>
+			<tbody>
 				<tr th:if="${candidateDtos.empty}">
-		            <td colspan="2"> No Books Available </td>
-		        </tr>
-		        <tr th:each="obj : ${candidateDtos}">
-		            <td><span th:text="${obj.firstName}"></span></td>
-		           <td><span th:text="${obj.profileTitle}"></span></td>
-		        </tr>
-		    </tbody>
+					<td colspan="2">No Books Available</td>
+				</tr>
+				<tr th:each="obj : ${candidateDtos}">
+					<td><span th:text="${obj.firstName}"></span></td>
+					<td><span th:text="${obj.profileTitle}"></span></td>
+				</tr>
+			</tbody>
 		</table>
-    
-    
-    </div>
-    
-    
-</body>  
+
+
+	</div>
+
+<div class="container">
+		<div class="row">
+			<div class="col">
+			
+			<div class="panel panel-default">
+  <div class="panel-body">Panel Content</div>
+  <div class="panel-footer">Panel Footer</div>
+</div>
+			</div>
+		</div>
+	</div>
+ -->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Resume--Intello Group,Inc</a>
+			</div>
+			<ul class="nav navbar-nav">
+			
+				<li class="active"><a th:href="@{/candidateProfile/{user}(user=${user})}">Candidate
+						Service</a></li>
+						
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><span style="color:white" class="glyphicon glyphicon-user"></span>
+						<span style="color:white" th:text="${user}"></span></li>
+				
+			</ul>
+		</div>
+	</nav>
+
+
+
+
+
+
+
+
+	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+
+</body>
 </html>

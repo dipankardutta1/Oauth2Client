@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.http.HttpStatus;
 
 
+
 public class ResponseDto implements Serializable {
 
 	/**

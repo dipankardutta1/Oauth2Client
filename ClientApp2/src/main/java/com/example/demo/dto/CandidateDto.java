@@ -3,25 +3,30 @@ package com.example.demo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 public class CandidateDto implements Serializable {
 
 
-	
+
 
 	/**
 	 * serialVersionUID = -6924459381251323726L;
 	 */
 	private static final long serialVersionUID = -6192478933745032661L;
-	
+
 	private String candidateId;
 
+
 	private String aliasName;
-	
-	
+
+
 	private String firstName;
-	
+
 	private String middleName;
 
 	private String lastName;
@@ -32,29 +37,30 @@ public class CandidateDto implements Serializable {
 
 	private String interviewStatuses;
 
-
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birthDate;
-	
+
 	private String password;
+
 	private String workExperience;
 	private String releventExperience;
 	private String comment;
 	private String hiringType;
 
 	private String email;
-	
+
 	private String alternateEmail;
 	private String  coverLetter;
 	private String  summary;
-	
-	
 
 
-	
-	
-	
+
+
+
+
+
 	//setter and getter
-	
+
 	public String getCandidateId() {
 		return candidateId;
 	}
@@ -163,15 +169,15 @@ public class CandidateDto implements Serializable {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 }
