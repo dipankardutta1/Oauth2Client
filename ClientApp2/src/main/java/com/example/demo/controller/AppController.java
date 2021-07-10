@@ -77,8 +77,8 @@ public class AppController {
     	
         return "index";
     }
-    @RequestMapping("/candidateProfile/{user}")
-    public String candidateProfile(Model model,@PathVariable("user")String user) {
+    @RequestMapping("/candidateProfile")
+    public String candidateProfile(Model model,Principal principal) {
     	
     	CandidateDto candidateDto=new CandidateDto();
     	/*CandidateDto candidateDto=new CandidateDto();
@@ -94,11 +94,13 @@ public class AppController {
     		model.addAttribute("candidateDto",candidateDto);
     	}
     	*/
-    	ResponseEntity<ResponseDto> responseDto1=candidateService.getUserEmail(user);
+    	/*ResponseEntity<ResponseDto> responseDto1=candidateService.getUserEmail(principal.getName());
     	String email=(String) responseDto1.getBody().getOutput();
     	System.out.print(email);
     	model.addAttribute("candidateDto",candidateDto);
-        return "candidate";
+       */
+    	model.addAttribute("candidateDto",candidateDto);
+    	return "candidate";
     }
    
 
