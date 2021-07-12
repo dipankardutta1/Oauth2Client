@@ -53,7 +53,9 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutSuccessUrl(authServerDomain+"/revoke-token")
         .invalidateHttpSession(true)
         .clearAuthentication(true)
-        .deleteCookies("JSESSIONID");
+        .deleteCookies("JSESSIONID")
+        .and()
+        .exceptionHandling().accessDeniedPage("/access-denied");
     }
     
     @Bean
