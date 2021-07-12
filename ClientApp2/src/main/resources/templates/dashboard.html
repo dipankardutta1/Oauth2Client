@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Secured Page</title>
-<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link href="css/font-awesome.min.css" rel="stylesheet" >
-<link href="css/dashboardui.css" rel="stylesheet" >
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" >
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet" >
 
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery-1.11.1.min.js"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <script type="text/javascript">
@@ -36,10 +36,10 @@ $(document).ready(function(){
                 <div class="navi" style="height:1500px">
                     <ul>
                         <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                        <li><a href="/candidateProfile"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Candidate</span></a></li>
-                        <li><a href="/getAddress"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Address</span></a></li>
-                        <li><a href="/getEducation"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Education</span></a></li>
-                        <li><a href="/getExperience"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Experience</span></a></li>
+                        <li><a th:href="@{/candidate/candidateProfile}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Candidate</span></a></li>
+                        <li><a th:href="@{/candidate/getAddress}"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Address</span></a></li>
+                        <li><a th:href="@{/candidate/getEducation}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Education</span></a></li>
+                        <li><a th:href="@{/candidate/getExperience}"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Experience</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -51,8 +51,15 @@ $(document).ready(function(){
                         
                     </header>
                 </div>
+                
+                
+                
                 <div class="user-dashboard">
                     <h1>Hello, <span th:text="${#authentication.name}"></span></h1>
+                    
+                    <div sec:authorize="hasAuthority('role_user')">Text visible to user.</div>
+        			<div sec:authorize="hasAuthority('role_admin')">Text visible to admin.</div>
+                    
                     <div class="row">
 
                     </div>

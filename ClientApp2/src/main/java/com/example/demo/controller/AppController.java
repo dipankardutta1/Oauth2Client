@@ -28,6 +28,7 @@ import com.example.demo.dto.ResponseDto;
 import com.example.demo.service.CandidateService;
 
 @Controller
+@RequestMapping("/candidate")
 public class AppController {
 	
 	@Autowired
@@ -67,7 +68,11 @@ public class AppController {
     	
     	//model.addAttribute("candidateDtos", candidateDtos);
     	
-    	model.addAttribute("user",principal.getName());
+    	OAuth2AuthenticationToken token = (OAuth2AuthenticationToken)principal;
+        token.getPrincipal().getAttributes();
+    	
+    	
+    	model.addAttribute("test",principal.getName());
     	
         return "dashboard";
     	//return "securedPage";
