@@ -47,7 +47,9 @@ public class CandidateController {
 
 		CandidateFormDto candidateDto=new CandidateFormDto();
 			
-		ResponseEntity<ResponseDto> res=candidateService.findCandidateByEmail(principal.getName());
+		candidateDto=candidateService.findCandidateByEmail(principal.getName());
+		System.out.print(candidateDto.getAliasName());
+	
 		//model.addAttribute("candidateDto",candidateDto);
 		return "view";
 	}

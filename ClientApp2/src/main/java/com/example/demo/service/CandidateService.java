@@ -28,20 +28,20 @@ public class CandidateService {
 		return candidateDtos;
 	}
 
-	public  ResponseEntity<ResponseDto> findCandidateByEmail(String email) {
+	public  CandidateFormDto findCandidateByEmail(String email) {
 
-		String requestUri = "http://localhost:9000/resource/candidate/find/fullCandidate/byEmail" + "?email={email}";
-		Map<String, String> urlParameters = new HashMap<>();
+		String requestUri = "http://localhost:9000/resource/candidate/find/fullCandidate/byEmail?email="+email;
+		/*Map<String, String> urlParameters = new HashMap<>();
 		urlParameters.put("email",email);
 
 		ResponseEntity<ResponseDto> res = restTemplate.getForEntity(requestUri,
 				ResponseDto.class,
 				urlParameters);
-
-		//System.out.println( restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput());
+*/
+		CandidateFormDto candidateFormDto=(CandidateFormDto) restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput();
 		//ResponseDto responseDto=new ResponseDto();
 		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
-		return res;
+		return candidateFormDto;
 
 	}
 	public ResponseEntity<ResponseDto> saveCandidate(CandidateDto candidateDto) {
