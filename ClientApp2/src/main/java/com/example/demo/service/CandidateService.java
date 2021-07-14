@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.dto.CandidateDto;
+import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.ResponseDto;
 
 @Service
@@ -25,11 +28,21 @@ public class CandidateService {
 		return candidateDtos;
 	}
 
-	public CandidateDto findCandidateByEmail(String email) {
+	public  ResponseEntity<ResponseDto> findCandidateByEmail(String email) {
 
-		CandidateDto candidateDto = (CandidateDto) restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+email, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput();
+		String requestUri = "http://localhost:9000/resource/candidate/find/fullCandidate/byEmail" + "?email={email}";
+		Map<String, String> urlParameters = new HashMap<>();
+		urlParameters.put("email",email);
 
-		return candidateDto;
+		ResponseEntity<ResponseDto> res = restTemplate.getForEntity(requestUri,
+				ResponseDto.class,
+				urlParameters);
+
+		//System.out.println( restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput());
+		//ResponseDto responseDto=new ResponseDto();
+		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
+		return res;
+
 	}
 	public ResponseEntity<ResponseDto> saveCandidate(CandidateDto candidateDto) {
 		HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(candidateDto);

@@ -39,25 +39,17 @@ public class CandidateController {
 		binder.registerCustomEditor(Date.class, editor);
 	}
 
+	
+	//this method 
+	
 	@RequestMapping("/profile")
 	public String candidateProfile(Model model,Principal principal) {
 
 		CandidateFormDto candidateDto=new CandidateFormDto();
-		/*ResponseEntity<ResponseDto> responseDto1=candidateService.getUserEmail(principal.getName());
-	    	String email=(String) responseDto1.getBody().getOutput();
-	    	System.out.print(email);
-	    	model.addAttribute("candidateDto",candidateDto);
-		 */
-		/*AddressDto add=new AddressDto();
-		add.setCity("a");
-		add.setState("b");
-		List<AddressDto>addList=new ArrayList<AddressDto>();
-
-		addList.add(add);
-		candidateDto.setAddresses(addList);
-		model.addAttribute("candidateDto",candidateDto);
-		model.addAttribute("candidateDto",candidateDto);
-*/		return "view";
+			
+		ResponseEntity<ResponseDto> res=candidateService.findCandidateByEmail(principal.getName());
+		//model.addAttribute("candidateDto",candidateDto);
+		return "view";
 	}
 
 
