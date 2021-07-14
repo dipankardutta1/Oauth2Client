@@ -39,7 +39,7 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
     	http.authorizeRequests()
         .antMatchers("/login**","/","oauth2/authorization**")
         .permitAll()
-        .antMatchers("/candidate/**").access("hasAnyAuthority('role_user')")
+        //.antMatchers("/candidate/**").access("hasAnyAuthority('role_user')")
         .anyRequest()
         .authenticated()
         .and()
