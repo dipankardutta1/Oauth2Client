@@ -45,12 +45,9 @@ public class CandidateController {
 	@RequestMapping("/profile")
 	public String candidateProfile(Model model,Principal principal) {
 
-		CandidateFormDto candidateDto=new CandidateFormDto();
-			
-		candidateDto=candidateService.findCandidateByEmail(principal.getName());
-		System.out.print(candidateDto.getAliasName());
-	
-		//model.addAttribute("candidateDto",candidateDto);
+		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
+		
+		model.addAttribute("candidateDto",candidateDto);
 		return "view";
 	}
 

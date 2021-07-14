@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -14,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.ResponseDto;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CandidateService {
@@ -38,10 +38,17 @@ public class CandidateService {
 				ResponseDto.class,
 				urlParameters);
 */
-		CandidateFormDto candidateFormDto=(CandidateFormDto) restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class).getBody().getOutput();
+		ResponseEntity<ResponseDto> responseDto = restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class);
+		
+		 ObjectMapper mapper = new ObjectMapper();
+		 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		 
+		 CandidateFormDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
+		 
+		 
 		//ResponseDto responseDto=new ResponseDto();
 		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
-		return candidateFormDto;
+		return pojo;
 
 	}
 	public ResponseEntity<ResponseDto> saveCandidate(CandidateDto candidateDto) {

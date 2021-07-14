@@ -51,6 +51,7 @@ footer {
 <link th:href="@{/css/dashboardui.css}" rel="stylesheet">
 <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<link th:href="@{/css/custom.css}" rel="stylesheet" >
 
 
 <link rel="shortcut icon" th:href="@{/assets/images/fav.jpg}">
@@ -71,36 +72,39 @@ footer {
 	});
 </script>
 
+
+
+
 </head>
 
 <body class="home">
+
+
+
+<div th:insert="header.html :: header">  </div>
+	
+
+
+
+
 	<div class="container-fluid display-table">
 		<div class="row display-table-row">
-			<div
-				class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box"
-				id="navigation">
-				<div class="logo">
-					<a href="home.html"><img src="/images/intello_logo.png"
-						alt="Intello" class="hidden-xs hidden-sm"> </a>
-				</div>
-				<div class="navi" style="height: 1500px">
-					<ul>
-						<li class="active"><a href="#"><i class="fa fa-home"
-								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-						<li><a th:href="@{/candidateService/profile}"><i
-								class="fa fa-user" aria-hidden="true"></i><span
-								class="hidden-xs hidden-sm">Candidate</span></a></li>
-					</ul>
-				</div>
-			</div>
+			
+			
+			
+			 <!-- menu -->
+		<div th:insert="nav.html :: nav">  </div>
+		<!-- /menu --> 
+			
+			
 			<div class="col-md-10 col-sm-11 display-table-cell v-align">
 				<!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
-				<div class="user-dashboard">
+				<!-- <div class="user-dashboard">
 					<h1>
 						Hello, <span th:text="${#authentication.name}"></span>
 					</h1>
 
-				</div>
+				</div> -->
 				<div class="container-fluid">
 					<div class="row content">
 
@@ -113,7 +117,7 @@ footer {
 											<div class="left-side">
 												<div class="profile-info">
 													<img src="/assets/images/profile.jpg" alt="">
-													<h3>Jonney Anderson</h3>
+													<h3><span th:text="${candidateDto.firstName}"></span> <span th:text="${candidateDto.lastName}"></span></h3>
 													<span>Web Designer</span>
 												</div>
 												<h4 class="ltitle">Contact</h4>
@@ -175,7 +179,7 @@ footer {
 										<div class="col-md-8 rt-div">
 											<div class="rit-cover">
 												<div class="hotkey">
-													<h1 class="">Jonney Anderson</h1>
+													<h1 class=""><span th:text="${candidateDto.firstName}"></span> <span th:text="${candidateDto.lastName}"></span></h1>
 													<small>Web Designer</small>
 												</div>
 												<h2 class="rit-titl">

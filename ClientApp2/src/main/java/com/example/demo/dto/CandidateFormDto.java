@@ -64,7 +64,7 @@ public class CandidateFormDto implements Serializable{
 	private List<ExperienceEntries>experienceEntries;
 	
 	private List<SocialProfiles>socialProfiles;
-	private List<Documents>documents;
+	
 	public String getCandidateId() {
 		return candidateId;
 	}
