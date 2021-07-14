@@ -2,12 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
-	rel="stylesheet" media="screen">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+.modal-dialog, .modal-content {
+	/* 80% of window height */
+	height: 90%;
+}
+
+.modal-body {
+	/* 100% = dialog height, 120px = header + footer */
+	max-height: calc(100% - 120px);
+	overflow-y: scroll;
+}
 /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
 .row.content {
 	height: 1500px
@@ -37,12 +45,14 @@ footer {
 	}
 }
 </style>
-<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link href="css/font-awesome.min.css" rel="stylesheet">
-<link href="css/dashboardui.css" rel="stylesheet">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	id="bootstrap-css">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet">
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 <!------ Include the above in your HEAD tag ---------->
 
 <script type="text/javascript">
@@ -55,28 +65,23 @@ footer {
 
 </head>
 
-<body class="home">
+<body class="home" onload="showProfile()">
 	<div class="container-fluid display-table">
 		<div class="row display-table-row">
 			<div
 				class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box"
 				id="navigation">
 				<div class="logo">
-					<a href="home.html"><img src="images/intello_logo.png"
+					<a href="home.html"><img src="/images/intello_logo.png"
 						alt="Intello" class="hidden-xs hidden-sm"> </a>
 				</div>
 				<div class="navi" style="height: 1500px">
 					<ul>
 						<li class="active"><a href="#"><i class="fa fa-home"
 								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-						<li><a href="/candidateProfile"><i class="fa fa-user"
-								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Candidate</span></a></li>
-						<li><a href="/getAddress"><i class="fa fa-bar-chart"
-								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Address</span></a></li>
-						<li><a href="/getEducation"><i class="fa fa-user"
-								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Education</span></a></li>
-						<li><a href="/getExperience"><i class="fa fa-calendar"
-								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Experience</span></a></li>
+						<li><a href="/candidateService/profile"><i
+								class="fa fa-user" aria-hidden="true"></i><span
+								class="hidden-xs hidden-sm">Candidate</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -86,13 +91,18 @@ footer {
 					<h1>
 						Hello, <span th:text="${#authentication.name}"></span>
 					</h1>
-					
+
 				</div>
 				<div class="container-fluid">
+					<button type="button" id="profile" class="btn btn-info btn-lg"
+						data-toggle="modal" data-target="#myModal">Open Modal</button>
+
 					<div class="row content">
 
 						<div class="col-sm-9">
 							<div class="panel panel-default">
+								<!-- Trigger the modal with a button -->
+
 								<div class="panel-heading">Candidate Information</div>
 								<div class="panel-body">
 									<form class="form-horizontal" action="#"
@@ -103,9 +113,10 @@ footer {
 											<li class="active"><a data-toggle="pill" href="#basic">General</a></li>
 											<li><a data-toggle="pill" href="#profile1">Profile1</a></li>
 											<li><a data-toggle="pill" href="#profile2">Profile2</a></li>
-
+											<li><a data-toggle="pill" href="#address">Address
+													Information</a></li>
 										</ul>
-										
+
 
 										<div class="tab-content">
 											<div id="basic" class="tab-pane fade in active">
@@ -229,18 +240,18 @@ footer {
 													</div>
 												</div>
 											</div>
-											
+
 
 											<div id="profile2" class="tab-pane fade">
-											<div class="form-group">
-												<label class="control-label col-sm-2" for="workExperience">Work Experience:
-													</label>
-												<div class="col-xs-4 col-sm-4 col-lg-4">
-													<input type="text" th:field="*{workExperience}"
-														class="form-control" id="workExperience"
-														placeholder="Enter Work Experience">
+												<div class="form-group">
+													<label class="control-label col-sm-2" for="workExperience">Work
+														Experience: </label>
+													<div class="col-xs-4 col-sm-4 col-lg-4">
+														<input type="text" th:field="*{workExperience}"
+															class="form-control" id="workExperience"
+															placeholder="Enter Work Experience">
+													</div>
 												</div>
-											</div>
 												<div class="form-group">
 													<label class="control-label col-sm-2"
 														for="releventExperience">Relevent Experience :</label>
@@ -311,6 +322,58 @@ footer {
 													</div>
 												</div>
 											</div>
+
+
+											<div id="address" class="tab-pane fade">
+
+												<div th:if="${candidateDto.addresses != null}">
+
+													<table>
+														<thead>
+															<tr>
+																<th>city</th>
+																<th>state</th>
+															</tr>
+														</thead>
+														<tbody>
+
+															<tr th:each="obj : ${candidateDto.addresses}">
+																<td><span th:text="${obj.city}"></span></td>
+																<td><span th:text="${obj.state}"></span></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+
+
+												<div class="form-group">
+													<label class="control-label col-sm-2" for="addressId">addressId</label>
+													<div class="col-xs-4 col-sm-4 col-lg-4">
+														<input type="text" hidden=true
+															th:field="*{addresses[0].addressId}" class="form-control"
+															id="addressId">
+													</div>
+												</div>
+
+
+												<div class="form-group">
+													<label class="control-label col-sm-2" for="comment">city
+														:</label>
+													<div class="col-xs-4 col-sm-4 col-lg-4">
+														<input type="text" th:field="*{addresses[0].city}"
+															class="form-control" id="city" placeholder="Enter city">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-sm-2" for="comment">state
+														:</label>
+													<div class="col-xs-4 col-sm-4 col-lg-4">
+														<input type="text" th:field="*{addresses[0].state}"
+															class="form-control" id="state" placeholder="Enter state">
+													</div>
+												</div>
+
+											</div>
 										</div>
 										<button type="submit" class="btn btn-success">Submit</button>
 
@@ -320,11 +383,6 @@ footer {
 
 								</div>
 							</div>
-
-
-
-
-
 						</div>
 					</div>
 				</div>
@@ -333,18 +391,105 @@ footer {
 		</div>
 
 	</div>
+	<div>
+
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Profile</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" action="#"
+							th:action="@{/saveCandidateProfile}" method="post"
+							th:object="${candidateDto}">
+
+							<div class="row content">
+
+
+								<div class="col-xs-4 col-sm-4 col-lg-4">
+									<input type="text" th:field="*{candidateId}" disabled
+										class="form-control" id="candidateId"
+										placeholder="Candidate Id">
+								</div>
+
+
+								<div class="col-xs-4 col-sm-4 col-lg-4">
+									<input type="text" th:field="*{aliasName}" class="form-control"
+										id="aliasName" placeholder="Enter AliasName">
+								</div>
+
+
+								<div class="col-xs-4 col-sm-4 col-lg-4">
+									<input type="text" th:field="*{firstName}" class="form-control"
+										id="firstName" placeholder="Enter First Name">
+								</div>
+
+
+								<div class="col-xs-4 col-sm-4 col-lg-4">
+									<input type="text" th:field="*{middleName}"
+										class="form-control" id="middleName"
+										placeholder="Enter Middle Name">
+								</div>
+
+
+								<div class="col-xs-4 col-sm-4 col-lg-4">
+									<input type="text" th:field="*{lastName}" class="form-control"
+										id="lastName" placeholder="Enter Last Name">
+
+								</div>
 
 
 
-	<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
-	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+								<div class="col-xs-12 col-sm-12 col-lg-12">
+									<hr>
+									<div th:if="${candidateDto.addresses != null}">
+
+
+
+										<div th:each="obj : ${candidateDto.addresses}">
+											<div class="row">
+												<div class="col-xs-5 col-sm-5 col-lg-5">
+													<span th:text="${obj.city}"></span>
+												</div>
+												<div class="col-xs-4 col-sm-4 col-lg-4">
+													<span th:text="${obj.state}"></span>
+												</div>
+												<div class="col-xs-2 col-sm-2 col-lg-2">
+													Update
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+						</form>
+
+
+
+					</div>
+
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+		</div>
+	</div>
+
 
 	<script type="text/javascript">
-		$(function() {
-
-			$('#birthDate').data("DateTimePicker").FUNCTION();
-		});
+		function showProfile() {
+			//alert("ok");
+			document.getElementById("profile").click();
+			document.getElementById("profile").style.display = "none";
+			/* for (var i = 0; i <20; i++) {
+			       $('.modal-body').append(i + '<br>');
+			   } */
+		}
 	</script>
-
 </body>
 </html>
