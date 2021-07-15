@@ -40,6 +40,19 @@ public class CandidateController {
 	}
 
 	
+	
+	
+	@RequestMapping("/search")
+	public String candidateSearch(Model model,Principal principal) {
+
+		
+		
+		
+		return "candidateSearch";
+	}
+	
+	
+	
 	//this method 
 	
 	@RequestMapping("/profile")
