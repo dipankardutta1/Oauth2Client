@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -24,14 +23,40 @@ public class Address implements Serializable {
 	private String city;
 	private String state;
 	private Boolean isDeleted;
+	private String country;
+	private String addressLine;
 	
 	
-	public Address(String addressId, String city, String state,Boolean isDeleted) {
+
+
+	public Address(String addressId, String city, String state, Boolean isDeleted, String country, String addressLine) {
 		super();
 		this.addressId = addressId;
 		this.city = city;
 		this.state = state;
 		this.isDeleted = isDeleted;
+		this.country = country;
+		this.addressLine = addressLine;
+	}
+
+
+	public String getCountry() {
+		return country;
+	}
+
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+
+	public String getAddressLine() {
+		return addressLine;
+	}
+
+
+	public void setAddressLine(String addressLine) {
+		this.addressLine = addressLine;
 	}
 
 
