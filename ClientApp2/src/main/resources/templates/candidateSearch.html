@@ -159,25 +159,25 @@ a {
 					                                    
 					                                    <section class="search-sec">
     <div>
-        <form action="#" method="post" novalidate="novalidate">
+        <form th:action="@{/candidateService/search}" method="post" novalidate="novalidate">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Enter Pickup City">
+                            <input type="text" class="form-control search-slt" placeholder="Enter Name">
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Enter Drop City">
+                            <input type="text" class="form-control search-slt" placeholder="Enter Email">
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
                             <select class="form-control search-slt" id="exampleFormControlSelect1">
-                                <option>Select Vehicle</option>
-                                <option>Example one</option>
-                                <option>Example one</option>
-                                <option>Example one</option>
-                                <option>Example one</option>
-                                <option>Example one</option>
-                                <option>Example one</option>
+                                <option>Select Work Experience</option>
+                                <option>Fresher</option>
+                                <option>1 to 3 Years</option>
+                                <option>4 to 6 Years</option>
+                                <option>7 to 10 Years</option>
+                                <option>11 to 15 Years</option>
+                                <option>More than 15 Years</option>
                             </select>
                         </div>
                        
@@ -187,7 +187,7 @@ a {
                      </div>
                     <div class="row">
                     	 <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                            <button type="button" class="btn btn-danger wrn-btn">Search</button>
+                            <button type="submit" class="btn btn-danger wrn-btn">Search</button>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-12 p-0">
                             <button type="button" class="btn btn-danger wrn-btn">Reset</button>
@@ -212,7 +212,7 @@ a {
 					                    </div>
 					                    <!-- end row -->
 					                    <ul class="nav nav-tabs tabs-bordered">
-					                        <li class="nav-item"><a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link active">Users <span class="badge badge-danger ml-1">89</span></a></li>
+					                        <li class="nav-item"><a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link active">Users <span class="badge badge-danger ml-1"><span th:text="${#lists.size(candidateDtos)}"></span></span></a></li>
 					                    </ul>
 					                    <div class="tab-content">
 					                        

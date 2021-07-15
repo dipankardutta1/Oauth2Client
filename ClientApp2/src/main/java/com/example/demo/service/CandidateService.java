@@ -27,6 +27,18 @@ public class CandidateService {
 
 		return candidateDtos;
 	}
+	
+	
+	public List<CandidateDto> findCandidateByQuery() {
+		@SuppressWarnings("unchecked")
+		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange("http://localhost:9000/resource/candidate/findAll", HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
+
+		return candidateDtos;
+	}
+	
+	
+	
+	
 
 	public  CandidateFormDto findCandidateByEmail(String email) {
 
@@ -65,6 +77,14 @@ public class CandidateService {
 		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/getEmailByUserName?username="+userName, HttpMethod.GET,null, ResponseDto.class);
 
 		return responseDto;
+	}
+
+
+	public List<CandidateDto> searchCandidate(String email, String name, String workexp) {
+		@SuppressWarnings("unchecked")
+		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate", HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
+
+		return candidateDtos;
 	}
 
 

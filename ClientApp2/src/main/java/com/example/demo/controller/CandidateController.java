@@ -12,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
@@ -42,10 +45,26 @@ public class CandidateController {
 	
 	
 	
-	@RequestMapping("/search")
-	public String candidateSearch(Model model,Principal principal) {
+	@GetMapping("/search")
+	public String openCandidateSearchPage(Model model,Principal principal) {
 
 		
+		
+		
+		return "candidateSearch";
+	}
+	
+	
+	
+	
+	@PostMapping("/search")
+	public String candidateSearch(Model model,Principal principal,@RequestParam(required = false) String email,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false)String workexp) {
+
+		List<CandidateDto> candidateDtos =candidateService.searchCandidate(email,name,workexp);
+		
+		model.addAttribute("candidateDtos",candidateDtos);
 		
 		
 		return "candidateSearch";
