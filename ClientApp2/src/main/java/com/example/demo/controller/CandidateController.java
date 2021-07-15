@@ -78,7 +78,8 @@ public class CandidateController {
 	public String candidateProfile(Model model,Principal principal) {
 
 		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
-		
+		System.out.print(candidateDto.getAliasName());
+		System.out.print(candidateDto.getAddresses().get(3).getCountry());
 		model.addAttribute("candidateDto",candidateDto);
 		return "view";
 	}
