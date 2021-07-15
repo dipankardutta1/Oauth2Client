@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,11 +81,11 @@ public class CandidateService {
 	}
 
 
-	public List<CandidateDto> searchCandidate(String email, String name, String workexp) {
+	public ResponseEntity<PagableResponseDto> searchCandidate(String email, String name, String workexp,Integer page) {
 		@SuppressWarnings("unchecked")
-		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate", HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
+		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate?page="+page, HttpMethod.GET, null, PagableResponseDto.class);
 
-		return candidateDtos;
+		return responseDto;
 	}
 
 

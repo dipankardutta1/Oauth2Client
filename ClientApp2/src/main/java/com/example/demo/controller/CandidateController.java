@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -18,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.service.CandidateService;
 
@@ -60,12 +58,34 @@ public class CandidateController {
 	@PostMapping("/search")
 	public String candidateSearch(Model model,Principal principal,@RequestParam(required = false) String email,
 			@RequestParam(required = false) String name,
-			@RequestParam(required = false)String workexp) {
+			@RequestParam(required = false)String workexp,
+			@RequestParam(required = false,defaultValue = "1")Integer page) {
 
-		List<CandidateDto> candidateDtos =candidateService.searchCandidate(email,name,workexp);
+		ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(email,name,workexp,page);
 		
-		model.addAttribute("candidateDtos",candidateDtos);
 		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("candidateDtos",responseDto.getBody().getOutput());
+		model.addAttribute("totalPages", responseDto.getBody().getTotalPages());
+	    model.addAttribute("totalItems", responseDto.getBody().getTotalItems());
+		
+		return "candidateSearch";
+	}
+	
+	
+	@GetMapping("/search/paginate")
+	public String candidateSearchPaginate(Model model,Principal principal,@RequestParam(required = false) String email,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false)String workexp,
+			@RequestParam(required = true)Integer page) {
+
+		ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(email,name,workexp, page);
+		
+		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("candidateDtos",responseDto.getBody().getOutput());
+		model.addAttribute("totalPages", responseDto.getBody().getTotalPages());
+	    model.addAttribute("totalItems", responseDto.getBody().getTotalItems());
 		
 		return "candidateSearch";
 	}
@@ -80,6 +100,15 @@ public class CandidateController {
 		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
 		System.out.print(candidateDto.getAliasName());
 		System.out.print(candidateDto.getAddresses().get(3).getCountry());
+		model.addAttribute("candidateDto",candidateDto);
+		return "view";
+	}
+	
+	@GetMapping("/profile/search")
+	public String candidateProfileSearch(Model model,Principal principal,@RequestParam(required = true) String email) {
+
+		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(email);
+		
 		model.addAttribute("candidateDto",candidateDto);
 		return "view";
 	}
