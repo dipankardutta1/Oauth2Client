@@ -14,6 +14,8 @@ public class AddressDto implements Serializable {
 	
 	private String candidateId;
 	
+	
+	
 	private String addressId;
 	
 	private String city;
@@ -27,6 +29,9 @@ public class AddressDto implements Serializable {
 	
 	
 	
+	
+
+
 	
 
 

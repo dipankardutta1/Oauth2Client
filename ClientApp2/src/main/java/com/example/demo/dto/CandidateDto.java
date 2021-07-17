@@ -37,7 +37,8 @@ public class CandidateDto implements Serializable {
 
 	private String interviewStatuses;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	private Date birthDate;
 
 	private String password;

@@ -44,13 +44,59 @@ footer {
 		height: auto;
 	}
 }
+
+
+
+
+#overlay {
+  background: #ffffff;
+  color: #666666;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 25%;
+  opacity: .80;
+}
+
+.spinner {
+    margin: 0 auto;
+    height: 64px;
+    width: 64px;
+    animation: rotate 0.8s infinite linear;
+    border: 5px solid firebrick;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
 </style>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
 	id="bootstrap-css">
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
 <link th:href="@{/css/dashboardui.css}" rel="stylesheet">
-<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/candidate/summary.js}"></script>
+
+
+
+
+
 <link th:href="@{/css/custom.css}" rel="stylesheet">
 
 
@@ -74,6 +120,8 @@ footer {
 
 
 
+
+
 </head>
 
 <body class="home">
@@ -87,7 +135,7 @@ footer {
 
 
 	<div class="container-fluid display-table">
-		<div class="row display-table-row">
+		<div class="row display-table-row" >
 
 
 
@@ -104,7 +152,8 @@ footer {
 					</h1>
 
 				</div> -->
-				<div class="container-fluid">
+				<div class="container-fluid" >
+					 
 					<div class="row content">
 
 						<div class="col-sm-9">
@@ -117,13 +166,10 @@ footer {
 												<div class="profile-info">
 													<img src="/assets/images/profile.jpg" alt="">
 													<h3>
-														<span STYLE="font-size: 16px"
-															th:text="${candidateDto.firstName}"></span> <span
-															STYLE="font-size: 16px"
-															th:text="${candidateDto.lastName}"></span>
+														<span id="firstNameAvatar" STYLE="font-size: 16px" th:text="${candidateDto.firstName}"></span> 
+														<span id="lastNameAvatar" STYLE="font-size: 16px" th:text="${candidateDto.lastName}"></span>
 													</h3>
-													<span STYLE="font-size: 12px"
-														th:text="${candidateDto.profileTitle}"></span>
+													<span  id="profileTitleAvatar" STYLE="font-size: 12px" th:text="${candidateDto.profileTitle}"></span>
 												</div>
 												<h4 class="ltitle">Contact</h4>
 												<div class="contact-box pb0">
@@ -220,18 +266,20 @@ footer {
 											<div class="rit-cover">
 												<div class="hotkey">
 													<h1 class="">
-														<span th:text="${candidateDto.firstName}"></span> <span
-															th:text="${candidateDto.lastName}"></span>
+														<span id="firstNameView" th:text="${candidateDto.firstName}"></span> 
+														<span id="lastNameView" th:text="${candidateDto.lastName}"></span>
 													</h1>
-													<small><span STYLE="font-size: 12px"
-														th:text="${candidateDto.profileTitle}"></span></small>
+													<small><span STYLE="font-size: 12px" id="profileTitleView" th:text="${candidateDto.profileTitle}"></span></small>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Profile
+													<i class="far fa-user"></i> Summary
+													
+													
+													<a data-toggle="modal" data-target="#summary" href="#" style=" float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
 												<div class="about">
 													<p>
-														<span STYLE="font-size: 12px"
+														<span STYLE="font-size: 12px" id="summaryView"
 															th:text="${candidateDto.summary}"></span>
 													</p>
 													<div class="btn-ro row no-margin">
@@ -245,41 +293,44 @@ footer {
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Profile Information
+													<i class="far fa-user"></i> Profile
+													
+													<a data-toggle="modal" data-target="#profile" href="#" style=" float: right;"><i class="fas fa-edit"></i>Edit</a>
+													
 												</h2>
 												<div class="row">
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">Alias Name :</span>
 														</h4>
-														<span id="aliasName" th:text="${candidateDto.aliasName}"></span>
+														<span id="aliasNameView" th:text="${candidateDto.aliasName}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">Interview Mode :</span>
 														</h4>
-														<span id="interViewMode"
+														<span id="interViewModeView"
 															th:text="${candidateDto.interViewMode}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">Interview Status :</span>
 														</h4>
-														<span id="interviewStatuses"
+														<span id="interviewStatusesView"
 															th:text="${candidateDto.interviewStatuses}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">Birth Date :</span>
 														</h4>
-														<span id="aliasName"
-															th:text="${#dates.year(candidateDto.birthDate)}"></span>
+														<span id="birthDateView"
+															th:text="${#dates.format(candidateDto.birthDate,'MM/dd/yyyy')}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">Work Experience :</span>
 														</h4>
-														<span id="workExperience"
+														<span id="workExperienceView"
 															th:text="${candidateDto.workExperience}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
@@ -287,46 +338,50 @@ footer {
 															<span STYLE="font-size: 12px">Relevant Experience
 																:</span>
 														</h4>
-														<span id="releventExperience"
+														<span id="releventExperienceView"
 															th:text="${candidateDto.releventExperience}"></span>
 													</div>
 													<div class="col-xs-4 col-sm-4 col-lg-4">
 														<h4>
 															<span STYLE="font-size: 12px">HiringType :</span>
 														</h4>
-														<span id="hiringType" th:text="${candidateDto.hiringType}"></span>
+														<span id="hiringTypeView" th:text="${candidateDto.hiringType}"></span>
 
 													</div>
 												</div>
 												<h2 class="rit-titl">
 													<i class="fa fa-home fa-fw"></i> Address
+													
+													<a data-toggle="modal" data-target="#address" href="#" style=" float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
-												<div th:if="${candidateDto.addresses != null}">
-													<div th:each="obj : ${candidateDto.addresses}">
-
-														<div class="address">
-
-															<div th:if="${obj.country != null}">
-																<h4>
-																	<span STYLE="font-size: 12px" th:text="${obj.country}"></span>
-																</h4>
-															</div>
-															<span STYLE="font-size: 12px" th:text="${obj.state}"></span>,
-															<span STYLE="font-size: 12px" th:text="${obj.city}"></span>
-															<div th:if="${obj.addressLine != null}">
-																<ul>
-																	<li><i class="far fa-hand-point-right"></i> <span
-																		STYLE="font-size: 12px" th:text="${obj.addressLine}"></span>
-																	</li>
-
-																</ul>
-
+												<div id="addressFragment">
+														<div th:if="${candidateDto.addresses != null}" th:each="obj : ${candidateDto.addresses}">
+	
+															<div class="address">
+	
+																<div th:if="${obj.country != null}">
+																	<h4>
+																		<span STYLE="font-size: 12px" th:text="${obj.country}"></span>
+																	</h4>
+																</div>
+																<span STYLE="font-size: 12px" th:text="${obj.state}"></span>,
+																<span STYLE="font-size: 12px" th:text="${obj.city}"></span>
+																<div th:if="${obj.addressLine != null}">
+																	<ul>
+																		<li><i class="far fa-hand-point-right"></i> <span
+																			STYLE="font-size: 12px" th:text="${obj.addressLine}"></span>
+																		</li>
+	
+																	</ul>
+	
+																</div>
 															</div>
 														</div>
-													</div>
 												</div>
 												<h2 class="rit-titl">
 													<i class="fas fa-briefcase"></i> Work Experiance
+													
+													<span style=" float: right;"><i class="fas fa-edit"></i>Edit</span>
 												</h2>
 												<div th:if="${candidateDto.experienceEntries != null}">
 													<div th:each="obj : ${candidateDto.experienceEntries}">
@@ -352,6 +407,8 @@ footer {
 												</div>
 												<h2 class="rit-titl">
 													<i class="fas fa-graduation-cap"></i> Education
+													
+													<span style=" float: right;"><i class="fas fa-edit"></i>Edit</span>
 												</h2>
 												<div class="education">
 
@@ -386,6 +443,8 @@ footer {
 
 													<h2 class="rit-titl">
 														<i class="fas fa-users-cog"></i> Skills
+														
+														<span style=" float: right;"><i class="fas fa-edit"></i>Edit</span>
 													</h2>
 
 													<div th:if="${candidateDto.skils != null}">
@@ -456,11 +515,265 @@ footer {
 							</div>
 						</div>
 					</div>
-
+				
 				</div>
 			</div>
 
 		</div>
+		
+		
+		
+		
+		
+		
+		<!-- Summary Modal -->
+		<div class="modal fade" id="summary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			
+		    <div class="modal-dialog">
+		    	
+		        <div class="modal-content">
+		        	
+		            <!-- Modal Header -->
+		            <div class="modal-header">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                  <i class="far fa-user"></i> Summary
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body">
+		                
+		                <form id="summary-form">
+		                  <div class="form-group">
+		                    <label for="firstName">First Name</label>
+		                      
+		                      <input type="text" class="form-control" name="firstName" id="firstName" th:value="${candidateDto.firstName}" placeholder="Enter First Name"/>
+		                  </div>
+		                   <div class="form-group">
+		                    <label for="lastName">Last Name</label>
+		                      <input type="text" class="form-control" name="lastName" id="lastName" th:value="${candidateDto.lastName}" placeholder="Enter Last Name"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="profileTitle">Profile Title</label>
+		                      <input type="text" class="form-control" name="profileTitle" id="profileTitle" th:value="${candidateDto.profileTitle}" placeholder="Enter Profile Title"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="summary">Summary</label>
+		                    <textarea class="form-control" rows="5" id="summary" name="summary" >[[${candidateDto.summary}]]</textarea>
+		                  </div>
+		                  
+		                 <button type="submit" class="btn btn-primary">
+		                    Save changes
+		                  </button>
+		                  
+		                  </form>
+		                 
+		               
+		                
+		                
+		            </div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer">
+		            	 
+		                <button type="button" class="btn btn-default" data-dismiss="modal">
+		                            Close
+		                </button>
+		                
+		            </div>
+		            
+		        </div>
+		       
+		    </div>
+		     
+		</div>
+		
+		
+		
+		
+		<!-- Profile Modal -->
+		<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			
+		    <div class="modal-dialog">
+		    	
+		        <div class="modal-content">
+		        	
+		            <!-- Modal Header -->
+		            <div class="modal-header">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                  <i class="far fa-user"></i> Profile
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body">
+		                
+		                <form id="profile-form">
+		                  <div class="form-group">
+		                    <label for="aliasName">Alias Name</label>
+		                      
+		                      <input type="text" class="form-control" name="aliasName" id="aliasName" th:value="${candidateDto.aliasName}" placeholder="Enter Alias Name"/>
+		                  </div>
+		                   <div class="form-group">
+		                    <label for="interViewMode">Interview Mode</label>
+		                      <input type="text" class="form-control" name="interViewMode" id="interViewMode" th:value="${candidateDto.interViewMode}" placeholder="Enter Interview Mode"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="interviewStatuses">Interview Status</label>
+		                      <input type="text" class="form-control" name="interviewStatuses" id="interviewStatuses" th:value="${candidateDto.interviewStatuses}" placeholder="Enter Interview Status"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="birthDate">Birth Date</label>
+		                    <input type="text" class="form-control" name="birthDate" id="birthDate" th:value="${#dates.format(candidateDto.birthDate,'MM/dd/yyyy')}" placeholder="Enter Birth Date"/>
+		                  </div>
+		                   <div class="form-group">
+		                    <label for="workExperience">Work Experience</label>
+		                    <input type="text" class="form-control" name="workExperience" id="workExperience" th:value="${candidateDto.workExperience}" placeholder="Enter Wrok Experience"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="releventExperience">Relevant Experience</label>
+		                    <input type="text" class="form-control" name="releventExperience" id="releventExperience" th:value="${candidateDto.releventExperience}" placeholder="Enter Relevent Experience"/>
+		                  </div>
+		                  <div class="form-group">
+		                    <label for="hiringType">Hiring Type</label>
+		                    <input type="text" class="form-control" name="hiringType" id="hiringType" th:value="${candidateDto.hiringType}" placeholder="Enter Hiring Type"/>
+		                  </div>
+		                  
+		                 <button type="submit" class="btn btn-primary">
+		                    Save changes
+		                  </button>
+		                  
+		                  </form>
+		                 
+		               
+		                
+		                
+		            </div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer">
+		            	 
+		                <button type="button" class="btn btn-default" data-dismiss="modal">
+		                            Close
+		                </button>
+		                
+		            </div>
+		            
+		        </div>
+		       
+		    </div>
+		     
+		</div>
+		
+		<!-- address Modal -->
+		<div class="modal fade" id="address" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			
+		    <div class="modal-dialog">
+		    	
+		        <div class="modal-content">
+		        	
+		            <!-- Modal Header -->
+		            <div class="modal-header">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                  <i class="far fa-user"></i> Address
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body">
+		                
+		                <table id="addressTable" class=" table order-list">
+						    <thead>
+						        <tr>
+						            <td>Country</td>
+						            <td>State</td>
+						            <td>City</td>
+						            <td>Address</td>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <tr th:if="${candidateDto.addresses != null}" th:each="obj,iterator : ${candidateDto.addresses}">
+						        	<td class="col-sm-2">
+						                <input type="text"  class="form-control country" th:value="${obj.country}"/>
+						            </td>
+						            <td class="col-sm-2">
+						                <input type="text" class="form-control state" th:value="${obj.state}"/>
+						            </td>
+						            <td class="col-sm-2">
+						                <input type="text"  class="form-control city" th:value="${obj.city}"/>
+						            </td>
+						            <td class="col-sm-5">
+						                <input type="text"  class="form-control addressLine" th:value="${obj.addressLine}"/>
+						            </td>
+						            <td class="col-sm-1">
+						            	<a th:if="${iterator.index == 0}" class="deleteRow"></a>
+						            	<input th:if="${iterator.index > 0}" type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete">
+						            </td>
+						        </tr>
+						    </tbody>
+						    <tfoot>
+						        <tr>
+						            <td colspan="5" style="text-align: left;">
+						                <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
+						            </td>
+						        </tr>
+						        <tr>
+						        </tr>
+						    </tfoot>
+						</table>
+								                 
+		               
+		                
+		                
+		            </div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer">
+	            	 	<button type="button" class="btn btn-primary" id="addressBtn">
+	                    	Save changes
+	                  	</button>
+		                <button type="button" class="btn btn-default" data-dismiss="modal">
+		                            Close
+		                </button>
+		                
+		            </div>
+		            
+		        </div>
+		       
+		    </div>
+		     
+		</div>
+		
+		
+		
+		
+		
+	<div id="overlay" style="display:none;">
+	    <div class="spinner"></div>
+	    <br/>
+	    Loading...
+	</div>
+		
+		
+		
+		
+		
+		
 
 		<script th:src="@{/assets/js/jquery-3.2.1.min.js}"></script>
 		<script th:src="@{/assets/js/popper.min.js}"></script>
