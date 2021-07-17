@@ -10,10 +10,10 @@ $(document).ready(function () {
         var newRow = $("<tr>");
         var cols = "";
         
-        cols += '<td class="col-sm-2"><input type="text" class="form-control" name="country' + counter + '"/></td>';
-        cols += '<td class="col-sm-2"><input type="text" class="form-control" name="state' + counter + '"/></td>';
-        cols += '<td class="col-sm-2"><input type="text" class="form-control" name="city' + counter + '"/></td>';
-        cols += '<td class="col-sm-5"><input type="text" class="form-control" name="address' + counter + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control country" name="country' + counter + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control state" name="state' + counter + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control city" name="city' + counter + '"/></td>';
+        cols += '<td class="col-sm-5"><input type="text" class="form-control addressLine" name="address' + counter + '"/></td>';
 
         cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
         newRow.append(cols);
