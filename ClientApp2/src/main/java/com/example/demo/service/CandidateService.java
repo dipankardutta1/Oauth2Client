@@ -2,9 +2,12 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -71,6 +74,43 @@ public class CandidateService {
 
 		return responseDto;
 	}
+	
+	
+	public ResponseEntity<ResponseDto> updateSummary(CandidateDto candidateDto) {
+		
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+candidateDto.getEmail(), HttpMethod.GET,null, ResponseDto.class);
+
+		if(responseDto.getStatusCode().compareTo(HttpStatus.OK) == 0) {
+			 ObjectMapper mapper = new ObjectMapper();
+			 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			 
+			 CandidateDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateDto.class);
+			 
+			 pojo.setFirstName(candidateDto.getFirstName());
+			 pojo.setLastName(candidateDto.getLastName());
+			 pojo.setProfileTitle(candidateDto.getProfileTitle());
+			 pojo.setSummary(candidateDto.getSummary());
+			 
+			 if(pojo.getCandidateId() == null || pojo.getCandidateId().isEmpty()) {
+				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
+				 
+				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/save", HttpMethod.POST,httpEntity, ResponseDto.class);
+			 }else {
+				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
+				 
+				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/update", HttpMethod.PUT,httpEntity, ResponseDto.class);
+			 }
+			 
+			
+			 
+			 
+			 return responseDto;
+		}
+		
+		
+
+		return responseDto;
+	}
 
 	public ResponseEntity<ResponseDto> getUserEmail(String userName) {
 		//HttpEntity<String> httpEntity = new HttpEntity<String>();
@@ -87,6 +127,48 @@ public class CandidateService {
 
 		return responseDto;
 	}
+
+
+	public ResponseEntity<ResponseDto> updateProfile(CandidateDto candidateDto) {
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+candidateDto.getEmail(), HttpMethod.GET,null, ResponseDto.class);
+
+		if(responseDto.getStatusCode().compareTo(HttpStatus.OK) == 0) {
+			 ObjectMapper mapper = new ObjectMapper();
+			 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			 
+			 CandidateDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateDto.class);
+			 
+			 pojo.setAliasName(candidateDto.getAliasName());
+			 pojo.setInterViewMode(candidateDto.getInterViewMode());
+			 pojo.setInterviewStatuses(candidateDto.getInterviewStatuses());
+			 pojo.setBirthDate(candidateDto.getBirthDate());
+			 pojo.setWorkExperience(candidateDto.getWorkExperience());
+			 pojo.setReleventExperience(candidateDto.getReleventExperience());
+			 pojo.setHiringType(candidateDto.getHiringType());
+			 
+			 if(pojo.getCandidateId() == null || pojo.getCandidateId().isEmpty()) {
+				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
+				 
+				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/save", HttpMethod.POST,httpEntity, ResponseDto.class);
+			 }else {
+				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
+				 
+				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/update", HttpMethod.PUT,httpEntity, ResponseDto.class);
+			 }
+			 
+			
+			 
+			 
+			 return responseDto;
+		}
+		
+		
+
+		return responseDto;
+	}
+
+
+	
 
 
 }

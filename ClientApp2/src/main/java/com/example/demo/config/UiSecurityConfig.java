@@ -36,7 +36,7 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
     	
     	System.out.println("authServerDomain " + authServerDomain);
     	
-    	http.authorizeRequests()
+    	http.csrf().disable().authorizeRequests()
         .antMatchers("/login**","/","oauth2/authorization**")
         .permitAll()
         //.antMatchers("/candidate/**").access("hasAnyAuthority('role_user')")
