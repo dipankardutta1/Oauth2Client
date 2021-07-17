@@ -30,7 +30,65 @@ $(document).ready(function () {
 
 	
 	
-	
+    $("#addressBtn").on("click", function () {
+    	
+    	 $('#overlay').fadeIn();
+    	
+    	var addresses = new Array();
+        $("#addressTable tbody tr").each(function () {
+            var row = $(this);
+            var addressObj = {};
+            addressObj.country = row.find(".country").eq(0).val();
+            addressObj.state = row.find(".state").eq(0).val();
+            addressObj.city = row.find(".city").eq(0).val();
+            addressObj.addressLine = row.find(".addressLine").eq(0).val();
+           
+            addresses.push(addressObj);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/api/candidate/address/update",
+            data: JSON.stringify(addresses),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                
+                $('#overlay').fadeOut();
+                $('#address').modal('hide');
+                if(data.httpStatus == "OK"){
+                	
+                	jQuery('#addressFragment div').html('');
+                	
+                	 $.each(data.output, function(key,value) {
+                		 $( "#addressFragment" ).append(
+                         		'<div><div class="address"><div><h4><span style="font-size: 12px">'+value.country+'</span></h4></div>'+
+         							'<span style="font-size: 12px">'+value.state+'</span>,<span style="font-size: 12px">'+value.city+'</span>'+
+         							'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.addressLine+'</span></li></ul></div></div></div>'
+                         		 )
+                   	}); 
+                	
+                	
+                }
+               
+                
+                
+            },
+            error: function (e) {
+
+                /*  var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                      + e.responseText + "&lt;/pre&gt;";
+                  $('#feedback').html(json);*/
+
+                  console.log("ERROR : ", e.responseText);
+                 // $("#btn-search").prop("disabled", false);
+                  
+                 
+                  $('#overlay').fadeOut();
+                  $('#address').modal('hide');
+              }
+        });
+    });
 	
 	
 	

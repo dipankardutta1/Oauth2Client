@@ -1,23 +1,22 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
+import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.service.CandidateService;
 
@@ -77,6 +76,36 @@ public class CandidateRestController {
 		
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateProfile(candidateDto);
 		responseDto.getBody().setOutput(candidateDto);
+
+		return responseDto;
+	}
+	
+	
+	
+	@PostMapping("/api/candidate/address/update")
+	public ResponseEntity<?> saveCandidateAddress(Principal principal, @Valid @RequestBody List<AddressDto> addressDtos, Errors errors) {
+		
+		
+		
+		
+		
+		if (errors.hasErrors()) {
+			ResponseDto responseDto = new ResponseDto();
+
+			responseDto.setMsg(errors.getAllErrors()
+                        .stream().map(x -> x.getDefaultMessage())
+                        .collect(Collectors.joining(",")));
+
+            return ResponseEntity.badRequest().body(responseDto);
+
+        }
+		
+		addressDtos.forEach((addressDto)->{
+			addressDto.setCandidateId(principal.getName());
+		});
+		
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateAddress(addressDtos);
+		responseDto.getBody().setOutput(addressDtos);
 
 		return responseDto;
 	}

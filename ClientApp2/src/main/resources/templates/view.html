@@ -135,7 +135,7 @@ footer {
 
 
 	<div class="container-fluid display-table">
-		<div class="row display-table-row">
+		<div class="row display-table-row" >
 
 
 
@@ -152,7 +152,8 @@ footer {
 					</h1>
 
 				</div> -->
-				<div class="container-fluid">
+				<div class="container-fluid" >
+					 
 					<div class="row content">
 
 						<div class="col-sm-9">
@@ -353,29 +354,29 @@ footer {
 													
 													<a data-toggle="modal" data-target="#address" href="#" style=" float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
-												<div th:if="${candidateDto.addresses != null}">
-													<div th:each="obj : ${candidateDto.addresses}">
-
-														<div class="address">
-
-															<div th:if="${obj.country != null}">
-																<h4>
-																	<span STYLE="font-size: 12px" th:text="${obj.country}"></span>
-																</h4>
-															</div>
-															<span STYLE="font-size: 12px" th:text="${obj.state}"></span>,
-															<span STYLE="font-size: 12px" th:text="${obj.city}"></span>
-															<div th:if="${obj.addressLine != null}">
-																<ul>
-																	<li><i class="far fa-hand-point-right"></i> <span
-																		STYLE="font-size: 12px" th:text="${obj.addressLine}"></span>
-																	</li>
-
-																</ul>
-
+												<div id="addressFragment">
+														<div th:if="${candidateDto.addresses != null}" th:each="obj : ${candidateDto.addresses}">
+	
+															<div class="address">
+	
+																<div th:if="${obj.country != null}">
+																	<h4>
+																		<span STYLE="font-size: 12px" th:text="${obj.country}"></span>
+																	</h4>
+																</div>
+																<span STYLE="font-size: 12px" th:text="${obj.state}"></span>,
+																<span STYLE="font-size: 12px" th:text="${obj.city}"></span>
+																<div th:if="${obj.addressLine != null}">
+																	<ul>
+																		<li><i class="far fa-hand-point-right"></i> <span
+																			STYLE="font-size: 12px" th:text="${obj.addressLine}"></span>
+																		</li>
+	
+																	</ul>
+	
+																</div>
 															</div>
 														</div>
-													</div>
 												</div>
 												<h2 class="rit-titl">
 													<i class="fas fa-briefcase"></i> Work Experiance
@@ -514,7 +515,7 @@ footer {
 							</div>
 						</div>
 					</div>
-
+				
 				</div>
 			</div>
 
@@ -696,7 +697,7 @@ footer {
 		            <!-- Modal Body -->
 		            <div class="modal-body">
 		                
-		                <table id="myTable" class=" table order-list">
+		                <table id="addressTable" class=" table order-list">
 						    <thead>
 						        <tr>
 						            <td>Country</td>
@@ -706,20 +707,23 @@ footer {
 						        </tr>
 						    </thead>
 						    <tbody>
-						        <tr>
+						        <tr th:if="${candidateDto.addresses != null}" th:each="obj,iterator : ${candidateDto.addresses}">
 						        	<td class="col-sm-2">
-						                <input type="text" name="country"  class="form-control" />
+						                <input type="text"  class="form-control country" th:value="${obj.country}"/>
 						            </td>
 						            <td class="col-sm-2">
-						                <input type="text" name="state" class="form-control" />
+						                <input type="text" class="form-control state" th:value="${obj.state}"/>
 						            </td>
 						            <td class="col-sm-2">
-						                <input type="text" name="city"  class="form-control"/>
+						                <input type="text"  class="form-control city" th:value="${obj.city}"/>
 						            </td>
 						            <td class="col-sm-5">
-						                <input type="text" name="address"  class="form-control"/>
+						                <input type="text"  class="form-control addressLine" th:value="${obj.addressLine}"/>
 						            </td>
-						            <td class="col-sm-1"><a class="deleteRow"></a> </td>
+						            <td class="col-sm-1">
+						            	<a th:if="${iterator.index == 0}" class="deleteRow"></a>
+						            	<input th:if="${iterator.index > 0}" type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete">
+						            </td>
 						        </tr>
 						    </tbody>
 						    <tfoot>
@@ -740,7 +744,9 @@ footer {
 		            
 		            <!-- Modal Footer -->
 		            <div class="modal-footer">
-		            	 
+	            	 	<button type="button" class="btn btn-primary" id="addressBtn">
+	                    	Save changes
+	                  	</button>
 		                <button type="button" class="btn btn-default" data-dismiss="modal">
 		                            Close
 		                </button>

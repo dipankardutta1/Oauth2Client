@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.PagableResponseDto;
@@ -60,6 +61,9 @@ public class CandidateService {
 		 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		 
 		 CandidateFormDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
+		 
+		 
+		
 		 
 		 
 		//ResponseDto responseDto=new ResponseDto();
@@ -165,6 +169,16 @@ public class CandidateService {
 		
 
 		return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateAddress(List<AddressDto> addressDtos) {
+		
+		 HttpEntity<List<AddressDto>> httpEntity = new HttpEntity<List<AddressDto>>(addressDtos);
+		 
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/address/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
 	}
 
 
