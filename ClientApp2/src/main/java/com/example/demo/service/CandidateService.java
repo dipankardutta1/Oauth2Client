@@ -81,9 +81,10 @@ public class CandidateService {
 	}
 
 
-	public ResponseEntity<PagableResponseDto> searchCandidate(String email, String name, String workexp,Integer page) {
-		@SuppressWarnings("unchecked")
-		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate?page="+page, HttpMethod.GET, null, PagableResponseDto.class);
+	public ResponseEntity<PagableResponseDto> searchCandidate(String email, String skil, String workExp,Integer page) {
+		
+		
+		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate?email="+email+"&skil="+skil+"&workExp="+workExp+"&page="+page, HttpMethod.GET, null, PagableResponseDto.class);
 
 		return responseDto;
 	}

@@ -20,6 +20,7 @@ import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.SearchDto;
 import com.example.demo.service.CandidateService;
 
 @Controller
@@ -46,8 +47,8 @@ public class CandidateController {
 	@GetMapping("/search")
 	public String openCandidateSearchPage(Model model,Principal principal) {
 
-		
-		
+		SearchDto searchDto=new SearchDto();
+		model.addAttribute("searchDto",searchDto);
 		
 		return "candidateSearch";
 	}
@@ -57,13 +58,16 @@ public class CandidateController {
 	
 	@PostMapping("/search")
 	public String candidateSearch(Model model,Principal principal,@RequestParam(required = false) String email,
-			@RequestParam(required = false) String name,
-			@RequestParam(required = false)String workexp,
+			@RequestParam(required = false) String skil,
+			@RequestParam(required = false)String workExp,
 			@RequestParam(required = false,defaultValue = "1")Integer page) {
 
-		ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(email,name,workexp,page);
 		
 		
+		
+		ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(email,skil,workExp,page);
+		
+	
 		model.addAttribute("currentPage", page);
 		model.addAttribute("candidateDtos",responseDto.getBody().getOutput());
 		model.addAttribute("totalPages", responseDto.getBody().getTotalPages());
@@ -98,9 +102,9 @@ public class CandidateController {
 	public String candidateProfile(Model model,Principal principal) {
 
 		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
-		System.out.print(candidateDto.getAliasName());
+		/*System.out.print(candidateDto.getAliasName());
 		System.out.print(candidateDto.getAddresses().get(3).getCountry());
-		model.addAttribute("candidateDto",candidateDto);
+		*/model.addAttribute("candidateDto",candidateDto);
 		return "view";
 	}
 	

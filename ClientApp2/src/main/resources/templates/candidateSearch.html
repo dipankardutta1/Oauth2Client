@@ -159,25 +159,31 @@ a {
 					                                    
 					                                    <section class="search-sec">
     <div>
-        <form th:action="@{/candidateService/search}" method="post" novalidate="novalidate">
+        <form th:action="@{/candidateService/search}" method="post" novalidate="novalidate" >
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Enter Name">
+                            <input type="text" th:name="skil" class="form-control search-slt" placeholder="Enter Skill">
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Enter Email">
+                            <input type="text" th:name="email" class="form-control search-slt" placeholder="Enter Email">
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1">
+                            <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
                                 <option>Select Work Experience</option>
                                 <option>Fresher</option>
-                                <option>1 to 3 Years</option>
-                                <option>4 to 6 Years</option>
-                                <option>7 to 10 Years</option>
-                                <option>11 to 15 Years</option>
-                                <option>More than 15 Years</option>
+                                <option>1years</option>
+                                <option>2years</option>
+                                <option>3years</option>
+                                <option>4years</option>
+                                <option>5years</option>
+                                <option>6years</option>
+                                <option>7years</option>
+                                <option>8years</option>
+                                <option>9years</option>
+                                <option>10years</option>
+                                
                             </select>
                         </div>
                        
