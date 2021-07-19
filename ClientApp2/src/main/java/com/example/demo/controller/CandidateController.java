@@ -108,9 +108,9 @@ public class CandidateController {
 	
 	@RequestMapping("/profile")
 	public String candidateProfile(Model model,Principal principal) {
-
+		System.out.print("data1");
 		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
-		
+		System.out.print("data");
 		model.addAttribute("candidateDto",candidateDto);
 		
 		return "view";

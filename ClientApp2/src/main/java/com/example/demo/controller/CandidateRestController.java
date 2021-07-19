@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.service.CandidateService;
@@ -126,5 +127,27 @@ public class CandidateRestController {
 		return responseDto;
 	}
 
+	@PostMapping("/api/candidate/education/update")
+	public ResponseEntity<?> saveCandidateEducations(Principal principal, @Valid @RequestBody List<EducationEntryDto> EducationEntryDtos, Errors errors) {
+		if (errors.hasErrors()) {
+			ResponseDto responseDto = new ResponseDto();
+
+			responseDto.setMsg(errors.getAllErrors()
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
+
+			return ResponseEntity.badRequest().body(responseDto);
+
+		}
+
+		EducationEntryDtos.forEach((EducationEntryDto)->{
+			EducationEntryDto.setCandidateId(principal.getName());
+		});
+
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateEducations(EducationEntryDtos);
+		responseDto.getBody().setOutput(EducationEntryDtos);
+
+		return responseDto;
+	}
 
 }

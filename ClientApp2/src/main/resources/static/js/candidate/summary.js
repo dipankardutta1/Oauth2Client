@@ -171,7 +171,106 @@ $(document).ready(function () {
    });
 
 //-------------------------------------------------------workExperience ends here----------------------------------------	
-	$.fn.serializeFormJSON = function () {
+	
+    //---------------------------------------------------Education -------------------------------------------------------
+    var counterEducation = 0;
+
+    $("#addrowEducation").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-2"><input type="text" class="form-control degree" name="degree' + counterEducation + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control school" name="school' + counterEducation + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control fieldOfStudy" name="fieldOfStudy' + counterEducation + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control startDate" name="startDate' + counterEducation + '"/></td>';
+        cols += '<td class="col-sm-5"><input type="text" class="form-control endDate" name="endDate' + counterEducation + '"/></td>';
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnEducationDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#educationModel table.order-list").append(newRow);
+        counter++;
+    });
+    
+    $("#educationModel table.order-list").on("click", ".ibtnEducationDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+    
+    $("#EducationBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var educationList = new Array();
+       $("#educationModel tbody tr").each(function () {
+           var row = $(this);
+           var educationObj = {};
+           educationObj.degree = row.find(".degree").eq(0).val();  
+           educationObj.school = row.find(".school").eq(0).val();
+           educationObj.fieldOfStudy = row.find(".fieldOfStudy").eq(0).val();
+           educationObj.startDate = new Date(row.find(".startDate").eq(0).val());
+           educationObj.endDate = new Date(row.find(".endDate").eq(0).val());  
+         
+          
+           educationList.push(educationObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/education/update",
+           data: JSON.stringify(educationList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+              // $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#educationFragment div').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 $( "#educationFragment" ).append(
+                        		'<div><div class="educationModel"><div><h4><span style="font-size: 12px">'+value.degree+'</span></h4></div>'+
+                        		'<div><span style="font-size: 12px">'+value.school+'</span></div>'+'<div><span style="font-size: 12px">'+value.fieldOfStudy+'</span></div>'+
+        							'<span style="font-size: 12px">'+value.startDate+'</span>,<span style="font-size: 12px">'+value.endDate+'</span>'+
+        							'</div></div>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);
+
+                 console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+                 
+                
+                 $('#overlay').fadeOut();
+                // $('#workExp').modal('hide');
+             }
+       });
+   });
+//-------------------------------------------------------------Education ends here------------------------------------------
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    $.fn.serializeFormJSON = function () {
 		 
         var o = {};
         var a = this.serializeArray();
