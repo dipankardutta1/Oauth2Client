@@ -3,6 +3,8 @@ package com.example.demo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -54,7 +56,8 @@ public class CandidateDto implements Serializable {
 	private String  coverLetter;
 	private String  summary;
 
-
+	private String  placeOfBirth;
+	private String  maritalStatus;
 
 
 
@@ -64,6 +67,18 @@ public class CandidateDto implements Serializable {
 
 	public String getCandidateId() {
 		return candidateId;
+	}
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
+	}
+	public void setPlaceOfBirth(String placeOfBirth) {
+		this.placeOfBirth = placeOfBirth;
+	}
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;

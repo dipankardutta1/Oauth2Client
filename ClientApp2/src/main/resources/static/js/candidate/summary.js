@@ -1,9 +1,7 @@
 
 $(document).ready(function () {
 	
-	
-	
-	
+
 	var counter = 0;
 
     $("#addrow").on("click", function () {
@@ -308,8 +306,8 @@ function profile_ajax_submit(json) {
             	
             	
             	$("#aliasNameView").text(data.output.aliasName);
-            	$("#interViewModeView").text(data.output.interViewMode);
-            	$("#interviewStatusesView").text(data.output.interviewStatuses);
+            	$("#placeOfBirthView").text(data.output.placeOfBirth);
+            	$("#maritalStatusView").text(data.output.maritalStatus);
             	$("#birthDateView").text(data.output.birthDate);
             	$("#workExperienceView").text(data.output.workExperience);
             	$("#releventExperienceView").text(data.output.releventExperience);

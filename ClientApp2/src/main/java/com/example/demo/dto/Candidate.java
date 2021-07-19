@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 public class Candidate implements Serializable {
 
 	/**
@@ -33,7 +35,8 @@ public class Candidate implements Serializable {
 	private String  coverLetter;
 	private String  summary;
 
-
+	private String  placeOfBirth;
+	private String  maritalStatus;
 	
 	private List<Address>addresses;
 
@@ -67,6 +70,18 @@ public class Candidate implements Serializable {
 	
 	public String getCandidateId() {
 		return candidateId;
+	}
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
+	}
+	public void setPlaceOfBirth(String placeOfBirth) {
+		this.placeOfBirth = placeOfBirth;
+	}
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;

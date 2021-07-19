@@ -98,6 +98,8 @@ public class CandidateService {
 			pojo.setSummary("NA");
 			pojo.setWorkExperience("Fresher");
 			pojo.setReleventExperience("Fresher");
+			pojo.setMaritalStatus("Single");
+			pojo.setPlaceOfBirth("NA");
 			
 			CandidateDto candidateDto = new CandidateDto();
 			candidateDto.setFirstName(map.get("firstName"));
@@ -107,6 +109,8 @@ public class CandidateService {
 			candidateDto.setSummary("NA");
 			candidateDto.setWorkExperience("Fresher");
 			candidateDto.setReleventExperience("Fresher");
+			candidateDto.setMaritalStatus("Single");
+			candidateDto.setPlaceOfBirth("NA");
 			
 			
 			saveCandidate(candidateDto);
@@ -207,7 +211,8 @@ public class CandidateService {
 			 CandidateDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateDto.class);
 			 
 			 pojo.setAliasName(candidateDto.getAliasName());
-			 pojo.setInterViewMode(candidateDto.getInterViewMode());
+			 pojo.setPlaceOfBirth(candidateDto.getPlaceOfBirth());
+			 pojo.setMaritalStatus(candidateDto.getMaritalStatus());
 			 pojo.setInterviewStatuses(candidateDto.getInterviewStatuses());
 			 pojo.setBirthDate(candidateDto.getBirthDate());
 			 pojo.setWorkExperience(candidateDto.getWorkExperience());

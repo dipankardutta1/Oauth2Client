@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 
 
 
@@ -37,7 +39,8 @@ public class CandidateFormDto implements Serializable{
 	private String  coverLetter;
 	private String  summary;
 
-
+	private String  placeOfBirth;
+	private String  maritalStatus;
 	
 	private List<Address>addresses;
 
@@ -65,6 +68,22 @@ public class CandidateFormDto implements Serializable{
 	
 	private List<SocialProfiles>socialProfiles;
 	
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
+	}
+
+	public void setPlaceOfBirth(String placeOfBirth) {
+		this.placeOfBirth = placeOfBirth;
+	}
+
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
 	public String getCandidateId() {
 		return candidateId;
 	}
