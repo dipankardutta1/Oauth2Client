@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+.row.content {
+	height: 1500px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	background-color: #f1f1f1;
+	height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
+</style>
+<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/dashboardui.css" rel="stylesheet">
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('[data-toggle="offcanvas"]').click(function() {
+			$("#navigation").toggleClass("hidden-xs");
+		});
+	});
+</script>
+</head>
+<body class="home">
+	<div class="container-fluid display-table">
+		<div class="row display-table-row">
+			<div
+				class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box"
+				id="navigation">
+				<div class="logo">
+					<a href="home.html"><img src="images/intello_logo.png"
+						alt="Intello" class="hidden-xs hidden-sm"> </a>
+				</div>
+				<div class="navi" style="height: 1500px">
+					<ul>
+						<li class="active"><a href="#"><i class="fa fa-home"
+								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+						<li><a href="/candidateProfile"><i class="fa fa-user"
+								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Candidate</span></a></li>
+						<li><a href="/getAddress"><i class="fa fa-bar-chart"
+								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Address</span></a></li>
+						<li><a href="/getEducation"><i class="fa fa-user"
+								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Education</span></a></li>
+						<li><a href="/getExperience"><i class="fa fa-calendar"
+								aria-hidden="true"></i><span class="hidden-xs hidden-sm">Experience</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-10 col-sm-11 display-table-cell v-align">
+				<!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+				<div class="user-dashboard">
+					<h1>
+						Hello, <span th:text="${#authentication.name}"></span>
+					</h1>
+
+				</div>
+
+				<div class="container-fluid">
+					<div class="row content">
+
+						<div class="col-sm-9">
+							<div class="panel panel-default">
+								<div class="panel-heading">Information On Experience</div>
+								<div class="panel-body">
+									<form class="form-horizontal" action="">
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="candidateId">Candidate
+												Id:</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="text" disabled class="form-control"
+													id="candidateId" placeholder="Candidate Id">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="id">Id :</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="text" disabled class="form-control" id="id"
+													placeholder="Id">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="title">Title
+												:</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="text" class="form-control" id="title"
+													placeholder="Enter Title">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="company">company
+												:</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="text" class="form-control" id="company"
+													placeholder="Enter company information">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="industry">industry
+												:</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="text" class="form-control" id="industry"
+													placeholder="Enter industry information">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="isCurrent">Current
+												Experience :</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<div class="panel panel-default">
+													<div class="panel-heading">Current Experience :</div>
+													<div class="panel-body">
+														<input type="radio" id="isCurrent" name="isCurrent">Yes
+														<input type="radio" id="isCurrent" name="isCurrent">No
+													</div>
+												</div>
+
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="startDate">Start
+												Date :</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="date" id="startDate" name="startDate">
+												<span class="glyphicon glyphicon-calendar"></span>
+
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-sm-2" for="endDate">End
+												Date :</label>
+											<div class="col-xs-4 col-sm-4 col-lg-4">
+												<input type="date" id="endDate" name="endDate"> <span
+													class="glyphicon glyphicon-calendar"></span>
+
+											</div>
+										</div>
+										<button type="submit" class="btn btn-success">Submit</button>
+									</form>
+
+								</div>
+							</div>
+
+
+
+
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<script type="text/javascript">
+				/* $(function() {
+					$('#startDate').datetimepicker();
+					$('#endDate').datetimepicker();
+				}); */
+			</script>
+			<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>

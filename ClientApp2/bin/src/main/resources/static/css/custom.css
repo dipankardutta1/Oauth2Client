@@ -1,0 +1,22 @@
+.navbar {
+    
+    margin-bottom: 0px;
+    
+}
+
+.navbar-inverse {
+    background-color: #0e1a35;
+    border-color: blue;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color:#0e1a35;
+    border-color: blue;
+}
+
+
+.modal-dialog {
+  width: 80%;
+  
+}

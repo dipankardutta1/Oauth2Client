@@ -24,7 +24,15 @@ spring:
             user-info-uri: http://localhost:9999/auth/user/me
             user-name-attribute: name
 
+auth:
+  server:
+    domain: http://localhost:9999/auth
 
+
+
+resouce:
+  server:
+    domain: http://localhost:9000/resource
 #feign:#  compression:#    request:#      enabled: true
 #      mime-types: application/json
 #    response:#      enabled: true              

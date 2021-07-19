@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+<meta charset="UTF-8">
+<title>Secured Page</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" >
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet" >
+<link th:href="@{/css/custom.css}" rel="stylesheet" >
+
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	   $('[data-toggle="offcanvas"]').click(function(){
+	       $("#navigation").toggleClass("hidden-xs");
+	   });
+	});
+
+
+
+
+</script>
+
+
+
+
+
+</head>
+<body class="home">
+
+	
+	<div th:fragment="nav"  class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                <div class="logo">
+                    <a href="home.html"><img src="/images/intello_logo.png" alt="Intello" class="hidden-xs hidden-sm">
+                    </a>
+                </div>
+                <div class="navi" style="height:1500px">
+                    <ul>
+                       	<li class="active"><a th:href="@{/candidate/securedPage}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+						<li sec:authorize="hasAuthority('role_user')"><a th:href="@{/candidateService/profile}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Profile</span></a></li>
+                 		<li><a th:href="@{/candidateService/search}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Search</span></a></li>
+                    </ul>
+                </div>
+            </div>
+	
+	
+	
+	
+	
+	
+</body>
+</html>

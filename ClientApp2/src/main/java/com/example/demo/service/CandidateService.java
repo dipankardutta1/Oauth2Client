@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
@@ -79,9 +80,6 @@ public class CandidateService {
 			pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
 		}else {
 			
-			
-			
-			
 			requestUri = authServerDomain+"/user/getDetails?username="+email;
 			
 			responseDto = restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class);
@@ -118,7 +116,7 @@ public class CandidateService {
 		 
 		
 		 
-		 
+		System.out.print("data");
 		//ResponseDto responseDto=new ResponseDto();
 		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
 		return pojo;
@@ -263,7 +261,14 @@ public class CandidateService {
 		 return responseDto;
 	}
 
-
+	public ResponseEntity<ResponseDto> updateEducations(List<EducationEntryDto> EducationEntryDtos) {
+		
+		 HttpEntity<List<EducationEntryDto>> httpEntity = new HttpEntity<List<EducationEntryDto>>(EducationEntryDtos);
+		
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/educationEntry/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
 	
 
 
