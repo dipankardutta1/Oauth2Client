@@ -18,6 +18,7 @@ import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.SummaryDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -93,14 +94,22 @@ public class CandidateService {
 			pojo.setFirstName(map.get("firstName"));
 			pojo.setLastName(map.get("lastName"));
 			pojo.setEmail(map.get("email"));
-			
+			pojo.setProfileTitle("NA");
+			pojo.setSummary("NA");
+			pojo.setWorkExperience("Fresher");
+			pojo.setReleventExperience("Fresher");
 			
 			CandidateDto candidateDto = new CandidateDto();
 			candidateDto.setFirstName(map.get("firstName"));
 			candidateDto.setLastName(map.get("lastName"));
 			candidateDto.setEmail(map.get("email"));
+			candidateDto.setProfileTitle("NA");
+			candidateDto.setSummary("NA");
+			candidateDto.setWorkExperience("Fresher");
+			candidateDto.setReleventExperience("Fresher");
 			
-			updateSummary(candidateDto);
+			
+			saveCandidate(candidateDto);
 			
 		}
 		
@@ -115,6 +124,10 @@ public class CandidateService {
 		return pojo;
 
 	}
+	
+	
+	
+	
 	public ResponseEntity<ResponseDto> saveCandidate(CandidateDto candidateDto) {
 		
 		String url = resouceServerDomain+"/candidate/save";
@@ -143,21 +156,14 @@ public class CandidateService {
 			 pojo.setProfileTitle(candidateDto.getProfileTitle());
 			 pojo.setSummary(candidateDto.getSummary());
 			 
-			 if(pojo.getCandidateId() == null || pojo.getCandidateId().isEmpty()) {
+			 
 				 
-				 url = resouceServerDomain+"/candidate/save";
-				 
-				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
-				 
-				 responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
-			 }else {
-				 
-				 url = resouceServerDomain+"/candidate/update";
-				 
-				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
-				 
-				 responseDto =  restTemplate.exchange(url, HttpMethod.PUT,httpEntity, ResponseDto.class);
-			 }
+			 url = resouceServerDomain+"/candidate/update";
+			 
+			 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
+			 
+			 responseDto =  restTemplate.exchange(url, HttpMethod.PUT,httpEntity, ResponseDto.class);
+			
 			 
 			
 			 
