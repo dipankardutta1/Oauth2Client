@@ -79,20 +79,24 @@ keyframes rotate { 0% {
 transform
 
 
+
+
 :
 
+
  
+
 
 rotate
 
 
+
+
 (360
 deg
+
+
 );
-
-
-    
-
 }
 }
 </style>
@@ -406,29 +410,29 @@ deg
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
 												<div id="workExpFragment">
-												<div th:if="${candidateDto.experienceEntries != null}">
-													<div th:each="obj : ${candidateDto.experienceEntries}">
-													<div th:if="${obj.isDeleted == false}">
-														<div class="work-exp">
-															<h4>
-																<span th:text="${obj.title}"></span>
-															</h4>
-															<span><span
-																th:text="${#dates.year(obj.startDate)}"></span>-<span
-																th:text="${#dates.year(obj.endDate)}"></span></span>, <i><b><span
-																	th:text="${obj.company}"></span>/ <span
-																	th:text="${obj.industry}"></span></b></i>
+													<div th:if="${candidateDto.experienceEntries != null}">
+														<div th:each="obj : ${candidateDto.experienceEntries}">
+															<div th:if="${obj.isDeleted == false}">
+																<div class="work-exp">
+																	<h4>
+																		<span th:text="${obj.title}"></span>
+																	</h4>
+																	<span><span
+																		th:text="${#dates.year(obj.startDate)}"></span>-<span
+																		th:text="${#dates.year(obj.endDate)}"></span></span>, <i><b><span
+																			th:text="${obj.company}"></span>/ <span
+																			th:text="${obj.industry}"></span></b></i>
 
-															<ul>
-																<li><i class="far fa-hand-point-right"></i> <span
-																	STYLE="font-size: 12px" th:text="${obj.summary}"></span>
-																</li>
+																	<ul>
+																		<li><i class="far fa-hand-point-right"></i> <span
+																			STYLE="font-size: 12px" th:text="${obj.summary}"></span>
+																		</li>
 
-															</ul>
-														</div>
+																	</ul>
+																</div>
+															</div>
 														</div>
 													</div>
-												</div>
 												</div>
 												<h2 class="rit-titl">
 													<i class="fas fa-graduation-cap"></i> Education <span
@@ -817,11 +821,11 @@ deg
 							<thead>
 								<tr>
 									<td>Title</td>
-									<td>Summary</td>
 									<td>Start Date</td>
 									<td>End Date</td>
 									<td>Company</td>
 									<td>Industry</td>
+									<td>Summary</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -830,18 +834,18 @@ deg
 									<td class="col-sm-2"><input type="text"
 										class="form-control title" th:value="${obj.title}" /></td>
 									<td class="col-sm-2"><input type="text"
-										class="form-control summary" th:value="${obj.summary}" /></td>
+										class="form-control startDate"
+										th:value="${#dates.year(obj.startDate)}" /></td>
+									<td class="col-sm-5"><input type="text"
+										class="form-control endDate"
+										th:value="${#dates.year(obj.endDate)}" /></td>
+									<td class="col-sm-5"><input type="text"
+										class="form-control company" th:value="${obj.company}" /></td>
+									<td class="col-sm-5"><input type="text"
+										class="form-control industry" th:value="${obj.industry}" /></td>
 									<td class="col-sm-2"><input type="text"
-										class="form-control startDate" th:value="${#dates.year(obj.startDate)}" /></td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control endDate" th:value="${#dates.year(obj.endDate)}" />
-									</td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control company" th:value="${obj.company}" />
-									</td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control industry" th:value="${obj.industry}" />
-									</td>
+										class="form-control summary" th:value="${obj.summary}" /></td>
+
 									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
 										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
 										type="button" class="ibtnDel btn btn-md btn-danger "
@@ -851,7 +855,7 @@ deg
 							<tfoot>
 								<tr>
 									<td colspan="5" style="text-align: left;"><input
-										type="button" class="btn btn-lg btn-block " id="addrow"
+										type="button" class="btn btn-lg btn-block " id="addrowWorkExp"
 										value="Add Row" /></td>
 								</tr>
 								<tr>
@@ -866,8 +870,8 @@ deg
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="workExperienceBtn">
-							Save changes</button>
+						<button type="button" class="btn btn-primary"
+							id="workExperienceBtn">Save changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 

@@ -104,7 +104,7 @@ public class CandidateRestController {
 
 
 	@PostMapping("/api/candidate/workExp/update")
-	public ResponseEntity<?> saveCandidateWorkExperiences(Principal principal, @Valid @RequestBody List<ExperienceEntryDto> ExperienceEntryDtos, Errors errors) {
+	public ResponseEntity<?> saveCandidateWorkExperiences(Principal principal, @Valid @RequestBody List<ExperienceEntryDto> experienceEntryDtos, Errors errors) {
 		if (errors.hasErrors()) {
 			ResponseDto responseDto = new ResponseDto();
 
@@ -116,12 +116,12 @@ public class CandidateRestController {
 
 		}
 
-		ExperienceEntryDtos.forEach((ExperienceEntryDto)->{
-			ExperienceEntryDto.setCandidateId(principal.getName());
+		experienceEntryDtos.forEach((experienceEntryDto)->{
+			experienceEntryDto.setCandidateId(principal.getName());
 		});
 
-		ResponseEntity<ResponseDto> responseDto=candidateService.updateWorkExperience(ExperienceEntryDtos);
-		responseDto.getBody().setOutput(ExperienceEntryDtos);
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateWorkExperience(experienceEntryDtos);
+		responseDto.getBody().setOutput(experienceEntryDtos);
 
 		return responseDto;
 	}

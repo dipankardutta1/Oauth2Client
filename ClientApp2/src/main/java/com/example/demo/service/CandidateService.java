@@ -254,10 +254,10 @@ public class CandidateService {
 	}
 	
 	
-	public ResponseEntity<ResponseDto> updateWorkExperience(List<ExperienceEntryDto> ExperienceEntryDtos) {
+	public ResponseEntity<ResponseDto> updateWorkExperience(List<ExperienceEntryDto> experienceEntryDtos) {
 		
-		 HttpEntity<List<ExperienceEntryDto>> httpEntity = new HttpEntity<List<ExperienceEntryDto>>(ExperienceEntryDtos);
-		 
+		 HttpEntity<List<ExperienceEntryDto>> httpEntity = new HttpEntity<List<ExperienceEntryDto>>(experienceEntryDtos);
+		
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/experienceEntry/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
