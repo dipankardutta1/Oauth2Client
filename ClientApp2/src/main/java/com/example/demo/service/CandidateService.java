@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,18 +25,32 @@ public class CandidateService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Value("${resouce.server.domain}")
+	private String resouceServerDomain;
+	
+	
+	@Value("${auth.server.domain}")
+	private String authServerDomain;
+	
 
 	public List<CandidateDto> findAllCandidates() {
+		
+		String url = resouceServerDomain+"/candidate/findAll";
+		
 		@SuppressWarnings("unchecked")
-		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange("http://localhost:9000/resource/candidate/findAll", HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
+		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
 
 		return candidateDtos;
 	}
 	
 	
 	public List<CandidateDto> findCandidateByQuery() {
+		
+		String url = resouceServerDomain+"/candidate/findAll";
+		
 		@SuppressWarnings("unchecked")
-		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange("http://localhost:9000/resource/candidate/findAll", HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
+		List<CandidateDto> candidateDtos = (List<CandidateDto>) restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class).getBody().getOutput();
 
 		return candidateDtos;
 	}
@@ -47,20 +61,49 @@ public class CandidateService {
 
 	public  CandidateFormDto findCandidateByEmail(String email) {
 
-		String requestUri = "http://localhost:9000/resource/candidate/find/fullCandidate/byEmail?email="+email;
-		/*Map<String, String> urlParameters = new HashMap<>();
-		urlParameters.put("email",email);
-
-		ResponseEntity<ResponseDto> res = restTemplate.getForEntity(requestUri,
-				ResponseDto.class,
-				urlParameters);
-*/
+		
+		String requestUri = resouceServerDomain+"/candidate/find/fullCandidate/byEmail?email="+email;
+		
 		ResponseEntity<ResponseDto> responseDto = restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class);
 		
-		 ObjectMapper mapper = new ObjectMapper();
-		 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		 CandidateFormDto pojo = null;
+		
+		if(responseDto.getStatusCode().compareTo(HttpStatus.OK) == 0) {
+			
+			
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			 
+			pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
+		}else {
+			
+			
+			
+			
+			requestUri = authServerDomain+"/user/getDetails?username="+email;
+			
+			responseDto = restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			Map<String, String> map = mapper.convertValue(responseDto.getBody().getOutput(), Map.class);
+			
+			pojo = new CandidateFormDto();
+			pojo.setFirstName(map.get("firstName"));
+			pojo.setLastName(map.get("lastName"));
+			pojo.setEmail(map.get("email"));
+			
+			
+			CandidateDto candidateDto = new CandidateDto();
+			candidateDto.setFirstName(map.get("firstName"));
+			candidateDto.setLastName(map.get("lastName"));
+			candidateDto.setEmail(map.get("email"));
+			
+			updateSummary(candidateDto);
+			
+		}
+		
 		 
-		 CandidateFormDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
 		 
 		 
 		
@@ -72,17 +115,21 @@ public class CandidateService {
 
 	}
 	public ResponseEntity<ResponseDto> saveCandidate(CandidateDto candidateDto) {
+		
+		String url = resouceServerDomain+"/candidate/save";
+		
 		HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(candidateDto);
 
-		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/save", HttpMethod.POST,httpEntity, ResponseDto.class);
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
 
 		return responseDto;
 	}
 	
 	
 	public ResponseEntity<ResponseDto> updateSummary(CandidateDto candidateDto) {
+		String url = resouceServerDomain+"/candidate/find/byEmail/"+candidateDto.getEmail();
 		
-		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+candidateDto.getEmail(), HttpMethod.GET,null, ResponseDto.class);
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET,null, ResponseDto.class);
 
 		if(responseDto.getStatusCode().compareTo(HttpStatus.OK) == 0) {
 			 ObjectMapper mapper = new ObjectMapper();
@@ -96,13 +143,19 @@ public class CandidateService {
 			 pojo.setSummary(candidateDto.getSummary());
 			 
 			 if(pojo.getCandidateId() == null || pojo.getCandidateId().isEmpty()) {
+				 
+				 url = resouceServerDomain+"/candidate/save";
+				 
 				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
 				 
-				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/save", HttpMethod.POST,httpEntity, ResponseDto.class);
+				 responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
 			 }else {
+				 
+				 url = resouceServerDomain+"/candidate/update";
+				 
 				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
 				 
-				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/update", HttpMethod.PUT,httpEntity, ResponseDto.class);
+				 responseDto =  restTemplate.exchange(url, HttpMethod.PUT,httpEntity, ResponseDto.class);
 			 }
 			 
 			
@@ -117,25 +170,28 @@ public class CandidateService {
 	}
 
 	public ResponseEntity<ResponseDto> getUserEmail(String userName) {
-		//HttpEntity<String> httpEntity = new HttpEntity<String>();
+		String url = resouceServerDomain+"/candidate/getEmailByUserName?username="+userName;
 
-		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/getEmailByUserName?username="+userName, HttpMethod.GET,null, ResponseDto.class);
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET,null, ResponseDto.class);
 
 		return responseDto;
 	}
 
 
 	public ResponseEntity<PagableResponseDto> searchCandidate(String email, String skil, String workExp,Integer page) {
+		String url = resouceServerDomain+"/candidate/search/candidate?email="+email+"&skil="+skil+"&workExp="+workExp+"&page="+page;
 		
-		
-		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/search/candidate?email="+email+"&skil="+skil+"&workExp="+workExp+"&page="+page, HttpMethod.GET, null, PagableResponseDto.class);
+		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET, null, PagableResponseDto.class);
 
 		return responseDto;
 	}
 
 
 	public ResponseEntity<ResponseDto> updateProfile(CandidateDto candidateDto) {
-		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/find/byEmail/"+candidateDto.getEmail(), HttpMethod.GET,null, ResponseDto.class);
+		
+		String url = resouceServerDomain+"/candidate/find/byEmail/"+candidateDto.getEmail();
+		
+		ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET,null, ResponseDto.class);
 
 		if(responseDto.getStatusCode().compareTo(HttpStatus.OK) == 0) {
 			 ObjectMapper mapper = new ObjectMapper();
@@ -152,13 +208,19 @@ public class CandidateService {
 			 pojo.setHiringType(candidateDto.getHiringType());
 			 
 			 if(pojo.getCandidateId() == null || pojo.getCandidateId().isEmpty()) {
+				 
+				 url = resouceServerDomain+"/candidate/save";
+				 
 				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
 				 
-				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/save", HttpMethod.POST,httpEntity, ResponseDto.class);
+				 responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
 			 }else {
+				 
+				 url = resouceServerDomain+"/candidate/update";
+				 
 				 HttpEntity<CandidateDto> httpEntity = new HttpEntity<CandidateDto>(pojo);
 				 
-				 responseDto =  restTemplate.exchange("http://localhost:9000/resource/candidate/update", HttpMethod.PUT,httpEntity, ResponseDto.class);
+				 responseDto =  restTemplate.exchange(url, HttpMethod.PUT,httpEntity, ResponseDto.class);
 			 }
 			 
 			
@@ -175,9 +237,11 @@ public class CandidateService {
 
 	public ResponseEntity<ResponseDto> updateAddress(List<AddressDto> addressDtos) {
 		
+		String url = resouceServerDomain+"/address/saveMultiple";
+		
 		 HttpEntity<List<AddressDto>> httpEntity = new HttpEntity<List<AddressDto>>(addressDtos);
 		 
-		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/address/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}
