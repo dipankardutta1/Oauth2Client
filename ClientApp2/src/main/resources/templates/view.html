@@ -504,9 +504,9 @@ deg
 																<div th:each="obj : ${candidateDto.educationEntries}">
 																	<ul>
 																		<li class="col-md-6"><span
-																			th:text="${obj.degree}"></span> - <span
-																			th:text="${obj.fieldOfStudy}"></span> <br><span
-																			th:text="${obj.school}"></span> ,<span
+																			th:text="${obj.degree}"></span> <br> <span
+																			th:text="${obj.fieldOfStudy}"></span>-<span
+																			th:text="${obj.school}"></span> <br><span
 																			th:text="${#dates.year(obj.startDate)}"></span> -<span
 																			th:text="${#dates.year(obj.endDate)}"></span> <br>
 
