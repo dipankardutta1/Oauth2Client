@@ -141,7 +141,7 @@ $(document).ready(function () {
            success: function (data) {
                
                $('#overlay').fadeOut();
-               $('#workExp').modal('hide');
+              // $('#workExp').modal('hide');
                if(data.httpStatus == "OK"){
                	
                	jQuery('#workExpFragment div').html('');
@@ -167,7 +167,7 @@ $(document).ready(function () {
                  
                 
                  $('#overlay').fadeOut();
-                 $('#workExp').modal('hide');
+                // $('#workExp').modal('hide');
              }
        });
    });
