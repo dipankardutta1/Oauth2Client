@@ -89,6 +89,31 @@ $(document).ready(function () {
 	
 	//-----------------------------------------------workexperience--------------------------------------------------
     
+    
+    var counterWorkExp = 0;
+
+    $("#addrowWorkExp").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-2"><input type="text" class="form-control title" name="title' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control startDate" name="startDate' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control endDate" name="endDate' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control company" name="company' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-5"><input type="text" class="form-control industry" name="industry' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-5"><input type="text" class="form-control summary" name="summary' + counterWorkExp + '"/></td>';
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnWorkExpDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#workExp table.order-list").append(newRow);
+        counter++;
+    });
+    
+    $("#workExp table.order-list").on("click", ".ibtnWorkExpDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+    
     $("#workExperienceBtn").on("click", function () {
     	
    	 $('#overlay').fadeIn();
@@ -97,16 +122,13 @@ $(document).ready(function () {
        $("#workExp tbody tr").each(function () {
            var row = $(this);
            var workExpObj = {};
-           workExpObj.title = row.find(".title").eq(0).val();
-           workExpObj.summary = row.find(".summary").eq(0).val();
-           workExpObj.startDate = row.find(".startDate").eq(0).val();
-           workExpObj.endDate = row.find(".endDate").eq(0).val();
+           workExpObj.title = row.find(".title").eq(0).val();  
+           workExpObj.startDate = new Date(row.find(".startDate").eq(0).val());
+           workExpObj.endDate = new Date(row.find(".endDate").eq(0).val());  
            workExpObj.company = row.find(".company").eq(0).val();
            workExpObj.industry = row.find(".industry").eq(0).val();
-           
-         
-           
-           
+           workExpObj.summary = row.find(".summary").eq(0).val();
+             
            workExperienceList.push(workExpObj);
        });
 
@@ -145,7 +167,7 @@ $(document).ready(function () {
                  
                 
                  $('#overlay').fadeOut();
-                 $('#address').modal('hide');
+                 $('#workExp').modal('hide');
              }
        });
    });
