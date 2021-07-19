@@ -836,19 +836,19 @@ deg
 							<tbody>
 								<tr th:if="${candidateDto.experienceEntries != null}"
 									th:each="obj,iterator : ${candidateDto.experienceEntries}">
-									<td class="col-sm-2"><input type="text"
+									<td class="col-sm-1"><input type="text"
 										class="form-control title" th:value="${obj.title}" /></td>
-									<td class="col-sm-2"><input type="text"
+									<td class="col-sm-1"><input type="text"
 										class="form-control startDate"
 										th:value="${#dates.year(obj.startDate)}" /></td>
-									<td class="col-sm-5"><input type="text"
+									<td class="col-sm-1"><input type="text"
 										class="form-control endDate"
 										th:value="${#dates.year(obj.endDate)}" /></td>
-									<td class="col-sm-5"><input type="text"
+									<td class="col-sm-1"><input type="text"
 										class="form-control company" th:value="${obj.company}" /></td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control industry" th:value="${obj.industry}" /></td>
 									<td class="col-sm-2"><input type="text"
+										class="form-control industry" th:value="${obj.industry}" /></td>
+									<td class="col-sm-5"><input type="text"
 										class="form-control summary" th:value="${obj.summary}" /></td>
 
 									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
@@ -859,7 +859,7 @@ deg
 							</tbody>
 							<tfoot>
 								<tr>
-									<td colspan="5" style="text-align: left;"><input
+									<td colspan="12" style="text-align: left;"><input
 										type="button" class="btn btn-lg btn-block " id="addrowWorkExp"
 										value="Add Row" /></td>
 								</tr>
