@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -242,6 +243,16 @@ public class CandidateService {
 		 HttpEntity<List<AddressDto>> httpEntity = new HttpEntity<List<AddressDto>>(addressDtos);
 		 
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+	
+	
+	public ResponseEntity<ResponseDto> updateWorkExperience(List<ExperienceEntryDto> ExperienceEntryDtos) {
+		
+		 HttpEntity<List<ExperienceEntryDto>> httpEntity = new HttpEntity<List<ExperienceEntryDto>>(ExperienceEntryDtos);
+		 
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/experienceEntry/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}

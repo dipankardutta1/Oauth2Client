@@ -17,99 +17,114 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.service.CandidateService;
 
 @RestController
 public class CandidateRestController {
-	
+
 	@Autowired
 	private CandidateService candidateService;
-	
-	
+
+
 
 	@PostMapping("/api/candidate/summary/update")
 	public ResponseEntity<?> saveCandidateSummary(Principal principal, @Valid @RequestBody CandidateDto candidateDto, Errors errors) {
-		
-		
-		
-		
-		
+
 		if (errors.hasErrors()) {
 			ResponseDto responseDto = new ResponseDto();
 
 			responseDto.setMsg(errors.getAllErrors()
-                        .stream().map(x -> x.getDefaultMessage())
-                        .collect(Collectors.joining(",")));
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
 
-            return ResponseEntity.badRequest().body(responseDto);
+			return ResponseEntity.badRequest().body(responseDto);
 
-        }
+		}
 		candidateDto.setEmail(principal.getName());
-		
+
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateSummary(candidateDto);
 		responseDto.getBody().setOutput(candidateDto);
 
 		return responseDto;
 	}
-	
-	
-	
+
+
+
 	@PostMapping("/api/candidate/profile/update")
 	public ResponseEntity<?> saveCandidateProfile(Principal principal, @Valid @RequestBody CandidateDto candidateDto, Errors errors) {
-		
-		
-		
-		
-		
+
+
+
+
+
 		if (errors.hasErrors()) {
 			ResponseDto responseDto = new ResponseDto();
 
 			responseDto.setMsg(errors.getAllErrors()
-                        .stream().map(x -> x.getDefaultMessage())
-                        .collect(Collectors.joining(",")));
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
 
-            return ResponseEntity.badRequest().body(responseDto);
+			return ResponseEntity.badRequest().body(responseDto);
 
-        }
+		}
 		candidateDto.setEmail(principal.getName());
-		
+
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateProfile(candidateDto);
 		responseDto.getBody().setOutput(candidateDto);
 
 		return responseDto;
 	}
-	
-	
-	
+
+
+
 	@PostMapping("/api/candidate/address/update")
 	public ResponseEntity<?> saveCandidateAddress(Principal principal, @Valid @RequestBody List<AddressDto> addressDtos, Errors errors) {
-		
-		
-		
-		
-		
 		if (errors.hasErrors()) {
 			ResponseDto responseDto = new ResponseDto();
 
 			responseDto.setMsg(errors.getAllErrors()
-                        .stream().map(x -> x.getDefaultMessage())
-                        .collect(Collectors.joining(",")));
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
 
-            return ResponseEntity.badRequest().body(responseDto);
+			return ResponseEntity.badRequest().body(responseDto);
 
-        }
-		
+		}
+
 		addressDtos.forEach((addressDto)->{
 			addressDto.setCandidateId(principal.getName());
 		});
-		
+
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateAddress(addressDtos);
 		responseDto.getBody().setOutput(addressDtos);
 
 		return responseDto;
 	}
-	
-	
-	
+
+
+	@PostMapping("/api/candidate/workExp/update")
+	public ResponseEntity<?> saveCandidateWorkExperiences(Principal principal, @Valid @RequestBody List<ExperienceEntryDto> ExperienceEntryDtos, Errors errors) {
+		if (errors.hasErrors()) {
+			ResponseDto responseDto = new ResponseDto();
+
+			responseDto.setMsg(errors.getAllErrors()
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
+
+			return ResponseEntity.badRequest().body(responseDto);
+
+		}
+
+		ExperienceEntryDtos.forEach((ExperienceEntryDto)->{
+			ExperienceEntryDto.setCandidateId(principal.getName());
+		});
+
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateWorkExperience(ExperienceEntryDtos);
+		responseDto.getBody().setOutput(ExperienceEntryDtos);
+
+		return responseDto;
+	}
+
+
 }

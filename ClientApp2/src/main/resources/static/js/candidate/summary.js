@@ -59,7 +59,6 @@ $(document).ready(function () {
                 if(data.httpStatus == "OK"){
                 	
                 	jQuery('#addressFragment div').html('');
-                	
                 	 $.each(data.output, function(key,value) {
                 		 $( "#addressFragment" ).append(
                          		'<div><div class="address"><div><h4><span style="font-size: 12px">'+value.country+'</span></h4></div>'+
@@ -67,12 +66,7 @@ $(document).ready(function () {
          							'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.addressLine+'</span></li></ul></div></div></div>'
                          		 )
                    	}); 
-                	
-                	
                 }
-               
-                
-                
             },
             error: function (e) {
 
@@ -90,8 +84,70 @@ $(document).ready(function () {
         });
     });
 	
-	
-	
+	//-----------------------------------------------workexperience--------------------------------------------------
+    
+    $("#workExperienceBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var workExperienceList = new Array();
+       $("#workExp tbody tr").each(function () {
+           var row = $(this);
+           var workExpObj = {};
+           workExpObj.title = row.find(".title").eq(0).val();
+           workExpObj.summary = row.find(".summary").eq(0).val();
+           workExpObj.startDate = row.find(".startDate").eq(0).val();
+           workExpObj.endDate = row.find(".endDate").eq(0).val();
+           workExpObj.company = row.find(".company").eq(0).val();
+           workExpObj.industry = row.find(".industry").eq(0).val();
+           
+         
+           
+           
+           workExperienceList.push(workExpObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/workExp/update",
+           data: JSON.stringify(workExperienceList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+               $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#workExpFragment div').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 $( "#workExpFragment" ).append(
+                        		'<div><div class="work-exp"><div><h4><span style="font-size: 12px">'+value.title+'</span></h4></div>'+
+        							'<span style="font-size: 12px">'+value.startDate+'</span>,<span style="font-size: 12px">'+value.endDate+'</span>'+
+        							'<span style="font-size: 12px">'+value.company+'</span>/'+'<span style="font-size: 12px">'+value.industry+'</span>/'+
+        							'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.summary+'</span></li></ul></div></div></div>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);
+
+                 console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+                 
+                
+                 $('#overlay').fadeOut();
+                 $('#address').modal('hide');
+             }
+       });
+   });
+
+//-------------------------------------------------------workExperience ends here----------------------------------------	
 	$.fn.serializeFormJSON = function () {
 		 
         var o = {};
@@ -120,13 +176,7 @@ $(document).ready(function () {
         var json = $(this).serializeFormJSON();
         //alert(JSON.stringify(data));
         summary_ajax_submit(json);
-        
-        
-        
-        
-       
-
-    });
+     });
     
     
     
@@ -139,20 +189,8 @@ $(document).ready(function () {
         var json = $(this).serializeFormJSON();
         //alert(JSON.stringify(data));
         profile_ajax_submit(json);
-        
-        
-        
-        
-       
-
-    });
-    
-    
-    
-    
-    
-
-});
+      });
+   });
 
 
 
