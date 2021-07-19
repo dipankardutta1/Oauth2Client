@@ -55,7 +55,7 @@ $(document).ready(function () {
             success: function (data) {
                 
                 $('#overlay').fadeOut();
-                $('#address').modal('hide');
+               // $('#address').modal('hide');
                 if(data.httpStatus == "OK"){
                 	
                 	jQuery('#addressFragment div').html('');
@@ -66,6 +66,9 @@ $(document).ready(function () {
          							'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.addressLine+'</span></li></ul></div></div></div>'
                          		 )
                    	}); 
+                	 
+                	 
+                	 
                 }
             },
             error: function (e) {
@@ -79,7 +82,7 @@ $(document).ready(function () {
                   
                  
                   $('#overlay').fadeOut();
-                  $('#address').modal('hide');
+                 // $('#address').modal('hide');
               }
         });
     });
@@ -227,11 +230,14 @@ function summary_ajax_submit(json) {
             	$("#profileTitleView").text(data.output.profileTitle);
             	$("#summaryView").text(data.output.summary);
             	
+            	
+            	
             }else{
             	console.log("Error");
             }
             $('#overlay').fadeOut();
-            $('#summary').modal('hide');
+           // $('#summary').modal('hide');
+            //$('#summary').modal('toggle');
           
 
         },
@@ -246,7 +252,7 @@ function summary_ajax_submit(json) {
             
            
             $('#overlay').fadeOut();
-            $('#summary').modal('hide');
+           // $('#summary').modal('toggle');
         }
     });
 
@@ -292,7 +298,7 @@ function profile_ajax_submit(json) {
             	console.log("Error");
             }
             $('#overlay').fadeOut();
-            $('#profile').modal('hide');
+           // $('#profile').modal('hide');
           
 
         },
@@ -307,7 +313,7 @@ function profile_ajax_submit(json) {
             
            
             $('#overlay').fadeOut();
-            $('#profile').modal('hide');
+           // $('#profile').modal('hide');
         }
     });
 
