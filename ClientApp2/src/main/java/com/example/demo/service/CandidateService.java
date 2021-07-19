@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -48,26 +49,13 @@ public class CandidateService {
 	public  CandidateFormDto findCandidateByEmail(String email) {
 
 		String requestUri = "http://localhost:9000/resource/candidate/find/fullCandidate/byEmail?email="+email;
-		/*Map<String, String> urlParameters = new HashMap<>();
-		urlParameters.put("email",email);
-
-		ResponseEntity<ResponseDto> res = restTemplate.getForEntity(requestUri,
-				ResponseDto.class,
-				urlParameters);
-*/
+		
 		ResponseEntity<ResponseDto> responseDto = restTemplate.exchange(requestUri, HttpMethod.GET,null, ResponseDto.class);
 		
 		 ObjectMapper mapper = new ObjectMapper();
 		 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		 
 		 CandidateFormDto pojo = mapper.convertValue(responseDto.getBody().getOutput(), CandidateFormDto.class);
-		 
-		 
-		
-		 
-		 
-		//ResponseDto responseDto=new ResponseDto();
-		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
 		return pojo;
 
 	}
@@ -178,6 +166,16 @@ public class CandidateService {
 		 HttpEntity<List<AddressDto>> httpEntity = new HttpEntity<List<AddressDto>>(addressDtos);
 		 
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/address/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+	
+	
+	public ResponseEntity<ResponseDto> updateWorkExperience(List<ExperienceEntryDto> ExperienceEntryDtos) {
+		
+		 HttpEntity<List<ExperienceEntryDto>> httpEntity = new HttpEntity<List<ExperienceEntryDto>>(ExperienceEntryDtos);
+		 
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/experienceEntry/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}

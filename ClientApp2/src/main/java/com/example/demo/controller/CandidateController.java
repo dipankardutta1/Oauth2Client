@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.dto.Address;
+import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.PagableResponseDto;
@@ -109,6 +112,7 @@ public class CandidateController {
 		CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
 		
 		model.addAttribute("candidateDto",candidateDto);
+		
 		return "view";
 	}
 	
@@ -125,7 +129,7 @@ public class CandidateController {
 
 	@RequestMapping("/saveProfile")
 	public String saveCandidateProfile(CandidateDto candidateDto) {
-
+			
 		ResponseEntity<ResponseDto> responseDto=candidateService.saveCandidate(candidateDto);
 
 		return "candidate";
