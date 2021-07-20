@@ -276,23 +276,23 @@ deg
 													<span id="profileTitleAvatar" STYLE="font-size: 12px"
 														th:text="${candidateDto.profileTitle}"></span>
 												</div>
-												<h4 class="ltitle">Contact</h4>
+												<h4 class="ltitle">Contact
+												<a data-toggle="modal"
+														data-target="#contactModel" href="#" style="float: right;color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
+												</h4>
 												<div class="contact-box pb0">
 													<div class="icon">
 														<i class="fas fa-phone"></i>
 													</div>
-													<div class="detail">
-														<div th:if="${candidateDto.mobiles != null}">
-															<div th:each="obj : ${candidateDto.mobiles}">
+													<div class="detail" id="contactFragment">
+														
+															<div th:if="${candidateDto.mobiles != null}" th:each="obj : ${candidateDto.mobiles}">
 																<span th:text="${obj.mobileNumber}"></span>
 															</div>
-															<br>
-															<div th:if="${candidateDto.phones != null}">
-																<div th:each="obj : ${candidateDto.phones}">
-																	<span th:text="${obj.phoneNumber}"></span>
-																</div>
-															</div>
-														</div>
+															
+															
+														
 
 													</div>
 												</div>
@@ -312,7 +312,12 @@ deg
 													<div class="detail">First Floor,Vincent Plaza,
 														Toranto, Canada</div>
 												</div> -->
-												<h4 class="ltitle">Contact</h4>
+												<h4 class="ltitle">Social Profile
+												<a data-toggle="modal"
+														data-target="#summary" href="#" style="float: right;color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
+												
+												</h4>
 												<ul class="row social-link no-margin">
 													<li><i class="fab fa-facebook-f"></i>
 														<div th:if="${candidateDto.socialProfiles != null}">
@@ -343,7 +348,11 @@ deg
 														</div></li>
 													<li><i class="fab fa-github"></i></li>
 												</ul>
-												<h4 class="ltitle">Referencess</h4>
+												<!-- <h4 class="ltitle">Referencess
+												<a data-toggle="modal"
+														data-target="#summary" href="#" style="float: right;color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
+												</h4>
 
 												<div class="refer-cov">
 													<b>Jonney Smith</b>
@@ -354,8 +363,12 @@ deg
 													<b>Jonney Smith</b>
 													<p>System Administrator</p>
 													<span>p +00 890 1232 8767</span>
-												</div>
-												<h4 class="ltitle">Hobbies</h4>
+												</div> -->
+												<h4 class="ltitle">Hobbies
+												<a data-toggle="modal"
+														data-target="#summary" href="#" style="float: right;color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
+												</h4>
 												<ul class="hoby row no-margin">
 													<li><i class="fas fa-pencil-alt"></i> <br>
 														Writing</li>
@@ -1172,7 +1185,87 @@ deg
 			</div>
 		</div>
 		
-		
+		<div class="modal fade" id="contactModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Contact
+						</h4>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table id="contactTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Country Code</td>
+									<td>Contact Number</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not (candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}"
+									th:each="obj,iterator : ${candidateDto.mobiles}">
+									<td class="col-sm-3">
+										<input type="text"
+										class="form-control countryCode" th:value="${obj.countryCode}" /></td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control mobileNumber" th:value="${obj.mobileNumber}" /></td>
+									
+
+									
+									
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}" class="deleteRow"></a> 
+									
+										<input th:if="${iterator.index > 0}"
+										type="button" class="ibtnContactDel btn btn-md btn-danger "
+										value="Delete">
+										
+									</td>
+								</tr>
+								<tr th:if="${(candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}">
+									<td class="col-sm-3">
+										<input type="text"
+										class="form-control countryCode"  /></td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control mobileNumber" /></td>
+									
+
+									<td class="col-sm-1"><a 
+										class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowContact" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="contactBtn">Save
+							changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		
 

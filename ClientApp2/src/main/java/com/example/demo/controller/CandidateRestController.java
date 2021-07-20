@@ -19,6 +19,8 @@ import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
+import com.example.demo.dto.Mobile;
+import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
 import com.example.demo.dto.Skills;
@@ -172,6 +174,30 @@ public class CandidateRestController {
 
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateSkills(skillDtos);
 		responseDto.getBody().setOutput(skillDtos);
+
+		return responseDto;
+	}
+	
+	
+	@PostMapping("/api/candidate/mobile/update")
+	public ResponseEntity<?> saveCandidateMobiles(Principal principal, @Valid @RequestBody List<MobileDto> mobileDtos, Errors errors) {
+		if (errors.hasErrors()) {
+			ResponseDto responseDto = new ResponseDto();
+
+			responseDto.setMsg(errors.getAllErrors()
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
+
+			return ResponseEntity.badRequest().body(responseDto);
+
+		}
+
+		mobileDtos.forEach((mobileDto)->{
+			mobileDto.setCandidateId(principal.getName());
+		});
+
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateMobiles(mobileDtos);
+		responseDto.getBody().setOutput(mobileDtos);
 
 		return responseDto;
 	}

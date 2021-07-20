@@ -338,7 +338,83 @@ $(document).ready(function () {
    });
 //-------------------------------------------------------------Skill ends here------------------------------------------
     
+    //---------------------------------------------------contact -------------------------------------------------------
+    
+
+    $("#addrowContact").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-3"><input type="text" class="form-control countryCode" /></td>';
+        cols += '<td class="col-sm-8"><input type="text" class="form-control mobileNumber" /></td>';
        
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnContactDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#contactModel table.order-list").append(newRow);
+      
+    });
+    
+    $("#contactModel table.order-list").on("click", ".ibtnContactDel", function (event) {
+        $(this).closest("tr").remove();       
+       
+    });
+    
+    $("#contactBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var contactList = new Array();
+       $("#contactModel tbody tr").each(function () {
+           var row = $(this);
+           var contactObj = {};
+           contactObj.countryCode = row.find(".countryCode").eq(0).val();  
+           contactObj.mobileNumber = row.find(".mobileNumber").eq(0).val();
+             
+         
+          
+           contactList.push(contactObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/mobile/update",
+           data: JSON.stringify(contactList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+              // $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#contactFragment').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 $( "#contactFragment" ).append(
+               				'<div>' +
+								'<span>'+value.mobileNumber+'</span>' +
+							'</div>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);
+
+                 console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+                 
+                
+                 $('#overlay').fadeOut();
+                // $('#workExp').modal('hide');
+             }
+       });
+   });
+//-------------------------------------------------------------contact ends here------------------------------------------     
     
     
     

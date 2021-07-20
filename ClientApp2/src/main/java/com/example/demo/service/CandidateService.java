@@ -19,6 +19,7 @@ import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
+import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
@@ -284,6 +285,15 @@ public class CandidateService {
 		 HttpEntity<List<SkillDto>> httpEntity = new HttpEntity<List<SkillDto>>(skillDtos);
 		
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/skills/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateMobiles(@Valid List<MobileDto> mobileDtos) {
+		 HttpEntity<List<MobileDto>> httpEntity = new HttpEntity<List<MobileDto>>(mobileDtos);
+			
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/mobile/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}
