@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +26,11 @@ public class ExperienceEntryDto implements Serializable {
 					private String id;
 					private String title;
 					private String summary;
+					@DateTimeFormat(pattern = "MM/dd/yyyy")
+					@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 					private Date startDate;
+					@DateTimeFormat(pattern = "MM/dd/yyyy")
+					@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 					private Date endDate;
 					private String company;
 					private String industry;

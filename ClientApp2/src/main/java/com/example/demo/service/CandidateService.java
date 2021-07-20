@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,6 +21,7 @@ import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.SkillDto;
 import com.example.demo.dto.SummaryDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -271,6 +274,16 @@ public class CandidateService {
 		 HttpEntity<List<EducationEntryDto>> httpEntity = new HttpEntity<List<EducationEntryDto>>(EducationEntryDtos);
 		
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/educationEntry/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateSkills(@Valid List<SkillDto> skillDtos) {
+
+		 HttpEntity<List<SkillDto>> httpEntity = new HttpEntity<List<SkillDto>>(skillDtos);
+		
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/skills/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}

@@ -464,8 +464,7 @@ deg
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
 												<div id="addressFragment">
-													<div th:if="${candidateDto.addresses != null}"
-														th:each="obj : ${candidateDto.addresses}">
+													<div th:if="${candidateDto.addresses != null}" th:each="obj : ${candidateDto.addresses}">
 
 														<div class="address">
 															<div th:if="${obj.isDeleted == false}">
@@ -504,8 +503,8 @@ deg
 																		<span th:text="${obj.title}"></span>
 																	</h4>
 																	<span><span
-																		th:text="${#dates.year(obj.startDate)}"></span>-<span
-																		th:text="${#dates.year(obj.endDate)}"></span></span>, <i><b><span
+																		th:text="${#dates.format(obj.startDate,'MM/dd/yyyy')}"></span>-<span
+																		th:text="${#dates.format(obj.endDate,'MM/dd/yyyy')}"></span></span>, <i><b><span
 																			th:text="${obj.company}"></span>/ <span
 																			th:text="${obj.industry}"></span></b></i>
 
@@ -526,19 +525,19 @@ deg
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 
 												</h2>
-												<div id="educationFragment">
+												<div>
 													<div class="education">
 
-														<div th:if="${candidateDto.educationEntries != null}">
-															<div class="row no-margin">
-																<div th:each="obj : ${candidateDto.educationEntries}">
+														<div >
+															<div id="educationFragment" class="row no-margin">
+																<div th:if="${candidateDto.educationEntries != null}" th:each="obj : ${candidateDto.educationEntries}">
 																	<ul>
 																		<li class="col-md-6"><span
 																			th:text="${obj.degree}"></span> <br> <span
 																			th:text="${obj.fieldOfStudy}"></span>-<span
 																			th:text="${obj.school}"></span> <br><span
-																			th:text="${#dates.year(obj.startDate)}"></span> -<span
-																			th:text="${#dates.year(obj.endDate)}"></span> <br>
+																			th:text="${#dates.format(obj.startDate,'MM/dd/yyyy')}"></span> -<span
+																			th:text="${#dates.format(obj.endDate,'MM/dd/yyyy')}"></span> <br>
 
 
 																		</li>
@@ -546,85 +545,32 @@ deg
 
 																</div>
 															</div>
-															<!-- <ul>
-														
-														<li class="col-md-6"><span>2013-2015</span> <br>
-															Master Degree - Cambridg University</li>
-														<li class="col-md-6"><span>2013-2015</span> <br>
-															Master Degree - Cambridg University</li>
-														<li class="col-md-6"><span>2013-2015</span> <br>
-															Master Degree - Cambridg University</li>
-													</ul> -->
-
-
-
-
 														</div>
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fas fa-users-cog"></i> Skills <span
-														style="float: right;"><i class="fas fa-edit"></i>Edit</span>
+													<i class="fas fa-users-cog"></i> Skills <a
+														data-toggle="modal" data-target="#skillModel" href="#"
+														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
 
-												<div th:if="${candidateDto.skils != null}">
-													<div class="profess-cover row no-margin">
-														<div th:each="obj : ${candidateDto.skils}">
-															<div class="col-md-6">
-																<div class=" prog-row row">
-																	<div class="col-sm-6">
-																		<span th:text="${obj.name}"></span>
-																	</div>
-																	<div class="col-sm-3">
-																		<div class="progress">
-																			<div class="progress-bar" role="progressbar"
-																				style="width: 65%" aria-valuenow="25"
-																				aria-valuemin="0" aria-valuemax="100"></div>
-																		</div>
+												
+												<div class="profess-cover row no-margin" id="skillFragment">
+													<div class="col-md-6" th:if="${candidateDto.skils != null}" th:each="obj : ${candidateDto.skils}">
+															<div class="row prog-row">
+																<div class="col-sm-6"><span th:text="${obj.name}"></span></div>
+																<div class="col-sm-6">
+																	<div class="progress">
+																		<div class="progress-bar" role="progressbar" th:style="'width:' + ${obj.proficientLevel} + '%'" 
+																		aria-valuenow="25"
+																			aria-valuemin="0" aria-valuemax="100"></div>
 																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
 
-
-													<!-- <div class="col-md-6">
-															<div class="row prog-row">
-																<div class="col-sm-6">PHP</div>
-																<div class="col-sm-6">
-																	<div class="progress">
-																		<div class="progress-bar" role="progressbar"
-																			style="width: 85%" aria-valuenow="25"
-																			aria-valuemin="0" aria-valuemax="100"></div>
-																	</div>
-																</div>
-															</div>
-														</div> -->
-
-													<!-- <div class="col-md-6">
-															<div class="row prog-row">
-																<div class="col-sm-6">Web Design</div>
-																<div class="col-sm-6">
-																	<div class="progress">
-																		<div class="progress-bar" role="progressbar"
-																			style="width: 75%" aria-valuenow="25"
-																			aria-valuemin="0" aria-valuemax="100"></div>
-																	</div>
-																</div>
-															</div>
-														</div> -->
-													<!-- <div class="col-md-6">
-															<div class="row prog-row">
-																<div class="col-sm-6">Web Development</div>
-																<div class="col-sm-6">
-																	<div class="progress">
-																		<div class="progress-bar" role="progressbar"
-																			style="width: 55%" aria-valuenow="25"
-																			aria-valuemin="0" aria-valuemax="100"></div>
-																	</div>
-																</div>
-															</div>
-														</div> -->
+													
+													
 												</div>
 
 											</div>
@@ -870,7 +816,7 @@ deg
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${candidateDto.addresses != null}"
+								<tr th:if="${not (candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}"
 									th:each="obj,iterator : ${candidateDto.addresses}">
 									<td class="col-sm-2"><input type="text"
 										class="form-control country" th:value="${obj.country}" /></td>
@@ -881,11 +827,33 @@ deg
 									<td class="col-sm-5"><input type="text"
 										class="form-control addressLine" th:value="${obj.addressLine}" />
 									</td>
-									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+									<td class="col-sm-1">
+										<a th:if="${iterator.index == 0}" class="deleteRow"></a> 
+										
+										<input th:if="${iterator.index > 0}"
 										type="button" class="ibtnDel btn btn-md btn-danger "
 										value="Delete"></td>
 								</tr>
+								
+								
+								<tr th:if="${(candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}">
+									<td class="col-sm-2"><input type="text" class="form-control country"  /></td>
+									<td class="col-sm-2">
+										<input type="text" class="form-control state" /></td>
+									<td class="col-sm-2"><input type="text"
+										class="form-control city"  /></td>
+									<td class="col-sm-5"><input type="text"
+										class="form-control addressLine"  />
+									</td>
+									<td class="col-sm-1">
+										<a class="deleteRow"></a> 
+										
+									</td>
+								</tr>
+								
+								
+								
+								
 							</tbody>
 							<tfoot>
 								<tr>
@@ -952,16 +920,16 @@ deg
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${candidateDto.experienceEntries != null}"
+								<tr th:if="${not (candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}"
 									th:each="obj,iterator : ${candidateDto.experienceEntries}">
 									<td class="col-sm-1"><input type="text"
 										class="form-control title" th:value="${obj.title}" /></td>
 									<td class="col-sm-1"><input type="text"
 										class="form-control startDate"
-										th:value="${#dates.year(obj.startDate)}" /></td>
+										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
 									<td class="col-sm-1"><input type="text"
 										class="form-control endDate"
-										th:value="${#dates.year(obj.endDate)}" /></td>
+										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
 									<td class="col-sm-1"><input type="text"
 										class="form-control company" th:value="${obj.company}" /></td>
 									<td class="col-sm-2"><input type="text"
@@ -974,6 +942,27 @@ deg
 										type="button" class="ibtnDel btn btn-md btn-danger "
 										value="Delete"></td>
 								</tr>
+								
+								<tr th:if="${(candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}">
+									<td class="col-sm-1"><input type="text"
+										class="form-control title" /></td>
+									<td class="col-sm-1"><input type="text"
+										class="form-control startDate"
+										 /></td>
+									<td class="col-sm-1"><input type="text"
+										class="form-control endDate"
+										 /></td>
+									<td class="col-sm-1"><input type="text"
+										class="form-control company"  /></td>
+									<td class="col-sm-2"><input type="text"
+										class="form-control industry"  /></td>
+									<td class="col-sm-5"><input type="text"
+										class="form-control summary" /></td>
+
+									<td class="col-sm-1"><a 
+										class="deleteRow"></a> </td>
+								</tr>
+								
 							</tbody>
 							<tfoot>
 								<tr>
@@ -1037,7 +1026,7 @@ deg
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${candidateDto.educationEntries != null}"
+								<tr th:if="${not (candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
 									th:each="obj,iterator : ${candidateDto.educationEntries}">
 									<td class="col-sm-2"><input type="text"
 										class="form-control degree" th:value="${obj.degree}" /></td>
@@ -1049,15 +1038,35 @@ deg
 
 									<td class="col-sm-2"><input type="text"
 										class="form-control startDate"
-										th:value="${#dates.year(obj.startDate)}" /></td>
+										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
 									<td class="col-sm-2"><input type="text"
 										class="form-control endDate"
-										th:value="${#dates.year(obj.endDate)}" /></td>
+										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
 
 									<td class="col-sm-2"><a th:if="${iterator.index == 0}"
 										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
 										type="button" class="ibtnDel btn btn-md btn-danger "
 										value="Delete"></td>
+								</tr>
+								<tr th:if="${(candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
+									>
+									<td class="col-sm-2"><input type="text"
+										class="form-control degree"  /></td>
+									<td class="col-sm-2"><input type="text"
+										class="form-control school" /></td>
+									<td class="col-sm-2"><input type="text"
+										class="form-control fieldOfStudy"
+										 /></td>
+
+									<td class="col-sm-2"><input type="text"
+										class="form-control startDate"
+										 /></td>
+									<td class="col-sm-2"><input type="text"
+										class="form-control endDate"
+										 /></td>
+
+									<td class="col-sm-2"><a 
+										class="deleteRow"></a></td>
 								</tr>
 							</tbody>
 							<tfoot>
@@ -1082,6 +1091,90 @@ deg
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		<div class="modal fade" id="skillModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Skill
+						</h4>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table id="skillTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Skill Name</td>
+									<td>Proficient Level</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not (candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}"
+									th:each="obj,iterator : ${candidateDto.skils}">
+									<td class="col-sm-8"><input type="text"
+										class="form-control name" th:value="${obj.name}" /></td>
+									<td class="col-sm-3"><input type="text"
+										class="form-control proficientLevel" th:value="${obj.proficientLevel}" /></td>
+									
+
+									
+									
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}" class="deleteRow"></a> 
+									
+										<input th:if="${iterator.index > 0}"
+										type="button" class="ibtnSkillDel btn btn-md btn-danger "
+										value="Delete">
+										
+									</td>
+								</tr>
+								<tr th:if="${(candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}">
+									<td class="col-sm-8"><input type="text"
+										class="form-control name"  /></td>
+									<td class="col-sm-3"><input type="text"
+										class="form-control proficientLevel" /></td>
+									
+
+									<td class="col-sm-1"><a 
+										class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowSkill" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="skillBtn">Save
+							changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
 
 		<div id="overlay" style="display: none;">
 			<div class="spinner"></div>

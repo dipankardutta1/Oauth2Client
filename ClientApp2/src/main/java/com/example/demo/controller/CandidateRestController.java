@@ -20,6 +20,8 @@ import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.SkillDto;
+import com.example.demo.dto.Skills;
 import com.example.demo.service.CandidateService;
 
 @RestController
@@ -146,6 +148,30 @@ public class CandidateRestController {
 
 		ResponseEntity<ResponseDto> responseDto=candidateService.updateEducations(EducationEntryDtos);
 		responseDto.getBody().setOutput(EducationEntryDtos);
+
+		return responseDto;
+	}
+	
+	
+	@PostMapping("/api/candidate/skill/update")
+	public ResponseEntity<?> saveCandidateSkills(Principal principal, @Valid @RequestBody List<SkillDto> skillDtos, Errors errors) {
+		if (errors.hasErrors()) {
+			ResponseDto responseDto = new ResponseDto();
+
+			responseDto.setMsg(errors.getAllErrors()
+					.stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
+
+			return ResponseEntity.badRequest().body(responseDto);
+
+		}
+
+		skillDtos.forEach((skillDto)->{
+			skillDto.setCandidateId(principal.getName());
+		});
+
+		ResponseEntity<ResponseDto> responseDto=candidateService.updateSkills(skillDtos);
+		responseDto.getBody().setOutput(skillDtos);
 
 		return responseDto;
 	}

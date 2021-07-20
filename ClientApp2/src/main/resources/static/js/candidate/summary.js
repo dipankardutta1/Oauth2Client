@@ -94,11 +94,11 @@ $(document).ready(function () {
         var newRow = $("<tr>");
         var cols = "";
         
-        cols += '<td class="col-sm-2"><input type="text" class="form-control title" name="title' + counterWorkExp + '"/></td>';
-        cols += '<td class="col-sm-2"><input type="text" class="form-control startDate" name="startDate' + counterWorkExp + '"/></td>';
-        cols += '<td class="col-sm-2"><input type="text" class="form-control endDate" name="endDate' + counterWorkExp + '"/></td>';
-        cols += '<td class="col-sm-2"><input type="text" class="form-control company" name="company' + counterWorkExp + '"/></td>';
-        cols += '<td class="col-sm-5"><input type="text" class="form-control industry" name="industry' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-1"><input type="text" class="form-control title" name="title' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-1"><input type="text" class="form-control startDate" name="startDate' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-1"><input type="text" class="form-control endDate" name="endDate' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-1"><input type="text" class="form-control company" name="company' + counterWorkExp + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control industry" name="industry' + counterWorkExp + '"/></td>';
         cols += '<td class="col-sm-5"><input type="text" class="form-control summary" name="summary' + counterWorkExp + '"/></td>';
         
         cols += '<td class="col-sm-1"><input type="button" class="ibtnWorkExpDel btn btn-md btn-danger "  value="Delete"></td>';
@@ -121,8 +121,8 @@ $(document).ready(function () {
            var row = $(this);
            var workExpObj = {};
            workExpObj.title = row.find(".title").eq(0).val();  
-           workExpObj.startDate = new Date(row.find(".startDate").eq(0).val());
-           workExpObj.endDate = new Date(row.find(".endDate").eq(0).val());  
+           workExpObj.startDate = row.find(".startDate").eq(0).val();
+           workExpObj.endDate = row.find(".endDate").eq(0).val();  
            workExpObj.company = row.find(".company").eq(0).val();
            workExpObj.industry = row.find(".industry").eq(0).val();
            workExpObj.summary = row.find(".summary").eq(0).val();
@@ -183,9 +183,9 @@ $(document).ready(function () {
         cols += '<td class="col-sm-2"><input type="text" class="form-control school" name="school' + counterEducation + '"/></td>';
         cols += '<td class="col-sm-2"><input type="text" class="form-control fieldOfStudy" name="fieldOfStudy' + counterEducation + '"/></td>';
         cols += '<td class="col-sm-2"><input type="text" class="form-control startDate" name="startDate' + counterEducation + '"/></td>';
-        cols += '<td class="col-sm-5"><input type="text" class="form-control endDate" name="endDate' + counterEducation + '"/></td>';
+        cols += '<td class="col-sm-2"><input type="text" class="form-control endDate" name="endDate' + counterEducation + '"/></td>';
         
-        cols += '<td class="col-sm-1"><input type="button" class="ibtnEducationDel btn btn-md btn-danger "  value="Delete"></td>';
+        cols += '<td class="col-sm-2"><input type="button" class="ibtnEducationDel btn btn-md btn-danger "  value="Delete"></td>';
         newRow.append(cols);
         $("#educationModel table.order-list").append(newRow);
         counter++;
@@ -207,8 +207,8 @@ $(document).ready(function () {
            educationObj.degree = row.find(".degree").eq(0).val();  
            educationObj.school = row.find(".school").eq(0).val();
            educationObj.fieldOfStudy = row.find(".fieldOfStudy").eq(0).val();
-           educationObj.startDate = new Date(row.find(".startDate").eq(0).val());
-           educationObj.endDate = new Date(row.find(".endDate").eq(0).val());  
+           educationObj.startDate = row.find(".startDate").eq(0).val();
+           educationObj.endDate = row.find(".endDate").eq(0).val();  
          
           
            educationList.push(educationObj);
@@ -230,10 +230,10 @@ $(document).ready(function () {
                	
                	 $.each(data.output, function(key,value) {
                		 $( "#educationFragment" ).append(
-                        		'<div><div class="educationModel"><div><h4><span style="font-size: 12px">'+value.degree+'</span></h4></div>'+
-                        		'<div><span style="font-size: 12px">'+value.school+'</span></div>'+'<div><span style="font-size: 12px">'+value.fieldOfStudy+'</span></div>'+
-        							'<span style="font-size: 12px">'+value.startDate+'</span>,<span style="font-size: 12px">'+value.endDate+'</span>'+
-        							'</div></div>'
+                        		'<div><ul><li class="col-md-6">'+
+               				 	'<span>'+ value.degree +'</span> <br>' + 
+               				 	'<span>'+ value.fieldOfStudy +'</span>-<span>'+ value.school +'</span> <br>'+
+               				 	'<span>'+value.startDate+'</span> -<span>'+value.endDate+'</span> <br></li></ul></div>'
                         		 )
                   	}); 
                }
@@ -256,7 +256,89 @@ $(document).ready(function () {
 //-------------------------------------------------------------Education ends here------------------------------------------
     
     
+    //---------------------------------------------------Skill -------------------------------------------------------
+   
+
+    $("#addrowSkill").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-8"><input type="text" class="form-control name" /></td>';
+        cols += '<td class="col-sm-3"><input type="text" class="form-control proficientLevel" /></td>';
+       
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnSkillDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#skillModel table.order-list").append(newRow);
+      
+    });
     
+    $("#skillModel table.order-list").on("click", ".ibtnSkillDel", function (event) {
+        $(this).closest("tr").remove();       
+       
+    });
+    
+    $("#skillBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var skillList = new Array();
+       $("#skillModel tbody tr").each(function () {
+           var row = $(this);
+           var skillObj = {};
+           skillObj.name = row.find(".name").eq(0).val();  
+           skillObj.proficientLevel = row.find(".proficientLevel").eq(0).val();
+             
+         
+          
+           skillList.push(skillObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/skill/update",
+           data: JSON.stringify(skillList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+              // $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#skillFragment').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 $( "#skillFragment" ).append(
+               				'<div class="col-md-6">'+
+							'<div class="row prog-row">' +
+							'<div class="col-sm-6"><span>'+value.name+'</span></div>' +
+							'<div class="col-sm-6">' +
+							'<div class="progress">' +
+							'<div class="progress-bar" role="progressbar" style="width: '+value.proficientLevel+'%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>' +
+							'</div></div></div></div>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);
+
+                 console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+                 
+                
+                 $('#overlay').fadeOut();
+                // $('#workExp').modal('hide');
+             }
+       });
+   });
+//-------------------------------------------------------------Skill ends here------------------------------------------
+    
+       
     
     
     

@@ -3,6 +3,7 @@ package com.example.demo.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +23,11 @@ public class EducationEntryDto implements Serializable {
 	private String degree;
 	private String school;
 	private String fieldOfStudy;
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	private Date startDate;
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	private Date endDate;
 	 
 	public String getCandidateId() {
