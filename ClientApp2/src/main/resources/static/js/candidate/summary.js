@@ -75,12 +75,17 @@ $(document).ready(function () {
                       + e.responseText + "&lt;/pre&gt;";
                   $('#feedback').html(json);*/
 
-                  console.log("ERROR : ", e.responseText);
+                  //console.log("ERROR : ", e.responseText);
                  // $("#btn-search").prop("disabled", false);
-                  
+                 window.location.href="/candidate/refresh";
+                 // $('#address').modal('hide');
+                  //$('#refreshModel').modal('show');
                  
                   $('#overlay').fadeOut();
-                 // $('#address').modal('hide');
+                 // 
+                  
+                  
+                  
               }
         });
     });
@@ -156,12 +161,13 @@ $(document).ready(function () {
            },
            error: function (e) {
 
-                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                      + e.responseText + "&lt;/pre&gt;";
-                 $('#feedback').html(json);
+                 $('#feedback').html(json);*/
 
-                 console.log("ERROR : ", e.responseText);
+                // console.log("ERROR : ", e.responseText);
                 // $("#btn-search").prop("disabled", false);
+        	   window.location.href="/candidate/refresh";
                  
                 
                  $('#overlay').fadeOut();
@@ -240,14 +246,14 @@ $(document).ready(function () {
            },
            error: function (e) {
 
-                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                      + e.responseText + "&lt;/pre&gt;";
-                 $('#feedback').html(json);
+                 $('#feedback').html(json);*/
 
-                 console.log("ERROR : ", e.responseText);
+                // console.log("ERROR : ", e.responseText);
                 // $("#btn-search").prop("disabled", false);
                  
-                
+        	   window.location.href="/candidate/refresh";
                  $('#overlay').fadeOut();
                 // $('#workExp').modal('hide');
              }
@@ -323,13 +329,13 @@ $(document).ready(function () {
            },
            error: function (e) {
 
-                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                      + e.responseText + "&lt;/pre&gt;";
-                 $('#feedback').html(json);
+                 $('#feedback').html(json);*/
 
-                 console.log("ERROR : ", e.responseText);
+                 //console.log("ERROR : ", e.responseText);
                 // $("#btn-search").prop("disabled", false);
-                 
+        	   window.location.href="/candidate/refresh";
                 
                  $('#overlay').fadeOut();
                 // $('#workExp').modal('hide');
@@ -401,13 +407,13 @@ $(document).ready(function () {
            },
            error: function (e) {
 
-                 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                      + e.responseText + "&lt;/pre&gt;";
-                 $('#feedback').html(json);
+                 $('#feedback').html(json);*/
 
-                 console.log("ERROR : ", e.responseText);
+                 //console.log("ERROR : ", e.responseText);
                 // $("#btn-search").prop("disabled", false);
-                 
+        	   window.location.href="/candidate/refresh";
                 
                  $('#overlay').fadeOut();
                 // $('#workExp').modal('hide');
@@ -417,11 +423,205 @@ $(document).ready(function () {
 //-------------------------------------------------------------contact ends here------------------------------------------     
     
     
+ //---------------------------------------------------Social Profile -------------------------------------------------------
+    
+
+    $("#addrowSocial").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-3"><select class="form-control type"><option value="facebook">Facebook</option><option value="twitter">Twitter</option><option value="linkedin">Linked-in</option><option value="github">Github</option><option value="other">Other</option></select></td>';
+        cols += '<td class="col-sm-8"><input type="text" class="form-control url" /></td>';
+       
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnSocialDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#socialModel table.order-list").append(newRow);
+      
+    });
+    
+    $("#socialModel table.order-list").on("click", ".ibtnSocialDel", function (event) {
+        $(this).closest("tr").remove();       
+       
+    });
+    
+    $("#socialBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var socialList = new Array();
+       $("#socialModel tbody tr").each(function () {
+           var row = $(this);
+           var socialObj = {};
+           socialObj.type = row.find(".type").eq(0).val();  
+           socialObj.url = row.find(".url").eq(0).val();
+             
+         
+          
+           socialList.push(socialObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/social/update",
+           data: JSON.stringify(socialList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+              // $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#socialFragment').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 
+               		 var socialTag ="";
+               		 
+               		 if(value.type =='facebook'){
+               			socialTag = '<i class="fab fa-facebook-f"></i>'
+               		 }else if(value.type=='twitter'){
+               			socialTag = '<i class="fab fa-twitter"></i>'
+               		 }else if(value.type=='linkedin'){
+               			socialTag = '<i class="fab fa-linkedin-in"></i>'
+               		 }else if(value.type=='github'){
+               			socialTag = '<i class="fab fa-github"></i>'
+               		 }else{
+               			socialTag = '<i class="fas fa-exclamation"></i>'
+               		 }
+               		 
+               		 $( "#socialFragment" ).append(
+               				'<li>' + 
+							
+               				socialTag+
+							
+							'<span style="margin-left: 10px">'+ value.url +'</span></li>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);*/
+
+                 //console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+        	   window.location.href="/candidate/refresh";
+                
+                 $('#overlay').fadeOut();
+                // $('#workExp').modal('hide');
+             }
+       });
+   });
+//-------------------------------------------------------------social ends here------------------------------------------      
     
     
     
+//---------------------------------------------------hobby -------------------------------------------------------
     
+
+    $("#addrowHobby").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+        
+        cols += '<td class="col-sm-3"><select class="form-control type"><option value="writing" >Writing</option><option value="cycling" >Cycling</option><option value="football" >Football</option><option value="movies" >Movies</option><option value="travel" >Travel</option><option value="games" >Games</option><option value="other" >Other</option></select></td>';
+        cols += '<td class="col-sm-8"><input type="text" class="form-control hobby" /></td>';
+       
+        
+        cols += '<td class="col-sm-1"><input type="button" class="ibtnHobbyDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("#hobbyModel table.order-list").append(newRow);
+      
+    });
     
+    $("#hobbyModel table.order-list").on("click", ".ibtnHobbyDel", function (event) {
+        $(this).closest("tr").remove();       
+       
+    });
+    
+    $("#hobbyBtn").on("click", function () {
+    	
+   	 $('#overlay').fadeIn();
+   	
+   	var hobbyList = new Array();
+       $("#hobbyModel tbody tr").each(function () {
+           var row = $(this);
+           var hobbyObj = {};
+           hobbyObj.type = row.find(".type").eq(0).val();  
+           hobbyObj.hobby = row.find(".hobby").eq(0).val();
+             
+         
+          
+           hobbyList.push(hobbyObj);
+       });
+
+       $.ajax({
+           type: "POST",
+           url: "/api/candidate/hobby/update",
+           data: JSON.stringify(hobbyList),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (data) {
+               
+               $('#overlay').fadeOut();
+              // $('#workExp').modal('hide');
+               if(data.httpStatus == "OK"){
+               	
+               	jQuery('#hobbyFragment').html('');
+               	
+               	 $.each(data.output, function(key,value) {
+               		 
+               		 var hobbyTag ="";
+               		 
+               		 if(value.type =='writing'){
+               			hobbyTag = '<i class="fas fa-pencil-alt"></i>'
+               		 }else if(value.type=='cycling'){
+               			hobbyTag = '<i class="fas fa-bicycle"></i>'
+               		 }else if(value.type=='football'){
+               			hobbyTag = '<i class="fas fa-futbol"></i>'
+               		 }else if(value.type=='movies'){
+               			hobbyTag = '<i class="fas fa-film"></i>'
+               		 }else if(value.type=='travel'){
+               			hobbyTag = '<i class="fas fa-plane-departure"></i>'
+               		 }else if(value.type=='games'){
+               			hobbyTag = '<i class="fas fa-gamepad"></i>'
+               		 }else{
+               			hobbyTag = '<i class="fas fa-exclamation"></i>'
+               		 }
+               		 
+               		 
+           
+               		 $( "#hobbyFragment" ).append(
+               				'<li>' + 
+							
+               				hobbyTag+
+							
+							'<br> <span>'+ value.hobby +'</span>'
+                        		 )
+                  	}); 
+               }
+           },
+           error: function (e) {
+
+                /* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                     + e.responseText + "&lt;/pre&gt;";
+                 $('#feedback').html(json);*/
+
+                 //console.log("ERROR : ", e.responseText);
+                // $("#btn-search").prop("disabled", false);
+        	   window.location.href="/candidate/refresh";
+                
+                 $('#overlay').fadeOut();
+                // $('#workExp').modal('hide');
+             }
+       });
+   });
+//-------------------------------------------------------------hobby ends here------------------------------------------      
+    
+      
     
     
     
@@ -524,9 +724,9 @@ function summary_ajax_submit(json) {
                 + e.responseText + "&lt;/pre&gt;";
             $('#feedback').html(json);*/
 
-            console.log("ERROR : ", e.responseText);
+           // console.log("ERROR : ", e.responseText);
            // $("#btn-search").prop("disabled", false);
-            
+        	 window.location.href="/candidate/refresh";
            
             $('#overlay').fadeOut();
            // $('#summary').modal('toggle');
@@ -585,9 +785,9 @@ function profile_ajax_submit(json) {
                 + e.responseText + "&lt;/pre&gt;";
             $('#feedback').html(json);*/
 
-            console.log("ERROR : ", e.responseText);
+            //console.log("ERROR : ", e.responseText);
            // $("#btn-search").prop("disabled", false);
-            
+        	 window.location.href="/candidate/refresh";
            
             $('#overlay').fadeOut();
            // $('#profile').modal('hide');

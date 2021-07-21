@@ -314,39 +314,21 @@ deg
 												</div> -->
 												<h4 class="ltitle">Social Profile
 												<a data-toggle="modal"
-														data-target="#summary" href="#" style="float: right;color: white;"><i
+														data-target="#socialModel" href="#" style="float: right;color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 												
 												</h4>
-												<ul class="row social-link no-margin">
-													<li><i class="fab fa-facebook-f"></i>
-														<div th:if="${candidateDto.socialProfiles != null}">
-															<div th:each="obj : ${candidateDto.socialProfiles}">
-
-																<div th:if="${obj.type=='facebook'}">
-																	<span th:text="${obj.url}"></span>
-																</div>
-															</div>
-														</div></li>
-													<li><i class="fab fa-twitter"></i>
-														<div th:if="${candidateDto.socialProfiles != null}">
-															<div th:each="obj : ${candidateDto.socialProfiles}">
-
-																<div th:if="${obj.type=='twitter'}">
-																	<span th:text="${obj.url}"></span>
-																</div>
-															</div>
-														</div></li>
-													<li><i class="fab fa-linkedin-in"></i>
-														<div th:if="${candidateDto.socialProfiles != null}">
-															<div th:each="obj : ${candidateDto.socialProfiles}">
-
-																<div th:if="${obj.type=='linkedIn'}">
-																	<span th:text="${obj.url}"></span>
-																</div>
-															</div>
-														</div></li>
-													<li><i class="fab fa-github"></i></li>
+												<ul class="row social-link no-margin" id="socialFragment">
+													<li th:if="${candidateDto.socialProfiles != null}" th:each="obj : ${candidateDto.socialProfiles}">
+														
+														<i th:if="${obj.type=='facebook'}" class="fab fa-facebook-f"></i>
+														<i th:if="${obj.type=='twitter'}" class="fab fa-twitter"></i>
+														<i th:if="${obj.type=='linkedin'}" class="fab fa-linkedin-in"></i>
+														<i th:if="${obj.type=='github'}" class="fab fa-github"></i>
+														<i th:if="${obj.type=='other'}" class="fas fa-exclamation"></i>
+														<span style="margin-left: 10px" th:text="${obj.url}"></span>
+															
+													</li>
 												</ul>
 												<!-- <h4 class="ltitle">Referencess
 												<a data-toggle="modal"
@@ -366,17 +348,22 @@ deg
 												</div> -->
 												<h4 class="ltitle">Hobbies
 												<a data-toggle="modal"
-														data-target="#summary" href="#" style="float: right;color: white;"><i
+														data-target="#hobbyModel" href="#" style="float: right;color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 												</h4>
-												<ul class="hoby row no-margin">
-													<li><i class="fas fa-pencil-alt"></i> <br>
-														Writing</li>
-													<li><i class="fas fa-bicycle"></i> <br> Cycling</li>
-													<li><i class="fas fa-futbol"></i> <br> Football</li>
-													<li><i class="fas fa-film"></i><br> Movies</li>
-													<li><i class="fas fa-plane-departure"></i> <br>Travel</li>
-													<li><i class="fas fa-gamepad"></i> <br> Games</li>
+												<ul class="hoby row no-margin" id="hobbyFragment">
+													<li  th:if="${candidateDto.hobbies != null}" th:each="obj : ${candidateDto.hobbies}">
+														<i th:if="${obj.type=='writing'}" class="fas fa-pencil-alt"></i>
+														<i th:if="${obj.type=='cycling'}" class="fas fa-bicycle"></i> 
+														<i th:if="${obj.type=='football'}" class="fas fa-futbol"></i> 
+														<i th:if="${obj.type=='movies'}" class="fas fa-film"></i> 
+														<i th:if="${obj.type=='travel'}" class="fas fa-plane-departure"></i> 
+														<i th:if="${obj.type=='games'}" class="fas fa-gamepad"></i> 
+														<i th:if="${obj.type=='other'}" class="fas fa-exclamation"></i> 
+														<br> <span th:text="${obj.hobby}"></span>
+														
+														
+													</li>
 												</ul>
 											</div>
 										</div>
@@ -1268,6 +1255,204 @@ deg
 		</div>
 		
 		
+		<div class="modal fade" id="socialModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Social Profile
+						</h4>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table id="socialTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Type</td>
+									<td>Url</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not (candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}"
+									th:each="obj,iterator : ${candidateDto.socialProfiles}">
+									<td class="col-sm-3">
+										
+									
+										<select class="form-control type">
+											<option value="facebook" th:selected="${obj.type == 'facebook'}">Facebook</option>
+											<option value="twitter" th:selected="${obj.type == 'twitter'}">Twitter</option>
+											<option value="linkedin" th:selected="${obj.type == 'linkedin'}">Linked-in</option>
+											<option value="github" th:selected="${obj.type == 'github'}">Github</option>
+											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
+										</select>
+											
+									</td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control url" th:value="${obj.url}" /></td>
+									
+
+									
+									
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}" class="deleteRow"></a> 
+									
+										<input th:if="${iterator.index > 0}"
+										type="button" class="ibtnSocialDel btn btn-md btn-danger "
+										value="Delete">
+										
+									</td>
+								</tr>
+								<tr th:if="${(candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}">
+									<td class="col-sm-3">
+										
+										<select class="form-control type">
+											<option value="facebook">Facebook</option>
+											<option value="twitter">Twitter</option>
+											<option value="linkedin">Linked-in</option>
+											<option value="github">Github</option>
+											<option value="other">Other</option>
+										</select>
+									</td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control url" /></td>
+									
+
+									<td class="col-sm-1"><a 
+										class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowSocial" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="socialBtn">Save
+							changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="hobbyModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Hobbies
+						</h4>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table id="hobbyTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Type</td>
+									<td>Hobby</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
+									th:each="obj,iterator : ${candidateDto.hobbies}">
+									<td class="col-sm-3">
+									
+										<select class="form-control type">
+											<option value="writing" th:selected="${obj.type == 'writing'}">Writing</option>
+											<option value="cycling" th:selected="${obj.type == 'cycling'}">Cycling</option>
+											<option value="football" th:selected="${obj.type == 'football'}">Football</option>
+											<option value="movies" th:selected="${obj.type == 'movies'}">Movies</option>
+											<option value="travel" th:selected="${obj.type == 'travel'}">Travel</option>
+											<option value="games" th:selected="${obj.type == 'games'}">Games</option>
+											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
+										</select>
+											
+									</td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control hobby" th:value="${obj.hobby}" /></td>
+									
+
+									
+									
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}" class="deleteRow"></a> 
+									
+										<input th:if="${iterator.index > 0}"
+										type="button" class="ibtnHobbyDel btn btn-md btn-danger "
+										value="Delete">
+										
+									</td>
+								</tr>
+								<tr th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}">
+									<td class="col-sm-3">
+										
+										<select class="form-control type">
+											<option value="writing" >Writing</option>
+											<option value="cycling" >Cycling</option>
+											<option value="football" >Football</option>
+											<option value="movies" >Movies</option>
+											<option value="travel" >Travel</option>
+											<option value="games" >Games</option>
+											<option value="other" >Other</option>
+										</select>
+									</td>
+									<td class="col-sm-8">
+										<input type="text"
+										class="form-control hobby" /></td>
+									
+
+									<td class="col-sm-1"><a 
+										class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowHobby" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="hobbyBtn">Save
+							changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div id="overlay" style="display: none;">
 			<div class="spinner"></div>

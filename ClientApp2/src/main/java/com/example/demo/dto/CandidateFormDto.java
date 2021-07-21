@@ -68,6 +68,17 @@ public class CandidateFormDto implements Serializable{
 	
 	private List<SocialProfiles>socialProfiles;
 	
+	private List<Hobby> hobbies;
+	
+	
+	public List<Hobby> getHobbies() {
+		return hobbies;
+	}
+
+	public void setHobbies(List<Hobby> hobbies) {
+		this.hobbies = hobbies;
+	}
+
 	public String getPlaceOfBirth() {
 		return placeOfBirth;
 	}

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.TokenExpireException;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.FooModel;
 import com.example.demo.dto.ResponseDto;
@@ -49,6 +51,13 @@ public class AppController {
 	    //Register it as custom editor for the Date type
 	    binder.registerCustomEditor(Date.class, editor);
 	}
+	
+	 @RequestMapping("/refresh")
+    public String refresh(Model model) {
+        
+        return "refresh";
+	
+    }
 
     @GetMapping("/foos")
     public String getFoos(Model model) {
@@ -71,10 +80,22 @@ public class AppController {
     	OAuth2AuthenticationToken token = (OAuth2AuthenticationToken)principal;
         token.getPrincipal().getAttributes();
     	
+        
+        OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	model.addAttribute("test",principal.getName());
+        	
+            return "dashboard";
+        }else {
+        	throw new TokenExpireException();
+        }
     	
-    	model.addAttribute("test",principal.getName());
     	
-        return "dashboard";
     	//return "securedPage";
     }
     @RequestMapping("/")

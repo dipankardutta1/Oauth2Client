@@ -19,10 +19,12 @@ import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
+import com.example.demo.dto.HobbyDto;
 import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
+import com.example.demo.dto.SocialProfileDto;
 import com.example.demo.dto.SummaryDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -294,6 +296,24 @@ public class CandidateService {
 		 HttpEntity<List<MobileDto>> httpEntity = new HttpEntity<List<MobileDto>>(mobileDtos);
 			
 		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/mobile/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateSocialProfiles(@Valid List<SocialProfileDto> socialProfileDtos) {
+		HttpEntity<List<SocialProfileDto>> httpEntity = new HttpEntity<List<SocialProfileDto>>(socialProfileDtos);
+		
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/socialProfile/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateHobbies(@Valid List<HobbyDto> hobbyDtos) {
+		HttpEntity<List<HobbyDto>> httpEntity = new HttpEntity<List<HobbyDto>>(hobbyDtos);
+		
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/hobby/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
 		
 		 return responseDto;
 	}

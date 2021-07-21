@@ -51,12 +51,17 @@ $(document).ready(function(){
                 
                 
                 <div class="user-dashboard">
-                    <h1>Welcome, <span th:text="${#authentication.name}"></span></h1>
+                    <h1>Session is Expired, Do you want to continue ?<!-- <span th:text="${#authentication.name}"></span> --></h1>
                     
                    
                     
                     <div class="row">
-
+						<div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                            <a href="/oauth2/authorization/login-client" class="btn btn-danger wrn-btn">Yes, Continue</a>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                            <a href="/logout" class="btn btn-danger wrn-btn">No, Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>

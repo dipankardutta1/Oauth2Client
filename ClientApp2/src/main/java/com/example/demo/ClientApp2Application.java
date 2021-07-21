@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -65,13 +66,17 @@ public class ClientApp2Application {
 	    	
 	    	if (httpResponse.getStatusCode() .series() == HttpStatus.Series.SERVER_ERROR) {
 	    	            // handle SERVER_ERROR
-	    	        } else if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
-	    	            // handle CLIENT_ERROR
-						/*
-						 * if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) { throw new
-						 * NotFoundException(); }
-						 */
-	    	        }
+	    				
+	    		
+	        } else if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
+	            // handle CLIENT_ERROR
+				
+				  if (httpResponse.getStatusCode() == HttpStatus.UNAUTHORIZED) { 
+					  throw new TokenExpireException();
+					  
+				}
+				 
+	        }
 	    	
 	    	
 	    }

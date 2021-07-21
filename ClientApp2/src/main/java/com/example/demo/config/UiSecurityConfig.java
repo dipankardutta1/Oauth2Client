@@ -48,7 +48,8 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 				 * .and()
 				 */
        // .oauth2ResourceServer()
-        .oauth2Login().and().logout()
+        .oauth2Login().defaultSuccessUrl("/candidate/securedPage").and().logout()
+        
         //.logoutSuccessHandler(oidcLogoutSuccessHandler())
         .logoutSuccessUrl(authServerDomain+"/revoke-token")
         .invalidateHttpSession(true)
@@ -56,7 +57,10 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
         .deleteCookies("JSESSIONID")
         .and()
         .exceptionHandling().accessDeniedPage("/access-denied");
+        
     }
+    
+    
     
     @Bean
     public GrantedAuthoritiesMapper userAuthoritiesMapper() {
