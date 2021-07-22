@@ -14,27 +14,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.TokenExpireException;
-import com.example.demo.TokenExpireJsonException;
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
 import com.example.demo.dto.CandidateFormDto;
+import com.example.demo.dto.DocumentsDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.HobbyDto;
-import com.example.demo.dto.Mobile;
 import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
-import com.example.demo.dto.Skills;
 import com.example.demo.dto.SocialProfileDto;
-import com.example.demo.dto.SocialProfiles;
 import com.example.demo.service.CandidateService;
 
 @RestController
@@ -44,7 +41,61 @@ public class CandidateRestController {
 	private CandidateService candidateService;
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
+	
+	
+	/*
+	 * @GetMapping("/api/candidate/avatar/download") public ResponseEntity<Resource>
+	 * downloadFile(@RequestParam String username, HttpServletRequest request) {
+	 * 
+	 * 
+	 * CandidateFormDto candidateFormDto =
+	 * candidateService.findCandidateByEmail(username); // Load file as Resource
+	 * Resource resource = fileStorageService.loadFileAsResource(fileName);
+	 * 
+	 * // Try to determine file's content type String contentType = null; try {
+	 * contentType =
+	 * request.getServletContext().getMimeType(resource.getFile().getAbsolutePath())
+	 * ; } catch (IOException ex) { logger.info("Could not determine file type."); }
+	 * 
+	 * // Fallback to the default content type if type could not be determined
+	 * if(contentType == null) { contentType = "application/octet-stream"; }
+	 * 
+	 * return ResponseEntity.ok()
+	 * .contentType(MediaType.parseMediaType(contentType))
+	 * .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+	 * resource.getFilename() + "\"") .body(resource); }
+	 */
 
+	@PostMapping("/api/candidate/avatar/update")
+	public ResponseEntity<?> saveCandidateSummary(Principal principal,@RequestParam("file") MultipartFile file) {
+		
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	DocumentsDto documentsDto = new DocumentsDto();
+        	documentsDto.setCandidateId(principal.getName());
+        	documentsDto.setImage(file);
+        	documentsDto.setType("avatar");
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.updateAvatar(documentsDto);
+    		//responseDto.getBody().setOutput(candidateDto);
+
+    		return responseDto;
+        }else {
+        	//throw new TokenExpireJsonException();
+        	ResponseEntity<ResponseDto> responseDto=new ResponseEntity<ResponseDto>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
 
 	@PostMapping("/api/candidate/summary/update")
 	public ResponseEntity<?> saveCandidateSummary(Principal principal, @Valid @RequestBody CandidateDto candidateDto, Errors errors) {

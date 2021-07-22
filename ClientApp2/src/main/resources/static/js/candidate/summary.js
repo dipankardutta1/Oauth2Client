@@ -620,9 +620,25 @@ $(document).ready(function () {
        });
    });
 //-------------------------------------------------------------hobby ends here------------------------------------------      
-    
-      
-    
+    /*
+    $("#avatarBtn").on("click", function () {
+    	
+      	 $('#overlay').fadeIn();
+      	
+      	
+         
+      	let formData = new FormData(); 
+        formData.append("file", avatarUpload.files[0]);
+        let response = await fetch('/api/candidate/avatar/update', {
+          method: "POST", 
+          body: formData
+        }); 
+
+        if (response.status == 200) {
+          alert("File successfully uploaded.");
+        }
+      });   
+    */
     
     
     
@@ -809,3 +825,33 @@ function calculateGrandTotal() {
     });
     $("#grandtotal").text(grandTotal.toFixed(2));
 }
+
+
+
+
+
+async function uploadFile() {
+	$('#overlay').fadeIn();
+	
+	  let formData = new FormData(); 
+	  formData.append("file", avatarUpload.files[0]);
+	  let response = await fetch('/api/candidate/avatar/update', {
+	    method: "POST", 
+	    body: formData
+	  }); 
+
+	  if (response.status == 200) {
+		  $('#avatarUpload').val('');  
+		  let json = await response.json();
+		  
+		  if(json.httpStatus == "OK"){
+			  $("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
+		  }
+		 
+		  
+	  }else{
+		  window.location.href="/candidate/refresh";
+	  }
+	  
+	  $('#overlay').fadeOut();
+	}

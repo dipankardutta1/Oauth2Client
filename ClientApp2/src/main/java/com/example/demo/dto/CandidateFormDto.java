@@ -1,11 +1,8 @@
 package com.example.demo.dto;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.List;
-
-import javax.validation.constraints.NotBlank;
 
 
 
@@ -56,7 +53,7 @@ public class CandidateFormDto implements Serializable{
 	private List<WorkAuthorization>workAuthorizations;
 
 	
-	
+	private List<DocumentDisplayDto> documents;
 	
 	private List<JobLocation>JobLocations;
 	
@@ -71,6 +68,16 @@ public class CandidateFormDto implements Serializable{
 	private List<Hobby> hobbies;
 	
 	
+	
+
+	public List<DocumentDisplayDto> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<DocumentDisplayDto> documents) {
+		this.documents = documents;
+	}
+
 	public List<Hobby> getHobbies() {
 		return hobbies;
 	}
