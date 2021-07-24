@@ -44,7 +44,7 @@ public class CandidateController {
 	@InitBinder
 	private void dateBinder(WebDataBinder binder) {
 		//The date format to parse or output your dates
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		//Create a new CustomDateEditor
 		CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
 		//Register it as custom editor for the Date type
@@ -163,7 +163,7 @@ public class CandidateController {
         
         if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
         	CandidateFormDto candidateDto=candidateService.findCandidateByEmail(principal.getName());
-    		System.out.print("data");
+    		
     		model.addAttribute("candidateDto",candidateDto);
     		
     		return "view";
