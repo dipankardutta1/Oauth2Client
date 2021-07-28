@@ -7,9 +7,13 @@
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" >
 <link th:href="@{/css/dashboardui.css}" rel="stylesheet" >
 <link th:href="@{/css/custom.css}" rel="stylesheet" >
+<link th:href="@{/css/bootstrap-tagsinput.css}" rel="stylesheet" >
 
 <script th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-tagsinput.js}"></script>
+<script th:src="@{/js/bootstrap3-typeahead.js}"></script>
+
 
 <!------ Include the above in your HEAD tag ---------->
 
@@ -19,6 +23,79 @@ $(document).ready(function(){
 	   $('[data-toggle="offcanvas"]').click(function(){
 	       $("#navigation").toggleClass("hidden-xs");
 	   });
+	   
+	   
+	  /*  $('input[name="skillls"]').amsifySuggestags({
+       	suggestionsAction : { 		url: 'http://localhost:8000/api/candidate/skill/findAll' 	}
+       	
+       }); */
+       
+       $('input[name="skillls"]').tagsinput({
+    	   typeahead: {
+    	     minLength: 1,
+    	     delay: 400,
+    	     source: $.getJSON('http://localhost:8000/api/candidate/skill/findAll')
+    		  
+
+    	   },
+    	   freeInput: false
+    	 });
+       
+       $('input[name="skillls"]').on('itemAdded', function(event) {
+    	   //here some set timeout to call function
+    	    setTimeout(function(){
+    	      //just check inputbox here
+    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
+    	    }, 1);
+    	});
+       
+       
+       
+       $('input[name="locations"]').tagsinput({
+    	   typeahead: {
+    	     minLength: 1,
+    	     delay: 400,
+    	     source: $.getJSON('http://localhost:8000/api/candidate/country/findAll')
+    		  
+
+    	   },
+    	   freeInput: false
+    	 });
+       
+       $('input[name="locations"]').on('itemAdded', function(event) {
+    	   //here some set timeout to call function
+    	    setTimeout(function(){
+    	      //just check inputbox here
+    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
+    	    }, 1);
+    	});
+       
+       
+       
+       $('input[name="workExp"]').tagsinput({
+    	   typeahead: {
+    	     minLength: 1,
+    	     delay: 400,
+    	     source: $.getJSON('http://localhost:8000/api/candidate/workexp/findAll')
+    		  
+
+    	   },
+    	   freeInput: false
+    	 });
+       
+       $('input[name="workExp"]').on('itemAdded', function(event) {
+    	   //here some set timeout to call function
+    	    setTimeout(function(){
+    	      //just check inputbox here
+    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
+    	    }, 1);
+    	});
+       
+       
+       
+       
+	   
+	   
 	});
 
 
@@ -109,7 +186,9 @@ a {
 
 
 
-
+.bootstrap-tagsinput{
+	width: 100%
+}
 
 
 
@@ -163,14 +242,29 @@ a {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" th:name="skil" class="form-control search-slt" placeholder="Enter Skill">
+                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                            <input type="text" th:name="skillls" class="form-control search-slt" placeholder="Add Skills">
+                           
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <input type="text" th:name="email" class="form-control search-slt" placeholder="Enter Email">
+                        
+                    </div>
+                     <div class="row">
+                     	<br/>
+                     </div>
+                     <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                            <input type="text" th:name="locations" class="form-control search-slt" placeholder="Add Locations">
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                            <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
+                     </div>
+                     <div class="row">
+                     	<br/>
+                     </div>
+                     <div class="row">
+                     	 <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                            <input type="text" th:name="workExp" class="form-control search-slt" placeholder="Add Work Experiance">
+                        </div>
+                       
+                            <!-- <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
                                 <option value="">Select Work Experience</option>
                                 <option value="0">Fresher</option>
                                 <option value="1">1years</option>
@@ -184,8 +278,8 @@ a {
                                 <option value="9">9years</option>
                                 <option value="10">10years</option>
                                 
-                            </select>
-                        </div>
+                            </select> -->
+                       
                        
                     </div>
                      <div class="row">
@@ -229,7 +323,12 @@ a {
 					                        
 					                        
 					                            <div class="search-item" th:each="obj: ${candidateDtos}">
-					                                <div class="media mt-1"><img class="d-flex mr-3 rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Generic placeholder image" height="54">
+					                                <div class="media mt-1">
+					                                <img th:if="${obj.isAvatarUploaded == null or obj.isAvatarUploaded == false}" src="/images/avatar.png" alt="Generic placeholder image" class="d-flex mr-3 rounded-circle" height="54"></img>
+													
+													<img th:if="${obj.isAvatarUploaded == true and objImg.type == 'avatar'}" th:each="objImg: ${obj.documents}" th:src="'data:image/jpg;base64,' + ${objImg.image}" alt="Generic placeholder image" class="d-flex mr-3 rounded-circle" height="54" ></img>
+					                               
+					                                
 					                                    <div class="media-body">
 					                                        <h5 class="media-heading mt-0"><a th:href="@{'/candidateService/profile/search?email=' + ${obj.email}}" class="text-dark"><span th:text="${obj.firstName + ' ' + obj.lastName}"></span></a></h5>
 					                                        <p class="font-13"><b>Email:</b> <span><a href="#" class="text-muted"><span th:text="${obj.email}"></span></a></span></p>
