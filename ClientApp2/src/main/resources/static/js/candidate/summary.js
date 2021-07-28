@@ -1,8 +1,11 @@
 
 $(document).ready(function () {
-
-
-	var counter = 0;
+	var validation = $('#address-form').validate();
+	var rules = {};
+	var messages = {};
+	var rules1 = {};
+	var messages1 = {};
+	var counter = 1;
 
 	$("#addrow").on("click", function () {
 		var newRow = $("<tr>");
@@ -17,6 +20,23 @@ $(document).ready(function () {
 		newRow.append(cols);
 		$("table.order-list").append(newRow);
 		counter++;
+		//$('#address-form').removeData('validator');
+		$("#address-form").find($("input:text")).each(function(){ 
+			var name = $(this).attr('name');
+			rules1[name] = {};
+			messages1[name] = {};
+			if(name.startsWith("add")){
+				rules1[name] = {required: true,maxlength:100}; 
+				messages1[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 100 length"};
+			}else{
+				rules1[name] = {required: true,maxlength:25}; 
+				messages1[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 25 length"};
+		
+			}
+				});
+		validation.resetForm();
+	    validation.settings.rules =rules1;
+	    validation.settings.messages = messages1;
 	});
 
 
@@ -25,78 +45,99 @@ $(document).ready(function () {
 		$(this).closest("tr").remove();       
 		counter -= 1
 	});
+	
+	$("#address-form").find($("input:text")).each(function(){ 
+	var name = $(this).attr('name');
+	rules[name] = {};
+	messages[name] = {};
+	if(name.startsWith("add")){
+		rules[name] = {required: true,maxlength:100}; 
+		messages[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 100 length"};
+	}else{
+		rules[name] = {required: true,maxlength:25}; 
+		messages[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 25 length"};
+
+	}
+	//rules[name] = {required: true,maxlength:25}; 
+	//messages[name]={required:"Please provide valid value",maxlength:"Can not Exceed 25 length"};
+});
+
+	
+	validation.resetForm();
+    validation.settings.rules =rules;
+    validation.settings.messages = messages;
+	
+	
+	$("#address-form").on("submit", function (event) {
+
+		event.preventDefault();
+
+
+		//$('#overlay').fadeIn();
+			if($("#address-form").valid()){
+			var addresses = new Array();
+			$("#addressTable tbody tr").each(function () {
+				var row = $(this);
+				var addressObj = {};
+				addressObj.country = row.find(".country").eq(0).val();
+				addressObj.state = row.find(".state").eq(0).val();
+				addressObj.city = row.find(".city").eq(0).val();
+				addressObj.addressLine = row.find(".addressLine").eq(0).val();
+
+				addresses.push(addressObj);
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "/api/candidate/address/update",
+				data: JSON.stringify(addresses),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+
+					//$('#overlay').fadeOut();
+					// $('#address').modal('hide');
+					if(data.httpStatus == "OK"){
+						$('#overlay').fadeIn();
+						$('#overlay').fadeOut();
+						jQuery('#addressFragment div').html('');
+						$.each(data.output, function(key,value) {
+							$( "#addressFragment" ).append(
+									'<div><div class="address"><div><h4><span style="font-size: 12px">'+value.country+'</span></h4></div>'+
+									'<span style="font-size: 12px">'+value.state+'</span>,<span style="font-size: 12px">'+value.city+'</span>'+
+									'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.addressLine+'</span></li></ul></div></div></div>'
+							)
+						}); 
 
 
 
-	$("#addressBtn").on("click", function () {
+					}
+				},
+				error: function (e) {
 
-		$('#overlay').fadeIn();
+					/*  var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+	                      + e.responseText + "&lt;/pre&gt;";
+	                  $('#feedback').html(json);*/
 
-		var addresses = new Array();
-		$("#addressTable tbody tr").each(function () {
-			var row = $(this);
-			var addressObj = {};
-			addressObj.country = row.find(".country").eq(0).val();
-			addressObj.state = row.find(".state").eq(0).val();
-			addressObj.city = row.find(".city").eq(0).val();
-			addressObj.addressLine = row.find(".addressLine").eq(0).val();
+					//console.log("ERROR : ", e.responseText);
+					// $("#btn-search").prop("disabled", false);
+					window.location.href="/candidate/refresh";
+					// $('#address').modal('hide');
+					//$('#refreshModel').modal('show');
 
-			addresses.push(addressObj);
-		});
-
-		$.ajax({
-			type: "POST",
-			url: "/api/candidate/address/update",
-			data: JSON.stringify(addresses),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (data) {
-
-				$('#overlay').fadeOut();
-				// $('#address').modal('hide');
-				if(data.httpStatus == "OK"){
-
-					jQuery('#addressFragment div').html('');
-					$.each(data.output, function(key,value) {
-						$( "#addressFragment" ).append(
-								'<div><div class="address"><div><h4><span style="font-size: 12px">'+value.country+'</span></h4></div>'+
-								'<span style="font-size: 12px">'+value.state+'</span>,<span style="font-size: 12px">'+value.city+'</span>'+
-								'<div><ul><li><i class="far fa-hand-point-right"></i> <span style="font-size: 12px">'+value.addressLine+'</span></li></ul></div></div></div>'
-						)
-					}); 
-
-
-
+					$('#overlay').fadeOut();
+					// 
 				}
-			},
-			error: function (e) {
-
-				/*  var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                      + e.responseText + "&lt;/pre&gt;";
-                  $('#feedback').html(json);*/
-
-				//console.log("ERROR : ", e.responseText);
-				// $("#btn-search").prop("disabled", false);
-				window.location.href="/candidate/refresh";
-				// $('#address').modal('hide');
-				//$('#refreshModel').modal('show');
-
-				$('#overlay').fadeOut();
-				// 
-
-
-
+				
+			});//end of ajax submit of address
 			}
-		});
-	});
-
-	//-----------------------------------------------workexperience--------------------------------------------------
+	});//end of form submit
+//-----------------------------------------------workexperience--------------------------------------------------
 
 
 	var counterWorkExp = 0;
 
 	$("#addrowWorkExp").on("click", function () {
-		alert("ok");
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -119,9 +160,9 @@ $(document).ready(function () {
 	});
 
 	$("#workExperienceBtn").on("click", function () {
-
+		
 		$('#overlay').fadeIn();
-
+		
 		var workExperienceList = new Array();
 		$("#workExp tbody tr").each(function () {
 			var row = $(this);
@@ -672,14 +713,12 @@ $(document).ready(function () {
 		// var formData = JSON.stringify($("#summary-form").serializeArray());
 
 		if($("#summary-form").valid()){
+
 			var json = $(this).serializeFormJSON();
 			//alert(JSON.stringify(data));
 			summary_ajax_submit(json);
 		}
-
-
 	});
-
 
 
 
@@ -687,11 +726,14 @@ $(document).ready(function () {
 
 		//stop submit the form, we will post it manually.
 		event.preventDefault();
+		if($("#profile-form").valid()){
+			// var formData = JSON.stringify($("#summary-form").serializeArray());
+			var json = $(this).serializeFormJSON();
+			//alert(JSON.stringify(data));
+			profile_ajax_submit(json);
 
-		// var formData = JSON.stringify($("#summary-form").serializeArray());
-		var json = $(this).serializeFormJSON();
-		//alert(JSON.stringify(data));
-		profile_ajax_submit(json);
+		}
+
 	});
 });
 
