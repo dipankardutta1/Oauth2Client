@@ -161,22 +161,27 @@ $(document).ready(function () {
 
 	$("#workExperienceBtn").on("click", function () {
 		
-		$('#overlay').fadeIn();
+		//$('#overlay').fadeIn();
 		
 		var workExperienceList = new Array();
 		$("#workExp tbody tr").each(function () {
 			var row = $(this);
 			var workExpObj = {};
 			workExpObj.title = row.find(".title").eq(0).val();  
+			alert(workExpObj.title);
 			workExpObj.startDate = row.find(".startDate").eq(0).val();
-			workExpObj.endDate = row.find(".endDate").eq(0).val();  
+			workExpObj.endDate = row.find(".endDate").eq(0).val();
 			workExpObj.company = row.find(".company").eq(0).val();
 			workExpObj.industry = row.find(".industry").eq(0).val();
 			workExpObj.summary = row.find(".summary").eq(0).val();
-
+			
+			
 			workExperienceList.push(workExpObj);
+			
 		});
-
+		
+		
+		
 		$.ajax({
 			type: "POST",
 			url: "/api/candidate/workExp/update",
@@ -185,10 +190,11 @@ $(document).ready(function () {
 			dataType: "json",
 			success: function (data) {
 
-				$('#overlay').fadeOut();
+				
 				// $('#workExp').modal('hide');
 				if(data.httpStatus == "OK"){
-
+					$('#overlay').fadeIn();
+					$('#overlay').fadeOut();
 					jQuery('#workExpFragment div').html('');
 
 					$.each(data.output, function(key,value) {
