@@ -1,3 +1,56 @@
+$(document).on('click', '.iDelResume', function(){
+	
+	currentObj = $(this);
+	
+	title = $(this).closest("tr").find(".titleClazz").val();
+	email = $(this).closest("tr").find(".emailClazz").val();
+	
+	$('#overlay').fadeIn();
+
+	$.ajax({
+		type: "post",
+		contentType: 'application/json; charset=utf-8',
+		url:  "/api/candidate/resume/delete?email="+email+"&title="+title,
+		cache: false,
+		timeout: 600000,
+		success: function (data) {
+
+			/* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
+            $('#feedback').html(json);*/
+
+
+			if(data.httpStatus == "OK"){
+				console.log("SUCCESS : ", data);
+
+				currentObj.closest("tr").remove();       
+				
+
+
+			}else{
+				console.log("Error");
+			}
+			$('#overlay').fadeOut();
+			// $('#profile').modal('hide');
+
+
+		},
+		error: function (e) {
+
+			/*  var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + e.responseText + "&lt;/pre&gt;";
+            $('#feedback').html(json);*/
+
+			console.log("ERROR : ", e.responseText);
+			// $("#btn-search").prop("disabled", false);
+			window.location.href="/candidate/refresh";
+
+			$('#overlay').fadeOut();
+			// $('#profile').modal('hide');
+		}
+	});
+});
+
 
 $(document).ready(function () {
 	var validation = $('#address-form').validate();
@@ -909,4 +962,108 @@ async function uploadFile() {
 	}
 
 	$('#overlay').fadeOut();
+}
+
+
+
+
+async function uploadResume() {
+	$('#overlay').fadeIn();
+
+	let formData = new FormData(); 
+	formData.append("file", resumeUpload.files[0]);
+	let response = await fetch('/api/candidate/resume/update', {
+		method: "POST", 
+		body: formData
+	}); 
+
+	if (response.status == 200) {
+		$('#resumeUpload').val('');  
+		let json = await response.json();
+
+		if(json.httpStatus == "OK"){
+			//$("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
+			
+			
+				$( "#downloadResumeTable tbody" ).append(
+						
+						'<tr ><td class="col-sm-9"><input type="hidden" class="titleClazz" value="'+json.output.title+'" /><input type="hidden" class="emailClazz" value="'+json.output.candidateId+'" /><span>'+json.output.fileName+'</span></td>' +
+						
+						'<td class="col-sm-2"><a href="/candidateService/downloadResume?email='+json.output.candidateId+'&title='+json.output.title+'"><i class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>' +
+
+						'<td class="col-sm-1"><button type="button" class="iDelResume btn fa fa-trash"></button></td></tr>'
+						
+						
+				)
+				
+				
+			 
+		}
+
+
+	}else{
+		window.location.href="/candidate/refresh";
+	}
+
+	$('#overlay').fadeOut();
+}
+
+
+
+
+function deleteResume(email,title, obj){
+	
+	//window.location.href="/candidateService/downloadResume?email="+email+"&title="+title;
+	
+	
+	var search = {}
+
+	$('#overlay').fadeIn();
+
+	$.ajax({
+		type: "post",
+		contentType: 'application/json; charset=utf-8',
+		url:  "/api/candidate/resume/delete?email="+email+"&title="+title,
+		cache: false,
+		timeout: 600000,
+		success: function (data) {
+
+			/* var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + JSON.stringify(data, null, 4) + "&lt;/pre&gt;";
+            $('#feedback').html(json);*/
+
+
+			if(data.httpStatus == "OK"){
+				console.log("SUCCESS : ", data);
+
+				$(obj).closest("tr").remove();       
+				
+
+
+			}else{
+				console.log("Error");
+			}
+			$('#overlay').fadeOut();
+			// $('#profile').modal('hide');
+
+
+		},
+		error: function (e) {
+
+			/*  var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + e.responseText + "&lt;/pre&gt;";
+            $('#feedback').html(json);*/
+
+			console.log("ERROR : ", e.responseText);
+			// $("#btn-search").prop("disabled", false);
+			window.location.href="/candidate/refresh";
+
+			$('#overlay').fadeOut();
+			// $('#profile').modal('hide');
+		}
+	});
+	
+	
+	
+	
 }

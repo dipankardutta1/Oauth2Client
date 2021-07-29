@@ -99,4 +99,7 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 			return mappedAuthorities;
 		};
     }
+    
+    
+    
 }

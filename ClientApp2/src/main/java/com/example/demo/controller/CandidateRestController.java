@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.AddressDto;
 import com.example.demo.dto.CandidateDto;
-import com.example.demo.dto.CandidateFormDto;
 import com.example.demo.dto.DocumentsDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
@@ -33,6 +34,11 @@ import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
 import com.example.demo.dto.SocialProfileDto;
 import com.example.demo.service.CandidateService;
+import com.google.gson.Gson;
+import com.nimbusds.oauth2.sdk.ParseException;
+import com.nimbusds.oauth2.sdk.util.JSONArrayUtils;
+
+import net.minidev.json.JSONArray;
 
 @RestController
 public class CandidateRestController {
@@ -66,6 +72,153 @@ public class CandidateRestController {
 	 * resource.getFilename() + "\"") .body(resource); }
 	 */
 
+	
+	
+	@GetMapping("/api/candidate/skill/findAll")
+	public ResponseEntity<String> findAllSkills(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllSkills();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	
+	@GetMapping("/api/candidate/country/findAll")
+	public ResponseEntity<String> findAllCountries(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllCountries();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	
+	@GetMapping("/api/candidate/workexp/findAll")
+	public ResponseEntity<String> findAllWorkExp(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllWorkExp();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	
+	
+	@PostMapping("/api/candidate/resume/update")
+	public ResponseEntity<?> uploadResume(Principal principal,@RequestParam("file") MultipartFile file) {
+		
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	DocumentsDto documentsDto = new DocumentsDto();
+        	documentsDto.setCandidateId(principal.getName());
+        	documentsDto.setImage(file);
+        	documentsDto.setType("resume");
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.updateResume(documentsDto);
+    		//responseDto.getBody().setOutput(candidateDto);
+
+    		return responseDto;
+        }else {
+        	//throw new TokenExpireJsonException();
+        	ResponseEntity<ResponseDto> responseDto=new ResponseEntity<ResponseDto>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	@PostMapping("/api/candidate/resume/delete")
+	public ResponseEntity<?> deleteResume(Principal principal,@RequestParam String email,@RequestParam String title) {
+		
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+        	ResponseEntity<ResponseDto> responseDto=candidateService.deleteDocument(email,title);
+    		//responseDto.getBody().setOutput(candidateDto);
+
+    		return responseDto;
+        }else {
+        	//throw new TokenExpireJsonException();
+        	ResponseEntity<ResponseDto> responseDto=new ResponseEntity<ResponseDto>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
 	@PostMapping("/api/candidate/avatar/update")
 	public ResponseEntity<?> saveCandidateSummary(Principal principal,@RequestParam("file") MultipartFile file) {
 		

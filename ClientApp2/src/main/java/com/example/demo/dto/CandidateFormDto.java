@@ -38,7 +38,8 @@ public class CandidateFormDto implements Serializable{
 
 	private String  placeOfBirth;
 	private String  maritalStatus;
-	
+	private Boolean isAvatarUploaded;
+	private Boolean isResumeUploaded;
 	private List<Address>addresses;
 
 	
@@ -69,6 +70,22 @@ public class CandidateFormDto implements Serializable{
 	
 	
 	
+
+	public Boolean getIsResumeUploaded() {
+		return isResumeUploaded;
+	}
+
+	public void setIsResumeUploaded(Boolean isResumeUploaded) {
+		this.isResumeUploaded = isResumeUploaded;
+	}
+
+	public Boolean getIsAvatarUploaded() {
+		return isAvatarUploaded;
+	}
+
+	public void setIsAvatarUploaded(Boolean isAvatarUploaded) {
+		this.isAvatarUploaded = isAvatarUploaded;
+	}
 
 	public List<DocumentDisplayDto> getDocuments() {
 		return documents;

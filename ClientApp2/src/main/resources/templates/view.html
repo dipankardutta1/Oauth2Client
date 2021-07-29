@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
 .forced-display-none {
@@ -140,32 +140,18 @@ deg
 	z-index: 100000;
 } */
 </style>
-
-<link rel="stylesheet" type="text/css"
-	th:href="@{/assets/css/jquery-ui.css}" />
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	id="bootstrap-css">
-
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
-<link th:href="@{/css/dashboardui.css}" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/jquery-ui.css}" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet" />
 <script th:src="@{/js/jquery.min.js}"></script>
-
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/candidate/summary.js}"></script>
-
-<link th:href="@{/css/custom.css}" rel="stylesheet">
-<link rel="shortcut icon" th:href="@{/assets/images/fav.jpg}">
-<link rel="stylesheet" th:href="@{/assets/css/fontawsom-all.min.css}">
-<link rel="stylesheet" type="text/css"
-	th:href="@{/assets/css/style.css}" />
-<link rel="stylesheet" type="text/css"
-	th:href="@{/assets/css/yearpicker.css}" />
-
-
-
-<!------ Include the above in your HEAD tag ---------->
-<!------ Include the above in your HEAD tag ---------->
+<link th:href="@{/css/custom.css}" rel="stylesheet" />
+<link rel="shortcut icon" th:href="@{/assets/images/fav.jpg}" />
+<link rel="stylesheet" th:href="@{/assets/css/fontawsom-all.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/yearpicker.css}" />
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -183,11 +169,6 @@ deg
 
 	});
 </script>
-
-
-
-
-
 
 </head>
 
@@ -231,22 +212,19 @@ deg
 										<div class="col-md-4 left-co">
 											<div class="left-side">
 												<div class="profile-info">
-
-
-
-													<img
-														th:if="${(candidateDto.documents == null or #lists.isEmpty(candidateDto.documents))}"
-														src="/images/avatar.png" alt="" class="image"
-														id="avatarImage"> <img
-														th:if="${not (candidateDto.documents == null or #lists.isEmpty(candidateDto.documents))}"
-														th:src="'data:image/jpg;base64,' + ${candidateDto.documents[0].image}"
-														alt="" class="image" id="avatarImage">
+													
+													
+													
+													<img th:if="${candidateDto.isAvatarUploaded == null or candidateDto.isAvatarUploaded == false}" src="/images/avatar.png" alt="" class="image" id="avatarImage" ></img>
+													<img th:if="${candidateDto.isAvatarUploaded == true and objImg.type == 'avatar'}" th:each="objImg: ${candidateDto.documents}" th:src="'data:image/jpg;base64,' + ${objImg.image}" alt="" class="image" id="avatarImage" ></img>
 													<div class="middle">
 
-														<a data-toggle="modal" data-target="#avatarModel" href="#"
-															style="float: right; color: white;" class="text"><i
-															class="fas fa-edit"></i>Edit</a>
-													</div>
+													    
+													    <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
+														data-target="#avatarModel" href="#" style="float: right;color: white;" class="text"><i
+														class="fas fa-edit"></i>Edit</a>
+													  </div>
+
 													<h3>
 														<span id="firstNameAvatar" STYLE="font-size: 16px"
 															th:text="${candidateDto.firstName}"></span> <span
@@ -256,9 +234,10 @@ deg
 													<span id="profileTitleAvatar" STYLE="font-size: 12px"
 														th:text="${candidateDto.profileTitle}"></span>
 												</div>
-												<h4 class="ltitle">
-													Contact <a data-toggle="modal" data-target="#contactModel"
-														href="#" style="float: right; color: white;"><i
+
+												<h4 class="ltitle">Contact
+												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
+														data-target="#contactModel" href="#" style="float: right;color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 												</h4>
 												<div class="contact-box pb0">
@@ -293,10 +272,10 @@ deg
 													<div class="detail">First Floor,Vincent Plaza,
 														Toranto, Canada</div>
 												</div> -->
-												<h4 class="ltitle">
-													Social Profile <a data-toggle="modal"
-														data-target="#socialModel" href="#"
-														style="float: right; color: white;"><i
+
+												<h4 class="ltitle">Social Profile
+												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
+														data-target="#socialModel" href="#" style="float: right;color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 
 												</h4>
@@ -329,10 +308,11 @@ deg
 													<p>System Administrator</p>
 													<span>p +00 890 1232 8767</span>
 												</div> -->
-												<h4 class="ltitle">
-													Hobbies <a data-toggle="modal" data-target="#hobbyModel"
-														href="#" style="float: right; color: white;"><i
-														class="fas fa-edit"></i>Edit</a>
+
+												<h4 class="ltitle">Hobbies
+												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
+														data-target="#hobbyModel" href="#" style="float: right;color: white;"><i
+													class="fas fa-edit"></i>Edit</a>
 												</h4>
 												<ul class="hoby row no-margin" id="hobbyFragment">
 													<li th:if="${candidateDto.hobbies != null}"
@@ -362,7 +342,7 @@ deg
 														th:text="${candidateDto.profileTitle}"></span></small>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Summary <a data-toggle="modal"
+													<i class="far fa-user"></i> Summary <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
 														data-target="#summary" href="#" style="float: right;"><i
 														class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -373,16 +353,18 @@ deg
 													</p>
 													<div class="btn-ro row no-margin">
 														<ul class="btn-link">
-															<li><a href=""><i class="fas fa-paper-plane"></i>
-																	Hire Me</a></li>
-															<li><a href=""><i
+															<li sec:authorize="hasAuthority('role_user')">
+																<a data-toggle="modal" data-target="#uploadResumeModel" href="#"><i class="fas fa-paper-plane"></i>Upload Resume</a>
+															</li>
+															<li>
+																<a data-toggle="modal" data-target="#downloadResumeModel" href="#"><i
 																	class="fas fa-cloud-download-alt"></i> Download Resume</a>
 															</li>
 														</ul>
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Profile <a data-toggle="modal"
+													<i class="far fa-user"></i> Profile <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
 														data-target="#profile" href="#" style="float: right;"><i
 														class="fas fa-edit"></i>Edit</a>
 
@@ -441,7 +423,7 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fa fa-home fa-fw"></i> Address <a
+													<i class="fa fa-home fa-fw"></i> Address <a sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#address" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -473,7 +455,7 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fa fa-home fa-fw"></i> workExp <a
+													<i class="fa fa-home fa-fw"></i> workExp <a sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#workExpModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -503,7 +485,7 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fas fa-graduation-cap"></i> Education <a
+													<i class="fas fa-graduation-cap"></i> Education <a sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#educationModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 
@@ -532,7 +514,7 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fas fa-users-cog"></i> Skills <a
+													<i class="fas fa-users-cog"></i> Skills <a sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#skillModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -1446,9 +1428,107 @@ deg
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal fade" id="uploadResumeModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Upload Resume
+						</h4>
+					</div>
 
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<input id="resumeUpload" type="file" name="resumeUpload" /> 
+					</div>
 
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="uploadResume()">Save
+							changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		<div class="modal fade" id="downloadResumeModel" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Download Resume
+						</h4>
+					</div>
 
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<table id="downloadResumeTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Document Name</td>
+									<td>Download</td>
+									<td sec:authorize="hasAuthority('role_user')">Delete Resume ?</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${candidateDto.isResumeUploaded == true and obj.type == 'resume'}" th:each="obj,iterator : ${candidateDto.documents}">
+									<td class="col-sm-9">
+										<input type="hidden" class="titleClazz" th:value="${obj.title}" />
+										<input type="hidden" class="emailClazz" th:value="${candidateDto.email}" />
+										<span th:text="${obj.fileName}"></span>
+											
+									</td>
+									<td class="col-sm-2">
+										<a th:href="@{|/candidateService/downloadResume?email=${candidateDto.email}&title=${obj.title}|}"><i class="fa fa-download" aria-hidden="true"></i> Click Here</a>
+									</td>
+
+									<td class="col-sm-1" sec:authorize="hasAuthority('role_user')">
+										<button type="button" class="iDelResume btn fa fa-trash" ></button>
+										
+										
+										
+									</td>
+								</tr>
+								
+							</tbody>
+							
+						</table>
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
 
 		<div id="overlay" style="display: none;">
 			<div class="spinner"></div>

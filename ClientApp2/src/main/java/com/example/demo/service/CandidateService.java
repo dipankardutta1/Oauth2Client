@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -202,8 +203,8 @@ public class CandidateService {
 	}
 
 
-	public ResponseEntity<PagableResponseDto> searchCandidate(String email, String skil, String workExp,Integer page) {
-		String url = resouceServerDomain+"/candidate/search/candidate?email="+email+"&skil="+skil+"&workExp="+workExp+"&page="+page;
+	public ResponseEntity<PagableResponseDto> searchCandidate(String locations,String skillls,String workExp,Integer page) {
+		String url = resouceServerDomain+"/candidate/search/candidate?locations="+locations+"&skillls="+skillls+"&workExp="+workExp+"&page="+page;
 		
 		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET, null, PagableResponseDto.class);
 
@@ -385,4 +386,78 @@ public class CandidateService {
 
 	    return convFile;
 	 }
+
+
+	public ResponseEntity<ResponseDto> findAllSkills() {
+		String url = resouceServerDomain+"/skills/findAll/SkillName";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+
+
+	public ResponseEntity<ResponseDto> findAllWrkExp() {
+		String url = resouceServerDomain+"/skills/findAll/SkillName";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+
+
+	public ResponseEntity<ResponseDto> findAllCountries() {
+		String url = resouceServerDomain+"/address/findAll/countryName";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+
+
+	public ResponseEntity<ResponseDto> findAllWorkExp() {
+		String url = resouceServerDomain+"/candidate/findAll/workExp";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+
+
+	public ResponseEntity<ResponseDto> updateResume(DocumentsDto documentsDto) {
+		MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+	     bodyMap.add("file", new FileSystemResource(convert(documentsDto.getImage())));
+	     bodyMap.add("email", documentsDto.getCandidateId());
+	      HttpHeaders headers = new HttpHeaders();
+	      headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+	      HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
+	      
+	      ResponseEntity<ResponseDto> responseDto = restTemplate.exchange("http://localhost:9000/resource/document/updateResume",HttpMethod.POST, requestEntity, ResponseDto.class);
+	
+	      return responseDto;
+	}
+
+
+	public ResponseEntity<ResponseDto> findDocument(String email, String title) {
+		String url = resouceServerDomain+"/document/find/document/"+email+"/"+title;
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+
+
+	public ResponseEntity<ResponseDto> deleteDocument(String email, String title) {
+		String url = resouceServerDomain+"/document/delete/document/"+email+"/"+title;
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
 }
