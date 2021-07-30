@@ -94,14 +94,19 @@ $(function(){
 			}
 		}
 	});
-	
-	
-
-	
-	
 
 	$("#address-form").validate();
-
 	
-
+	$("#workExp-form").validate();
+	
+	$("#education-form").validate();
+	
+	$("#skill-form").validate();
+	
+	$("#contact-form").validate();
+	$("#social-form").validate();
+	$("#hobby-form").validate();
+	
+	
+	
 })

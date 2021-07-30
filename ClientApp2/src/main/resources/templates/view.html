@@ -6,6 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
+.clsDatePicker {
+	z-index: 100000;
+}
+
 .forced-display-none {
 	display: none !important;
 }
@@ -96,7 +100,23 @@ transform
 
 
 
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
 
 
 
@@ -121,8 +141,24 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
 (360
 deg
+
+
+
+
+
+
+
+
 
 
 
@@ -140,8 +176,10 @@ deg
 	z-index: 100000;
 } */
 </style>
-<link rel="stylesheet" type="text/css" th:href="@{/assets/css/jquery-ui.css}" />
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/jquery-ui.css}" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	id="bootstrap-css" />
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
 <link th:href="@{/css/dashboardui.css}" rel="stylesheet" />
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -150,8 +188,10 @@ deg
 <link th:href="@{/css/custom.css}" rel="stylesheet" />
 <link rel="shortcut icon" th:href="@{/assets/images/fav.jpg}" />
 <link rel="stylesheet" th:href="@{/assets/css/fontawsom-all.min.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/assets/css/yearpicker.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/style.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/yearpicker.css}" />
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -212,18 +252,25 @@ deg
 										<div class="col-md-4 left-co">
 											<div class="left-side">
 												<div class="profile-info">
-													
-													
-													
-													<img th:if="${candidateDto.isAvatarUploaded == null or candidateDto.isAvatarUploaded == false}" src="/images/avatar.png" alt="" class="image" id="avatarImage" ></img>
-													<img th:if="${candidateDto.isAvatarUploaded == true and objImg.type == 'avatar'}" th:each="objImg: ${candidateDto.documents}" th:src="'data:image/jpg;base64,' + ${objImg.image}" alt="" class="image" id="avatarImage" ></img>
+
+
+
+													<img
+														th:if="${candidateDto.isAvatarUploaded == null or candidateDto.isAvatarUploaded == false}"
+														src="/images/avatar.png" alt="" class="image"
+														id="avatarImage"></img> <img
+														th:if="${candidateDto.isAvatarUploaded == true and objImg.type == 'avatar'}"
+														th:each="objImg: ${candidateDto.documents}"
+														th:src="'data:image/jpg;base64,' + ${objImg.image}" alt=""
+														class="image" id="avatarImage"></img>
 													<div class="middle">
 
-													    
-													    <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#avatarModel" href="#" style="float: right;color: white;" class="text"><i
-														class="fas fa-edit"></i>Edit</a>
-													  </div>
+
+														<a sec:authorize="hasAuthority('role_user')"
+															data-toggle="modal" data-target="#avatarModel" href="#"
+															style="float: right; color: white;" class="text"><i
+															class="fas fa-edit"></i>Edit</a>
+													</div>
 
 													<h3>
 														<span id="firstNameAvatar" STYLE="font-size: 16px"
@@ -235,9 +282,10 @@ deg
 														th:text="${candidateDto.profileTitle}"></span>
 												</div>
 
-												<h4 class="ltitle">Contact
-												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#contactModel" href="#" style="float: right;color: white;"><i
+												<h4 class="ltitle">
+													Contact <a sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#contactModel" href="#"
+														style="float: right; color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 												</h4>
 												<div class="contact-box pb0">
@@ -273,9 +321,10 @@ deg
 														Toranto, Canada</div>
 												</div> -->
 
-												<h4 class="ltitle">Social Profile
-												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#socialModel" href="#" style="float: right;color: white;"><i
+												<h4 class="ltitle">
+													Social Profile <a sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#socialModel" href="#"
+														style="float: right; color: white;"><i
 														class="fas fa-edit"></i>Edit</a>
 
 												</h4>
@@ -309,10 +358,11 @@ deg
 													<span>p +00 890 1232 8767</span>
 												</div> -->
 
-												<h4 class="ltitle">Hobbies
-												<a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#hobbyModel" href="#" style="float: right;color: white;"><i
-													class="fas fa-edit"></i>Edit</a>
+												<h4 class="ltitle">
+													Hobbies <a sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#hobbyModel" href="#"
+														style="float: right; color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
 												</h4>
 												<ul class="hoby row no-margin" id="hobbyFragment">
 													<li th:if="${candidateDto.hobbies != null}"
@@ -342,9 +392,10 @@ deg
 														th:text="${candidateDto.profileTitle}"></span></small>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Summary <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#summary" href="#" style="float: right;"><i
-														class="fas fa-edit"></i>Edit</a>
+													<i class="far fa-user"></i> Summary <a
+														sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#summary" href="#"
+														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
 												<div class="about">
 													<p>
@@ -353,20 +404,22 @@ deg
 													</p>
 													<div class="btn-ro row no-margin">
 														<ul class="btn-link">
-															<li sec:authorize="hasAuthority('role_user')">
-																<a data-toggle="modal" data-target="#uploadResumeModel" href="#"><i class="fas fa-paper-plane"></i>Upload Resume</a>
-															</li>
-															<li>
-																<a data-toggle="modal" data-target="#downloadResumeModel" href="#"><i
+															<li sec:authorize="hasAuthority('role_user')"><a
+																data-toggle="modal" data-target="#uploadResumeModel"
+																href="#"><i class="fas fa-paper-plane"></i>Upload
+																	Resume</a></li>
+															<li><a data-toggle="modal"
+																data-target="#downloadResumeModel" href="#"><i
 																	class="fas fa-cloud-download-alt"></i> Download Resume</a>
 															</li>
 														</ul>
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="far fa-user"></i> Profile <a sec:authorize="hasAuthority('role_user')" data-toggle="modal"
-														data-target="#profile" href="#" style="float: right;"><i
-														class="fas fa-edit"></i>Edit</a>
+													<i class="far fa-user"></i> Profile <a
+														sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#profile" href="#"
+														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 
 												</h2>
 												<div class="row">
@@ -423,7 +476,8 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fa fa-home fa-fw"></i> Address <a sec:authorize="hasAuthority('role_user')"
+													<i class="fa fa-home fa-fw"></i> Address <a
+														sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#address" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -455,7 +509,8 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fa fa-home fa-fw"></i> workExp <a sec:authorize="hasAuthority('role_user')"
+													<i class="fa fa-home fa-fw"></i> workExp <a
+														sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#workExpModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -485,7 +540,8 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fas fa-graduation-cap"></i> Education <a sec:authorize="hasAuthority('role_user')"
+													<i class="fas fa-graduation-cap"></i> Education <a
+														sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#educationModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 
@@ -514,7 +570,8 @@ deg
 													</div>
 												</div>
 												<h2 class="rit-titl">
-													<i class="fas fa-users-cog"></i> Skills <a sec:authorize="hasAuthority('role_user')"
+													<i class="fas fa-users-cog"></i> Skills <a
+														sec:authorize="hasAuthority('role_user')"
 														data-toggle="modal" data-target="#skillModel" href="#"
 														style="float: right;"><i class="fas fa-edit"></i>Edit</a>
 												</h2>
@@ -866,100 +923,108 @@ deg
 			data-keyboard="false" data-backdrop="static">
 
 			<div class="modal-dialog">
+				<form id="workExp-form">
+					<div class="modal-content">
 
-				<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								<i class="far fa-user"></i> Work Experience
+							</h4>
+						</div>
 
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Work Experience
-						</h4>
+						<!-- Modal Body -->
+
+						<div class="modal-body">
+
+							<table id="workExp" class=" table order-list">
+								<thead>
+									<tr>
+										<td>Title</td>
+										<td>Start Date</td>
+										<td>End Date</td>
+										<td>Company</td>
+										<td>Industry</td>
+										<td>Summary</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										th:if="${not (candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}"
+										th:each="obj,iterator : ${candidateDto.experienceEntries}">
+										<td class="col-sm-1"><input type="text"
+											th:name="'title'+${obj.id}" class="form-control title"
+											th:value="${obj.title}" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="'startDate'+${obj.id}" readonly="readonly"
+											class="form-control startDate datepicker"
+											th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="'endDate'+${obj.id}" readonly="readonly"
+											class="form-control endDate datepicker"
+											th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
+										<td class="col-sm-1"><input type="text"
+											th:name="'company'+${obj.id}" class="form-control company"
+											th:value="${obj.company}" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="'industry'+${obj.id}" class="form-control industry"
+											th:value="${obj.industry}" /></td>
+										<td class="col-sm-3"><input type="text"
+											th:name="'summary'+${obj.id}" class="form-control summary"
+											th:value="${obj.summary}" /></td>
+
+										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+											type="button" class="ibtnDel btn btn-md btn-danger "
+											value="Delete"></td>
+									</tr>
+
+									<tr
+										th:if="${(candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}">
+										<td class="col-sm-1"><input type="text" th:name="title"
+											class="form-control title" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="startDateFirstData" readonly="readonly"
+											class="form-control startDate datepicker" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="endDateFirstData" readonly="readonly"
+											class="form-control endDate datepicker" /></td>
+										<td class="col-sm-1"><input type="text" th:name="company"
+											class="form-control company" /></td>
+										<td class="col-sm-2"><input type="text"
+											th:name="industry" class="form-control industry" /></td>
+										<td class="col-sm-3"><input type="text" th:name="summary"
+											class="form-control summary" /></td>
+
+										<td class="col-sm-1"><a class="deleteRow"></a></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="12" style="text-align: left;"><input
+											type="button" class="btn btn-lg btn-block "
+											id="addrowWorkExp" value="Add Row" /></td>
+									</tr>
+									<tr>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+						<!-- Modal Footer -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary"
+								id="workExperienceBtn">Save changes</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+
+						</div>
+
 					</div>
-
-					<!-- Modal Body -->
-					<div class="modal-body">
-
-						<table id="workExp" class=" table order-list">
-							<thead>
-								<tr>
-									<td>Title</td>
-									<td>Start Date</td>
-									<td>End Date</td>
-									<td>Company</td>
-									<td>Industry</td>
-									<td>Summary</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									th:if="${not (candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}"
-									th:each="obj,iterator : ${candidateDto.experienceEntries}">
-									<td class="col-sm-1"><input type="text"
-										class="form-control title" th:value="${obj.title}" /></td>
-									<td class="col-sm-1"><input type="text"
-										readonly="readonly" class="form-control startDate datepicker"
-										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
-									<td class="col-sm-1"><input type="text"
-										readonly="readonly" class="form-control endDate datepicker"
-										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
-									<td class="col-sm-1"><input type="text"
-										class="form-control company" th:value="${obj.company}" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control industry" th:value="${obj.industry}" /></td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control summary" th:value="${obj.summary}" /></td>
-
-									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-										type="button" class="ibtnDel btn btn-md btn-danger "
-										value="Delete"></td>
-								</tr>
-
-								<tr
-									th:if="${(candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}">
-									<td class="col-sm-1"><input type="text"
-										class="form-control title" /></td>
-									<td class="col-sm-1"><input type="text"
-										readonly="readonly" class="form-control startDate datepicker" /></td>
-									<td class="col-sm-1"><input type="text"
-										readonly="readonly" class="form-control endDate datepicker" /></td>
-									<td class="col-sm-1"><input type="text"
-										class="form-control company" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control industry" /></td>
-									<td class="col-sm-5"><input type="text"
-										class="form-control summary" /></td>
-
-									<td class="col-sm-1"><a class="deleteRow"></a></td>
-								</tr>
-
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="12" style="text-align: left;"><input
-										type="button" class="btn btn-lg btn-block " id="addrowWorkExp"
-										value="Add Row" /></td>
-								</tr>
-								<tr>
-								</tr>
-							</tfoot>
-						</table>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-							id="workExperienceBtn">Save changes</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-
-					</div>
-
-				</div>
-
+				</form>
 			</div>
 
 		</div>
@@ -971,90 +1036,92 @@ deg
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Education
-						</h4>
+				<form id="education-form">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								<i class="far fa-user"></i> Education
+							</h4>
+						</div>
+
+						<!-- Modal Body -->
+						<div class="modal-body">
+							<table id="educationTable" class=" table order-list">
+								<thead>
+									<tr>
+										<td>Degree</td>
+										<td>School</td>
+										<td>Field Of Study</td>
+										<td>Start Date</td>
+										<td>End Date</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										th:if="${not (candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
+										th:each="obj,iterator : ${candidateDto.educationEntries}">
+										<td class="col-sm-2"><input type="text" th:name="'degree'+${obj.id}"
+											class="form-control degree" th:value="${obj.degree}" /></td>
+										<td class="col-sm-2"><input type="text" th:name="'school'+${obj.id}"
+											class="form-control school" th:value="${obj.school}" /></td>
+										<td class="col-sm-2"><input type="text" th:name="'fieldOfStudy'+${obj.id}"
+											class="form-control fieldOfStudy"
+											th:value="${obj.fieldOfStudy}" /></td>
+
+										<td class="col-sm-2"><input type="text" th:name="'startDate'+${obj.id}"
+											class="form-control startDate datepicker"
+											th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
+										<td class="col-sm-2"><input type="text" th:name="'endDate'+${obj.id}"
+											class="form-control endDate datepicker"
+											th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
+
+										<td class="col-sm-2"><a th:if="${iterator.index == 0}"
+											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+											type="button" class="ibtnDel btn btn-md btn-danger "
+											value="Delete"></td>
+									</tr>
+									<tr
+										th:if="${(candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}">
+										<td class="col-sm-2"><input type="text" th:name="degreeFirstData"
+											class="form-control degree" /></td>
+										<td class="col-sm-2"><input type="text" th:name="schoolFirstData"
+											class="form-control school" /></td>
+										<td class="col-sm-2"><input type="text" th:name="fieldOfStudyFirstData"
+											class="form-control fieldOfStudy" /></td>
+
+										<td class="col-sm-2"><input type="text" th:name="startDateFirstData"
+											class="form-control startDate datepicker" /></td>
+										<td class="col-sm-2"><input type="text" th:name="endDateFirstData"
+											class="form-control endDate datepicker" /></td>
+
+										<td class="col-sm-2"><a class="deleteRow"></a></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="12" style="text-align: left;"><input
+											type="button" class="btn btn-lg btn-block "
+											id="addrowEducation" value="Add Row" /></td>
+									</tr>
+									<tr>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+						<!-- Modal Footer -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary" id="EducationBtn">Save
+								changes</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
 					</div>
-
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<table id="educationTable" class=" table order-list">
-							<thead>
-								<tr>
-									<td>Degree</td>
-									<td>School</td>
-									<td>Field Of Study</td>
-									<td>Start Date</td>
-									<td>End Date</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									th:if="${not (candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
-									th:each="obj,iterator : ${candidateDto.educationEntries}">
-									<td class="col-sm-2"><input type="text"
-										class="form-control degree" th:value="${obj.degree}" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control school" th:value="${obj.school}" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control fieldOfStudy"
-										th:value="${obj.fieldOfStudy}" /></td>
-
-									<td class="col-sm-2"><input type="text"
-										class="form-control startDate datepicker"
-										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control endDate datepicker"
-										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
-
-									<td class="col-sm-2"><a th:if="${iterator.index == 0}"
-										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-										type="button" class="ibtnDel btn btn-md btn-danger "
-										value="Delete"></td>
-								</tr>
-								<tr
-									th:if="${(candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}">
-									<td class="col-sm-2"><input type="text"
-										class="form-control degree" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control school" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control fieldOfStudy" /></td>
-
-									<td class="col-sm-2"><input type="text"
-										class="form-control startDate datepicker" /></td>
-									<td class="col-sm-2"><input type="text"
-										class="form-control endDate datepicker" /></td>
-
-									<td class="col-sm-2"><a class="deleteRow"></a></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="12" style="text-align: left;"><input
-										type="button" class="btn btn-lg btn-block "
-										id="addrowEducation" value="Add Row" /></td>
-								</tr>
-								<tr>
-								</tr>
-							</tfoot>
-						</table>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="EducationBtn">Save
-							changes</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 
@@ -1064,6 +1131,7 @@ deg
 			aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
+			<form id="skill-form">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
@@ -1088,14 +1156,11 @@ deg
 								<tr
 									th:if="${not (candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}"
 									th:each="obj,iterator : ${candidateDto.skils}">
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="'name'+${obj.id}"
 										class="form-control name" th:value="${obj.name}" /></td>
-									<td class="col-sm-3"><input type="text"
+									<td class="col-sm-3"><input type="text" th:name="'proficientLevel'+${obj.id}"
 										class="form-control proficientLevel"
 										th:value="${obj.proficientLevel}" /></td>
-
-
-
 
 
 									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
@@ -1105,9 +1170,9 @@ deg
 								</tr>
 								<tr
 									th:if="${(candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}">
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="nameFirstData"
 										class="form-control name" /></td>
-									<td class="col-sm-3"><input type="text"
+									<td class="col-sm-3"><input type="text" th:name="proficientLevelFirstData"
 										class="form-control proficientLevel" /></td>
 
 
@@ -1128,12 +1193,13 @@ deg
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="skillBtn">Save
+						<button type="submit" class="btn btn-primary" id="skillBtn">Save
 							changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 
@@ -1141,6 +1207,7 @@ deg
 			aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
+			<form id="contact-form">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
@@ -1165,10 +1232,10 @@ deg
 								<tr
 									th:if="${not (candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}"
 									th:each="obj,iterator : ${candidateDto.mobiles}">
-									<td class="col-sm-3"><input type="text"
+									<td class="col-sm-3"><input type="text" th:name="'countryCode'+${obj.id}"
 										class="form-control countryCode" th:value="${obj.countryCode}" /></td>
-									<td class="col-sm-8"><input type="text"
-										class="form-control mobileNumber"
+									<td class="col-sm-8"><input type="text" th:name="'mobileNumber'+${obj.id}"
+										class="form-control mobileNumber" 
 										th:value="${obj.mobileNumber}" /></td>
 
 
@@ -1182,9 +1249,9 @@ deg
 								</tr>
 								<tr
 									th:if="${(candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}">
-									<td class="col-sm-3"><input type="text"
+									<td class="col-sm-3"><input type="text"  th:name="countryCodeFirstData"
 										class="form-control countryCode" /></td>
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text"  th:name="mobileNumberFirstData"
 										class="form-control mobileNumber" /></td>
 
 
@@ -1205,12 +1272,13 @@ deg
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="contactBtn">Save
+						<button type="submit" class="btn btn-primary" id="contactBtn">Save
 							changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 
@@ -1219,6 +1287,7 @@ deg
 			aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
+			<form id="social-form">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
@@ -1243,7 +1312,7 @@ deg
 								<tr
 									th:if="${not (candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}"
 									th:each="obj,iterator : ${candidateDto.socialProfiles}">
-									<td class="col-sm-3"><select class="form-control type">
+									<td class="col-sm-3"><select th:name="domainLoopData" class="form-control type">
 											<option value="facebook"
 												th:selected="${obj.type == 'facebook'}">Facebook</option>
 											<option value="twitter"
@@ -1253,7 +1322,7 @@ deg
 											<option value="github" th:selected="${obj.type == 'github'}">Github</option>
 											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="'urlDomain'+${obj.id}"
 										class="form-control url" th:value="${obj.url}" /></td>
 
 
@@ -1267,14 +1336,14 @@ deg
 								</tr>
 								<tr
 									th:if="${(candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}">
-									<td class="col-sm-3"><select class="form-control type">
+									<td class="col-sm-3"><select th:name="domainOptionData" class="form-control type">
 											<option value="facebook">Facebook</option>
 											<option value="twitter">Twitter</option>
 											<option value="linkedin">Linked-in</option>
 											<option value="github">Github</option>
 											<option value="other">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="urlDomainFirstData"
 										class="form-control url" /></td>
 
 
@@ -1295,12 +1364,13 @@ deg
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="socialBtn">Save
+						<button type="submit" class="btn btn-primary" id="socialBtn">Save
 							changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 
@@ -1308,6 +1378,7 @@ deg
 			aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
+			<form id="hobby-form">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
@@ -1332,7 +1403,7 @@ deg
 								<tr
 									th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
 									th:each="obj,iterator : ${candidateDto.hobbies}">
-									<td class="col-sm-3"><select class="form-control type">
+									<td class="col-sm-3"><select th:name="hobbyLoopData" class="form-control type">
 											<option value="writing"
 												th:selected="${obj.type == 'writing'}">Writing</option>
 											<option value="cycling"
@@ -1344,7 +1415,7 @@ deg
 											<option value="games" th:selected="${obj.type == 'games'}">Games</option>
 											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="'hobby'+${obj.id}"
 										class="form-control hobby" th:value="${obj.hobby}" /></td>
 
 
@@ -1358,7 +1429,7 @@ deg
 								</tr>
 								<tr
 									th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}">
-									<td class="col-sm-3"><select class="form-control type">
+									<td class="col-sm-3"><select th:name="hobbyFirstData" class="form-control type">
 											<option value="writing">Writing</option>
 											<option value="cycling">Cycling</option>
 											<option value="football">Football</option>
@@ -1367,7 +1438,7 @@ deg
 											<option value="games">Games</option>
 											<option value="other">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text"
+									<td class="col-sm-8"><input type="text" th:name="hobbyFirstData1"
 										class="form-control hobby" /></td>
 
 
@@ -1388,12 +1459,13 @@ deg
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="hobbyBtn">Save
+						<button type="submit" class="btn btn-primary" id="hobbyBtn">Save
 							changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 
@@ -1428,7 +1500,7 @@ deg
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="modal fade" id="uploadResumeModel" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
@@ -1446,25 +1518,25 @@ deg
 
 					<!-- Modal Body -->
 					<div class="modal-body">
-						<input id="resumeUpload" type="file" name="resumeUpload" /> 
+						<input id="resumeUpload" type="file" name="resumeUpload" />
 					</div>
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="uploadResume()">Save
-							changes</button>
+						<button type="button" class="btn btn-primary"
+							onclick="uploadResume()">Save changes</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		<div class="modal fade" id="downloadResumeModel" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 			data-keyboard="false" data-backdrop="static">
@@ -1487,48 +1559,50 @@ deg
 								<tr>
 									<td>Document Name</td>
 									<td>Download</td>
-									<td sec:authorize="hasAuthority('role_user')">Delete Resume ?</td>
+									<td sec:authorize="hasAuthority('role_user')">Delete
+										Resume ?</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${candidateDto.isResumeUploaded == true and obj.type == 'resume'}" th:each="obj,iterator : ${candidateDto.documents}">
-									<td class="col-sm-9">
-										<input type="hidden" class="titleClazz" th:value="${obj.title}" />
-										<input type="hidden" class="emailClazz" th:value="${candidateDto.email}" />
-										<span th:text="${obj.fileName}"></span>
-											
-									</td>
-									<td class="col-sm-2">
-										<a th:href="@{|/candidateService/downloadResume?email=${candidateDto.email}&title=${obj.title}|}"><i class="fa fa-download" aria-hidden="true"></i> Click Here</a>
-									</td>
+								<tr
+									th:if="${candidateDto.isResumeUploaded == true and obj.type == 'resume'}"
+									th:each="obj,iterator : ${candidateDto.documents}">
+									<td class="col-sm-9"><input type="hidden"
+										class="titleClazz" th:value="${obj.title}" /> <input
+										type="hidden" class="emailClazz"
+										th:value="${candidateDto.email}" /> <span
+										th:text="${obj.fileName}"></span></td>
+									<td class="col-sm-2"><a
+										th:href="@{|/candidateService/downloadResume?email=${candidateDto.email}&title=${obj.title}|}"><i
+											class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>
 
 									<td class="col-sm-1" sec:authorize="hasAuthority('role_user')">
-										<button type="button" class="iDelResume btn fa fa-trash" ></button>
-										
-										
-										
+										<button type="button" class="iDelResume btn fa fa-trash"></button>
+
+
+
 									</td>
 								</tr>
-								
+
 							</tbody>
-							
+
 						</table>
 					</div>
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-						
+
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
+
+
+
+
+
 
 		<div id="overlay" style="display: none;">
 			<div class="spinner"></div>
@@ -1580,49 +1654,15 @@ deg
 							}
 						});
 
-				$('body')
-						.on(
-								'focus',
-								".datepicker",
-								function() {
-									$(this)
-											.datepicker(
-													{
-														dateFormat : 'mm/dd/yy',
-														changeMonth : true,
-														changeYear : true,
+				$('body').on('focus', ".datepicker", function() {
+					$(this).datepicker({
+						dateFormat : 'mm/dd/yy',
+						changeMonth : true,
+						changeYear : true,
+					});
+				});
+			});//end of function
 
-														beforeShow : function(
-																el, dp) {
-															uidp = $(
-																	'#ui-datepicker-div')
-																	.addClass(
-																			'forced-display-none')
-																	.detach();
-															$(el)
-																	.parent()
-																	.append(
-																			uidp);
-															setTimeout(
-																	function() {
-																		$(uidp)
-																				.css(
-																						{
-																							'position' : 'relative',
-																							'left' : '0px',
-																							'top' : '0px'
-																						})
-																				.removeClass(
-																						'forced-display-none')
-																	}, 200);
-														}
-													});
-								});
-
-			});
-			
-			
-			
 			/*]]>*/
 		</script>
 </body>
