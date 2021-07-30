@@ -94,6 +94,16 @@ $(function(){
 			}
 		}
 	});
+	
+	
+	
+
+
+	
+	
+	
+	
+
 
 	$("#address-form").validate();
 	

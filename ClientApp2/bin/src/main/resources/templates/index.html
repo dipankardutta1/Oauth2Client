@@ -1,11 +1,11 @@
 <!DOCTYPE html>  
-<html lang="en">  
+<html lang="en" xmlns:th="http://www.thymeleaf.org">  
 <head>  
     <meta charset="UTF-8">  
     <title>Home</title>  
 </head>  
-<body>  
+<body style="background-color: #F6F7FA">  
     <h1>Spring Security SSO</h1>  
-    <a href="candidate/securedPage">Login</a>  
+    <a th:href="@{/candidate/securedPage}">Login</a>  
 </body>  
 </html>

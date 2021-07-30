@@ -1,3 +1,13 @@
+$(document).on("click",".datepicker",function(){        
+                 
+    $(this).datepicker({                        
+            changeMonth: true,
+            changeYear: true,
+            maxDate : 0,
+            dateFormat : 'mm/dd/yy'                    
+        }).datepicker("show");
+});
+
 $(document).on('click', '.iDelResume', function(){
 
 	currentObj = $(this);
@@ -52,7 +62,18 @@ $(document).on('click', '.iDelResume', function(){
 });
 
 
+
+
 $(document).ready(function () {
+	
+	var counter = $('#addressTable tbody tr').length;
+	var counterWorkExp = $('#workExp tbody tr').length;
+	var counterEducation = $('#educationTable tbody tr').length;
+	var counterSkill = $('#skillTable tbody tr').length;
+	var mobleCounter=$('#contactTable tbody tr').length;
+	var socialCounter=$('#socialTable tbody tr').length;
+	var hobbyCounter=$('#hobbyTable tbody tr').length;
+	
 	var validation = $('#address-form').validate();
 	var workExpValidation = $('#workExp-form').validate();
 	var educationValidation=$("#education-form").validate();
@@ -64,7 +85,7 @@ $(document).ready(function () {
 	var messages = {};
 	var rules1 = {};
 	var messages1 = {};
-	var counter = 1;
+	
 
 	var workExpRules={};
 	var workExpRules1={};
@@ -96,29 +117,18 @@ $(document).ready(function () {
 	var hobbyMessages={};
 	var hobbyMessages1={};
 	
-	//custom method to check startdate > enddate
-
-	/*jQuery.validator.addMethod("startDateGtEndDate", function(value, element) {
-		alert(value);
-		alert(element.attr('name'));
-		var startDate;
-		var check2;
-		var check1=element.substr(7);
-		$("#address-form").find($("input:text")).each(function(){ 
-			var name = $(this).attr('name');
-			if(name.startsWith("start")){
-				check2=name.substr(9);
-				if(check1===check2){
-					startDate=$(this).attr('name').val();
-					 return Date.parse(startDate) <= Date.parse(value) || value == "";
-				}
-			}
-
-		});
-
-    }, "* End date must be after start date");*/
+	
+	$("table.order-list").on("click", ".ibtnDel", function (event) {
+		$(this).closest("tr").remove();       
+		//counter -= 1
+	});
+	
 
 	$("#addrow").on("click", function () {
+		
+		
+		counter++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -127,10 +137,11 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-2"><input type="text" class="form-control city" name="city' + counter + '"/></td>';
 		cols += '<td class="col-sm-5"><input type="text" class="form-control addressLine" name="address' + counter + '"/></td>';
 
+
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
-		$("table.order-list").append(newRow);
-		counter++;
+		$("#addressTable").append(newRow);
+		
 		//$('#address-form').removeData('validator');
 		$("#address-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
@@ -148,15 +159,11 @@ $(document).ready(function () {
 		validation.resetForm();
 		validation.settings.rules =rules1;
 		validation.settings.messages = messages1;
+		
 	});
 
 
-
-	$("table.order-list").on("click", ".ibtnDel", function (event) {
-		$(this).closest("tr").remove();       
-		counter -= 1
-	});
-
+	
 	$("#address-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
 		rules[name] = {};
@@ -242,13 +249,18 @@ $(document).ready(function () {
 
 			});//end of ajax submit of address
 		}
-	});//end of form submit
+	});
+
+	//end of form submit
 //	-----------------------------------------------workexperience--------------------------------------------------
 
 
-	var counterWorkExp = 0;
+	
 
 	$("#addrowWorkExp").on("click", function () {
+		
+		counterWorkExp++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -259,10 +271,10 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-2"><input type="text" class="form-control industry" name="industry' + counterWorkExp + '"/></td>';
 		cols += '<td class="col-sm-3"><input type="text" class="form-control summary" name="summary' + counterWorkExp + '"/></td>';
 
-		cols += '<td class="col-sm-1"><input type="button" class="ibtnWorkExpDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#workExp").append(newRow);
-		counter++;
+		
 
 
 		$("#workExp-form").find($("input:text")).each(function(){ 
@@ -283,10 +295,7 @@ $(document).ready(function () {
 
 	});
 
-	$("#workExp").on("click", ".ibtnWorkExpDel", function (event) {
-		$(this).closest("tr").remove();       
-		counter -= 1
-	});
+	
 
 	$("#workExp-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -385,9 +394,11 @@ $(document).ready(function () {
 //	-------------------------------------------------------workExperience ends here----------------------------------------	
 
 	//---------------------------------------------------Education -------------------------------------------------------
-	var counterEducation = 0;
+	
 
 	$("#addrowEducation").on("click", function () {
+		counterEducation++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -397,7 +408,7 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-2"><input type="text" readonly="readonly" class="form-control startDate datepicker" name="startDate' + counterEducation + '"/></td>';
 		cols += '<td class="col-sm-2"><input type="text" readonly="readonly"  class="form-control endDate datepicker" name="endDate' + counterEducation + '"/></td>';
 
-		cols += '<td class="col-sm-2"><input type="button" class="ibtnEducationDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-2"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#educationTable").append(newRow);
 		counter++;
@@ -417,10 +428,7 @@ $(document).ready(function () {
 
 	});
 
-	$("#educationTable").on("click", ".ibtnEducationDel", function (event) {
-		$(this).closest("tr").remove();       
-		counter -= 1
-	});
+	
 
 	$("#education-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -503,8 +511,11 @@ $(document).ready(function () {
 
 	//---------------------------------------------------Skill -------------------------------------------------------
 
-	var counterSkill = 0;
+	
 	$("#addrowSkill").on("click", function () {
+		
+		counterSkill++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -512,10 +523,10 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-3"><input type="text" class="form-control proficientLevel" name="proficientLevel'+ counterSkill + '"/></td>';
 
 
-		cols += '<td class="col-sm-1"><input type="button" class="ibtnSkillDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#skillModel table.order-list").append(newRow);
-		counterSkill++
+		
 
 		
 		$("#skill-form").find($("input:text")).each(function(){ 
@@ -538,10 +549,7 @@ $(document).ready(function () {
 
 	});
 
-	$("#skillModel table.order-list").on("click", ".ibtnSkillDel", function (event) {
-		$(this).closest("tr").remove();       
-		counterSkill -= 1
-	});
+	
 
 
 
@@ -629,20 +637,20 @@ $(document).ready(function () {
 
 	//---------------------------------------------------contact -------------------------------------------------------
 
-var mobleCounter=0;
+
 	$("#addrowContact").on("click", function () {
-		
+		contactTable++;
 		var newRow = $("<tr>");
 		var cols = "";
 		
-		cols += '<td class="col-sm-3"><input type="text" class="form-control countryCode" name="countryCode'+mobleCounter+'"/></td>';
-		cols += '<td class="col-sm-8"><input type="text" class="form-control mobileNumber" name="mobileNumber'+mobleCounter+'"/></td>';
+		cols += '<td class="col-sm-3"><input type="text" class="form-control countryCode" name="countryCode'+contactTable+'"/></td>';
+		cols += '<td class="col-sm-8"><input type="text" class="form-control mobileNumber" name="mobileNumber'+contactTable+'"/></td>';
 
 
-		cols += '<td class="col-sm-1"><input type="button" class="ibtnContactDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#contactModel table.order-list").append(newRow);
-		mobleCounter++;
+		
 
 		
 		$("#contact-form").find($("input:text")).each(function(){ 
@@ -667,10 +675,7 @@ var mobleCounter=0;
 
 	});
 
-	$("#contactModel table.order-list").on("click", ".ibtnContactDel", function (event) {
-		$(this).closest("tr").remove();       
-		mobleCounter -=1;
-	});
+	
 
 	$("#contact-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -763,8 +768,11 @@ var mobleCounter=0;
 
 	//---------------------------------------------------Social Profile -------------------------------------------------------
 
-var socialCounter=0;
+
 	$("#addrowSocial").on("click", function () {
+		
+		socialCounter++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 	
@@ -772,10 +780,10 @@ var socialCounter=0;
 		cols += '<td class="col-sm-8"><input type="text" class="form-control url" name="urlDomain'+ socialCounter + '" /></td>';
 
 
-		cols += '<td class="col-sm-1"><input type="button" class="ibtnSocialDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#socialModel table.order-list").append(newRow);
-		socialCounter++;
+		
 		
 		
 		$("#social-form").find($("input:text")).each(function(){ 
@@ -794,10 +802,7 @@ var socialCounter=0;
 		
 	});
 
-	$("#socialModel table.order-list").on("click", ".ibtnSocialDel", function (event) {
-		$(this).closest("tr").remove();       
-		socialCounter -=1;
-	});
+	
 
 	
 	$("#social-form").find($("input:text")).each(function(){ 
@@ -896,9 +901,12 @@ var socialCounter=0;
 
 //	---------------------------------------------------hobby -------------------------------------------------------
 
-	var hobbyCounter=0;
+	
 
 	$("#addrowHobby").on("click", function () {
+		
+		hobbyCounter++;
+		
 		var newRow = $("<tr>");
 		var cols = "";
 		
@@ -906,11 +914,11 @@ var socialCounter=0;
 		cols += '<td class="col-sm-8"><input name="hobbyDes' + hobbyCounter + '"type="text" class="form-control hobby" /></td>';
 
 
-		cols += '<td class="col-sm-1"><input type="button" class="ibtnHobbyDel btn btn-md btn-danger "  value="Delete"></td>';
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#hobbyModel table.order-list").append(newRow);
 		
-		hobbyCounter++;
+		
 		
 		
 		$("#hobby-form").find($("input:text")).each(function(){ 
@@ -928,11 +936,7 @@ var socialCounter=0;
 
 	});
 
-	$("#hobbyModel table.order-list").on("click", ".ibtnHobbyDel", function (event) {
-		$(this).closest("tr").remove();  
-		hobbyCounter -=1;
-
-	});
+	
 	
 	
 	$("#hobby-form").find($("input:text")).each(function(){ 

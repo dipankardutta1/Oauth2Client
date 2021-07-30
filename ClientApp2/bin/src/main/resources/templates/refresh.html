@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+<meta charset="UTF-8">
+<title>Secured Page</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" >
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet" >
+<link th:href="@{/css/custom.css}" rel="stylesheet" >
+
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	   $('[data-toggle="offcanvas"]').click(function(){
+	       $("#navigation").toggleClass("hidden-xs");
+	   });
+	});
+
+
+
+
+</script>
+
+
+
+
+
+</head>
+<body class="home">
+
+	
+	<!-- Header -->
+<div th:insert="header.html :: header">  </div>
+<!-- /Header -->
+	
+	
+    <div class="container-fluid display-table">
+        <div class="row display-table-row">
+         <!-- menu -->
+		<div th:insert="nav.html :: nav">  </div>
+		<!-- /menu -->  
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                
+                
+                
+                
+                <div class="user-dashboard">
+                    <h1>Session is Expired, Do you want to continue ?<!-- <span th:text="${#authentication.name}"></span> --></h1>
+                    
+                   
+                    
+                    <div class="row">
+						<div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                            <a href="/oauth2/authorization/login-client" class="btn btn-danger wrn-btn">Yes, Continue</a>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                            <a href="/logout" class="btn btn-danger wrn-btn">No, Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
