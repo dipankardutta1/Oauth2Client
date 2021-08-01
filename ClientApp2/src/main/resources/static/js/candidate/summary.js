@@ -1,11 +1,11 @@
 $(document).on("click",".datepicker",function(){        
-                 
-    $(this).datepicker({                        
-            changeMonth: true,
-            changeYear: true,
-            maxDate : 0,
-            dateFormat : 'mm/dd/yy'                    
-        }).datepicker("show");
+
+	$(this).datepicker({                        
+		changeMonth: true,
+		changeYear: true,
+		maxDate : 0,
+		dateFormat : 'mm/dd/yy'                    
+	}).datepicker("show");
 });
 
 $(document).on('click', '.iDelResume', function(){
@@ -65,7 +65,7 @@ $(document).on('click', '.iDelResume', function(){
 
 
 $(document).ready(function () {
-	
+
 	var counter = $('#addressTable tbody tr').length;
 	var counterWorkExp = $('#workExp tbody tr').length;
 	var counterEducation = $('#educationTable tbody tr').length;
@@ -73,7 +73,7 @@ $(document).ready(function () {
 	var mobleCounter=$('#contactTable tbody tr').length;
 	var socialCounter=$('#socialTable tbody tr').length;
 	var hobbyCounter=$('#hobbyTable tbody tr').length;
-	
+
 	var validation = $('#address-form').validate();
 	var workExpValidation = $('#workExp-form').validate();
 	var educationValidation=$("#education-form").validate();
@@ -85,7 +85,7 @@ $(document).ready(function () {
 	var messages = {};
 	var rules1 = {};
 	var messages1 = {};
-	
+
 
 	var workExpRules={};
 	var workExpRules1={};
@@ -111,24 +111,24 @@ $(document).ready(function () {
 	var socialRules1={};
 	var socialMessages={};
 	var socialMessages1={};
-	
+
 	var hobbyRules={};
 	var hobbyRules1={};
 	var hobbyMessages={};
 	var hobbyMessages1={};
-	
-	
+
+
 	$("table.order-list").on("click", ".ibtnDel", function (event) {
 		$(this).closest("tr").remove();       
 		//counter -= 1
 	});
-	
+
 
 	$("#addrow").on("click", function () {
-		
-		
+
+
 		counter++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -141,7 +141,7 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#addressTable").append(newRow);
-		
+
 		//$('#address-form').removeData('validator');
 		$("#address-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
@@ -159,11 +159,11 @@ $(document).ready(function () {
 		validation.resetForm();
 		validation.settings.rules =rules1;
 		validation.settings.messages = messages1;
-		
+
 	});
 
 
-	
+
 	$("#address-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
 		rules[name] = {};
@@ -255,12 +255,12 @@ $(document).ready(function () {
 //	-----------------------------------------------workexperience--------------------------------------------------
 
 
-	
+
 
 	$("#addrowWorkExp").on("click", function () {
-		
+
 		counterWorkExp++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -274,7 +274,7 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#workExp").append(newRow);
-		
+
 
 
 		$("#workExp-form").find($("input:text")).each(function(){ 
@@ -295,7 +295,7 @@ $(document).ready(function () {
 
 	});
 
-	
+
 
 	$("#workExp-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -394,11 +394,11 @@ $(document).ready(function () {
 //	-------------------------------------------------------workExperience ends here----------------------------------------	
 
 	//---------------------------------------------------Education -------------------------------------------------------
-	
+
 
 	$("#addrowEducation").on("click", function () {
 		counterEducation++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -428,7 +428,7 @@ $(document).ready(function () {
 
 	});
 
-	
+
 
 	$("#education-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -511,11 +511,11 @@ $(document).ready(function () {
 
 	//---------------------------------------------------Skill -------------------------------------------------------
 
-	
+
 	$("#addrowSkill").on("click", function () {
-		
+
 		counterSkill++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
 
@@ -526,9 +526,9 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#skillModel table.order-list").append(newRow);
-		
 
-		
+
+
 		$("#skill-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
 			skillRules1[name] = {};
@@ -549,7 +549,7 @@ $(document).ready(function () {
 
 	});
 
-	
+
 
 
 
@@ -596,7 +596,7 @@ $(document).ready(function () {
 				dataType: "json",
 				success: function (data) {
 
-					
+
 					// $('#workExp').modal('hide');
 					if(data.httpStatus == "OK"){
 						$('#overlay').fadeIn();
@@ -642,7 +642,7 @@ $(document).ready(function () {
 		contactTable++;
 		var newRow = $("<tr>");
 		var cols = "";
-		
+
 		cols += '<td class="col-sm-3"><input type="text" class="form-control countryCode" name="countryCode'+contactTable+'"/></td>';
 		cols += '<td class="col-sm-8"><input type="text" class="form-control mobileNumber" name="mobileNumber'+contactTable+'"/></td>';
 
@@ -650,9 +650,9 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#contactModel table.order-list").append(newRow);
-		
 
-		
+
+
 		$("#contact-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
 			mobileRules1[name] = {};
@@ -660,13 +660,13 @@ $(document).ready(function () {
 			if(name.startsWith("mob")){
 				mobileRules1[name] = {required: true,maxlength:15,number:true}; 
 				mobileMessages1[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 15 length",number:"Only Integral Number"};
-		
+
 			}else{
 				mobileRules1[name] = {required: true,maxlength:6,number:true}; 
 				mobileMessages1[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 6 length",number:"Only Integral Number"};
-		
+
 			}
-					
+
 
 		});
 		mobileValidation.resetForm();
@@ -675,7 +675,7 @@ $(document).ready(function () {
 
 	});
 
-	
+
 
 	$("#contact-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
@@ -684,11 +684,11 @@ $(document).ready(function () {
 		if(name.startsWith("mob")){
 			mobileRules[name] = {required: true,maxlength:15,number:true}; 
 			mobileMessages[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 15 length",number:"Only Integral Number"};
-	
+
 		}else{
 			mobileRules[name] = {required: true,maxlength:6,number:true}; 
 			mobileMessages[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 6 length",number:"Only Integral Number"};
-	
+
 		}
 
 	});
@@ -696,15 +696,15 @@ $(document).ready(function () {
 	mobileValidation.settings.rules =mobileRules;
 	mobileValidation.settings.messages = mobileMessages;
 
-	
-	
+
+
 	$("#contact-form").on("submit", function (event) {
 
 		event.preventDefault();
 		//$('#overlay').fadeIn();
-		
+
 		if($("#contact-form").valid()){
-			
+
 			var contactList = new Array();
 			$("#contactModel tbody tr").each(function () {
 				var row = $(this);
@@ -757,11 +757,11 @@ $(document).ready(function () {
 				}
 			});
 
-			
-			
-			
+
+
+
 		}//valid checks end here
-		
+
 	});//form submit end here
 //	-------------------------------------------------------------contact ends here------------------------------------------     
 
@@ -770,12 +770,12 @@ $(document).ready(function () {
 
 
 	$("#addrowSocial").on("click", function () {
-		
+
 		socialCounter++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
-	
+
 		cols += '<td class="col-sm-3"><select name="domain'+ socialCounter + '"class="form-control type"><option value="facebook">Facebook</option><option value="twitter">Twitter</option><option value="linkedin">Linked-in</option><option value="github">Github</option><option value="other">Other</option></select></td>';
 		cols += '<td class="col-sm-8"><input type="text" class="form-control url" name="urlDomain'+ socialCounter + '" /></td>';
 
@@ -783,36 +783,36 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#socialModel table.order-list").append(newRow);
-		
-		
-		
+
+
+
 		$("#social-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
 			socialRules1[name] = {};
 			mobileMessages1[name] = {};
-				socialRules1[name] = {required: true}; 
-				socialMessages1[name]= {required:"Please provide valid value"};
-		
+			socialRules1[name] = {required: true}; 
+			socialMessages1[name]= {required:"Please provide valid value"};
+
 		});
 		socialValidation.resetForm();
 		socialValidation.settings.rules =socialRules1;
 		socialValidation.settings.messages =socialMessages1;
 
-		
-		
+
+
 	});
 
-	
 
-	
+
+
 	$("#social-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
 		socialRules[name] = {};
 		socialMessages[name] = {};
-		
-			socialRules[name] = {required: true}; 
-			socialMessages[name]= {required:"Please provide valid value"};
-	
+
+		socialRules[name] = {required: true}; 
+		socialMessages[name]= {required:"Please provide valid value"};
+
 	});
 	socialValidation.resetForm();
 	socialValidation.settings.rules =socialRules;
@@ -824,7 +824,7 @@ $(document).ready(function () {
 
 		event.preventDefault();
 		if($('#social-form').valid()){
-			
+
 			var socialList = new Array();
 			$("#socialModel tbody tr").each(function () {
 				var row = $(this);
@@ -845,7 +845,7 @@ $(document).ready(function () {
 				dataType: "json",
 				success: function (data) {
 
-					
+
 					// $('#workExp').modal('hide');
 					if(data.httpStatus == "OK"){
 						$('#overlay').fadeIn();
@@ -901,15 +901,15 @@ $(document).ready(function () {
 
 //	---------------------------------------------------hobby -------------------------------------------------------
 
-	
+
 
 	$("#addrowHobby").on("click", function () {
-		
+
 		hobbyCounter++;
-		
+
 		var newRow = $("<tr>");
 		var cols = "";
-		
+
 		cols += '<td class="col-sm-3"><select name="hobby' + hobbyCounter + '"class="form-control type"><option value="writing" >Writing</option><option value="cycling" >Cycling</option><option value="football" >Football</option><option value="movies" >Movies</option><option value="travel" >Travel</option><option value="games" >Games</option><option value="other" >Other</option></select></td>';
 		cols += '<td class="col-sm-8"><input name="hobbyDes' + hobbyCounter + '"type="text" class="form-control hobby" /></td>';
 
@@ -917,17 +917,17 @@ $(document).ready(function () {
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
 		newRow.append(cols);
 		$("#hobbyModel table.order-list").append(newRow);
-		
-		
-		
-		
+
+
+
+
 		$("#hobby-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
 			hobbyRules1[name] = {};
 			hobbyMessages1[name] = {};
 			hobbyRules1[name] = {required: true,maxlength:10}; 
 			hobbyMessages1[name]= {required:"Please provide valid value",maxlength:"Cant Exceed 10 length "};
-		
+
 		});
 		hobbyValidation.resetForm();
 		hobbyValidation.settings.rules =hobbyRules1;
@@ -936,32 +936,32 @@ $(document).ready(function () {
 
 	});
 
-	
-	
-	
+
+
+
 	$("#hobby-form").find($("input:text")).each(function(){ 
 		var name = $(this).attr('name');
 		hobbyRules[name] = {};
 		hobbyMessages[name] = {};
 		hobbyRules[name] = {required: true,maxlength:10}; 
 		hobbyMessages[name]= {required:"Please provide valid value",maxlength:"Cant Exceed 10 length "};
-	
+
 	});
 	hobbyValidation.resetForm();
 	hobbyValidation.settings.rules =hobbyRules;
 	hobbyValidation.settings.messages =hobbyMessages;
 
-	
+
 
 	$("#hobby-form").on("submit", function (event) {
 
-		
+
 		//$('#overlay').fadeIn();
 		event.preventDefault();
-		
+
 		if($("#hobby-form").valid()){
-			
-			
+
+
 			var hobbyList = new Array();
 			$("#hobbyModel tbody tr").each(function () {
 				var row = $(this);
@@ -982,7 +982,7 @@ $(document).ready(function () {
 				dataType: "json",
 				success: function (data) {
 
-					
+
 					// $('#workExp').modal('hide');
 					if(data.httpStatus == "OK"){
 						$('#overlay').fadeIn();
@@ -1037,7 +1037,7 @@ $(document).ready(function () {
 			});
 
 		}//end of valid checking
-		
+
 	});//end of form submit
 //	-------------------------------------------------------------hobby ends here------------------------------------------      
 	/*
@@ -1254,78 +1254,89 @@ function calculateGrandTotal() {
 }
 
 
-
-
-
 async function uploadFile() {
-	$('#overlay').fadeIn();
 
-	let formData = new FormData(); 
-	formData.append("file", avatarUpload.files[0]);
-	let response = await fetch('/api/candidate/avatar/update', {
-		method: "POST", 
-		body: formData
-	}); 
 
-	if (response.status == 200) {
-		$('#avatarUpload').val('');  
-		let json = await response.json();
+	$("#avatar-form").validate();
+	if($("#avatar-form").valid()){
+		$('#overlay').fadeIn();
 
-		if(json.httpStatus == "OK"){
-			$("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
+		let formData = new FormData(); 
+		formData.append("file", avatarUpload.files[0]);
+		let response = await fetch('/api/candidate/avatar/update', {
+			method: "POST", 
+			body: formData
+		}); 
+
+		if (response.status == 200) {
+			$('#avatarUpload').val('');  
+			let json = await response.json();
+
+			if(json.httpStatus == "OK"){
+				$("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
+			}
+
+
+		}else{
+			window.location.href="/candidate/refresh";
 		}
 
+		$('#overlay').fadeOut();
 
-	}else{
-		window.location.href="/candidate/refresh";
-	}
+	}//end of valid check
 
-	$('#overlay').fadeOut();
-}
+}//end of click method
 
 
 
 
 async function uploadResume() {
-	$('#overlay').fadeIn();
-
-	let formData = new FormData(); 
-	formData.append("file", resumeUpload.files[0]);
-	let response = await fetch('/api/candidate/resume/update', {
-		method: "POST", 
-		body: formData
-	}); 
-
-	if (response.status == 200) {
-		$('#resumeUpload').val('');  
-		let json = await response.json();
-
-		if(json.httpStatus == "OK"){
-			//$("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
 
 
-			$( "#downloadResumeTable tbody" ).append(
+	$("#resume-form").validate();
+	if($("#resume-form").valid()){
+		$('#overlay').fadeIn();
 
-					'<tr ><td class="col-sm-9"><input type="hidden" class="titleClazz" value="'+json.output.title+'" /><input type="hidden" class="emailClazz" value="'+json.output.candidateId+'" /><span>'+json.output.fileName+'</span></td>' +
+		let formData = new FormData(); 
+		formData.append("file", resumeUpload.files[0]);
+		let response = await fetch('/api/candidate/resume/update', {
+			method: "POST", 
+			body: formData
+		}); 
 
-					'<td class="col-sm-2"><a href="/candidateService/downloadResume?email='+json.output.candidateId+'&title='+json.output.title+'"><i class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>' +
+		if (response.status == 200) {
+			$('#resumeUpload').val('');  
+			let json = await response.json();
 
-					'<td class="col-sm-1"><button type="button" class="iDelResume btn fa fa-trash"></button></td></tr>'
+			if(json.httpStatus == "OK"){
+				//$("#avatarImage").attr("src",'data:image/jpg;base64,'+ json.output.image);
 
 
-			)
+				$( "#downloadResumeTable tbody" ).append(
+
+						'<tr ><td class="col-sm-9"><input type="hidden" class="titleClazz" value="'+json.output.title+'" /><input type="hidden" class="emailClazz" value="'+json.output.candidateId+'" /><span>'+json.output.fileName+'</span></td>' +
+
+						'<td class="col-sm-2"><a href="/candidateService/downloadResume?email='+json.output.candidateId+'&title='+json.output.title+'"><i class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>' +
+
+						'<td class="col-sm-1"><button type="button" class="iDelResume btn fa fa-trash"></button></td></tr>'
+
+
+				)
 
 
 
+			}
+
+
+		}else{
+			window.location.href="/candidate/refresh";
 		}
 
+		$('#overlay').fadeOut();
 
-	}else{
-		window.location.href="/candidate/refresh";
-	}
+	}//end of valid check
 
-	$('#overlay').fadeOut();
-}
+}//end of click method
 
 
 

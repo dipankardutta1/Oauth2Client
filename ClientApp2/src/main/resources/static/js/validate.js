@@ -9,7 +9,9 @@ $(function(){
 		return this.optional( element ) || /^[^0-9]+$/i.test( value );
 	}, " Can not be Number");
 
-
+	$.validator.addMethod('filesize', function (value, element, param) {
+	    return this.optional(element) || (element.files[0].size <= param * 1000000 )//* 1000000
+	}, 'File size must be less than {0} MB');
 
 
 	$("#summary-form").validate({
@@ -96,15 +98,6 @@ $(function(){
 	});
 	
 	
-	
-
-
-	
-	
-	
-	
-
-
 	$("#address-form").validate();
 	
 	$("#workExp-form").validate();
@@ -117,6 +110,42 @@ $(function(){
 	$("#social-form").validate();
 	$("#hobby-form").validate();
 	
+	$("#avatar-form").validate({
+		
+		rules:{
+			avatarUpload:{
+				required:true,
+				accept: "image/*",
+				extension:"png|jpe?g|gif",
+				filesize:1
+			}//1000000
+		},
+		messages:{
+			avatarUpload:{
+				required:'Can not be blank',
+				accept:'Only Images are allowed',
+				extension:'Only Images are allowed',
+				filesize:"File size within 1 MB"
+			}
+		}
+	});
 	
+$("#resume-form").validate({
+		
+		rules:{
+			resumeUpload:{
+				required:true,
+				extension: "docx|rtf|doc|pdf",
+				filesize:2
+			}//2000000
+		},
+		messages:{
+			resumeUpload:{
+				required:'Can not be blank',
+				extension:'Only docx,doc,pdf,rtf  are allowed',
+				filesize:"File size within 2 MB"
+			}
+		}
+	});
 	
 })
