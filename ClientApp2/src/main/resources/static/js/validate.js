@@ -77,6 +77,14 @@ $(function(){
 			birthDate:{
 				required:true,
 
+			},
+			workExperience:{
+				required:true,
+
+			},
+			releventExperience:{
+				required:true,
+
 			}
 		},
 		messages:{
@@ -93,6 +101,12 @@ $(function(){
 			},
 			birthDate:{
 				required:'Birth Date  can not be blank',
+			},
+			workExperience:{
+				required:'Work Experience can not be blank',
+			},
+			releventExperience:{
+				required:'Relevant Experience   can not be blank',
 			}
 		}
 	});

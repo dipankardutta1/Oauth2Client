@@ -1113,9 +1113,9 @@ deg
 
 										<td class="col-sm-2"><input type="text"
 											th:name="'startDate'+${iterator.count}"
-											class="form-control startDate datepicker"
+											class="form-control startDate datepicker" readonly="readonly"
 											th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
-										<td class="col-sm-2"><input type="text"
+										<td class="col-sm-2"><input type="text" readonly="readonly"
 											th:name="'endDate'+${iterator.count}"
 											class="form-control endDate datepicker"
 											th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
@@ -1134,9 +1134,9 @@ deg
 										<td class="col-sm-2"><input type="text"
 											name="fieldOfStudy1" class="form-control fieldOfStudy" /></td>
 
-										<td class="col-sm-2"><input type="text" name="startDate1"
+										<td class="col-sm-2"><input type="text" name="startDate1" readonly="readonly"
 											class="form-control startDate datepicker" /></td>
-										<td class="col-sm-2"><input type="text" name="endDate1"
+										<td class="col-sm-2"><input type="text" name="endDate1" readonly="readonly"
 											class="form-control endDate datepicker" /></td>
 
 										<td class="col-sm-2"><a class="deleteRow"></a></td>
