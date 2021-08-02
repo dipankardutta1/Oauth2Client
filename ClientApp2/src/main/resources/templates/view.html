@@ -643,6 +643,7 @@ deg
 			</div>
 
 		</div>
+		</div>
 
 
 
@@ -1458,37 +1459,31 @@ deg
 					<!-- Modal Body -->
 					<div class="modal-body">
 						<form id="hobby-form">
-							<table id="hobbyTable" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Type</td>
-										<td>Hobby</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
-										th:each="obj,iterator : ${candidateDto.hobbies}">
-										<td class="col-sm-3"><select
-											th:name="'hobby'+${iterator.count}" class="form-control type">
-												<option value="writing"
-													th:selected="${obj.type == 'writing'}">Writing</option>
-												<option value="cycling"
-													th:selected="${obj.type == 'cycling'}">Cycling</option>
-												<option value="football"
-													th:selected="${obj.type == 'football'}">Football</option>
-												<option value="movies" th:selected="${obj.type == 'movies'}">Movies</option>
-												<option value="travel" th:selected="${obj.type == 'travel'}">Travel</option>
-												<option value="games" th:selected="${obj.type == 'games'}">Games</option>
-												<option value="other" th:selected="${obj.type == 'other'}">Other</option>
-										</select></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="'hobbyDes'+${iterator.count}"
-											class="form-control hobby" th:value="${obj.hobby}" /></td>
-
-
-
-
+						<table id="hobbyTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Type</td>
+									<td>Hobby</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
+									th:each="obj,iterator : ${candidateDto.hobbies}">
+									<td class="col-sm-3"><select th:name="'hobby'+${iterator.count}" class="form-control type">
+											<option value="writing"
+												th:selected="${obj.type == 'writing'}">Writing</option>
+											<option value="cycling"
+												th:selected="${obj.type == 'cycling'}">Cycling</option>
+											<option value="football"
+												th:selected="${obj.type == 'football'}">Football</option>
+											<option value="movies" th:selected="${obj.type == 'movies'}">Movies</option>
+											<option value="travel" th:selected="${obj.type == 'travel'}">Travel</option>
+											<option value="games" th:selected="${obj.type == 'games'}">Games</option>
+											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
+									</select></td>
+									<td class="col-sm-8"><input type="text" th:name="'hobbyDes'+${iterator.count}"
+										class="form-control hobby" th:value="${obj.hobby}" /></td>
 
 										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
 											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
