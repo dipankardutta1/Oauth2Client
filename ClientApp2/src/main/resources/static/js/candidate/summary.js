@@ -777,7 +777,7 @@ $(document).ready(function () {
 		var cols = "";
 
 		cols += '<td class="col-sm-3"><select name="domain'+ socialCounter + '"class="form-control type"><option value="facebook">Facebook</option><option value="twitter">Twitter</option><option value="linkedin">Linked-in</option><option value="github">Github</option><option value="other">Other</option></select></td>';
-		cols += '<td class="col-sm-8"><input type="text" class="form-control url" name="urlDomain'+ socialCounter + '" /></td>';
+		cols += '<td class="col-sm-8"><input type="text" class="form-control profile" name="profileDomain'+ socialCounter + '" /></td>';
 
 
 		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
@@ -788,10 +788,19 @@ $(document).ready(function () {
 
 		$("#social-form").find($("input:text")).each(function(){ 
 			var name = $(this).attr('name');
+			
 			socialRules1[name] = {};
 			mobileMessages1[name] = {};
-			socialRules1[name] = {required: true}; 
-			socialMessages1[name]= {required:"Please provide valid value"};
+			
+			if(name.startsWith("pro")){
+				socialRules1[name] = {required: true,maxlength:50}; 
+				socialMessages1[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 50 length"};
+			}else{
+				socialRules1[name] = {required: true}; 
+				socialMessages1[name]= {required:"Please provide valid value"};
+			}
+		//	socialRules1[name] = {required: true}; 
+			//socialMessages1[name]= {required:"Please provide valid value"};
 
 		});
 		socialValidation.resetForm();
@@ -810,8 +819,15 @@ $(document).ready(function () {
 		socialRules[name] = {};
 		socialMessages[name] = {};
 
-		socialRules[name] = {required: true}; 
-		socialMessages[name]= {required:"Please provide valid value"};
+		if(name.startsWith("pro")){
+			socialRules[name] = {required: true,maxlength:50}; 
+			socialMessages[name]= {required:"Please provide valid value",maxlength:"Can not Exceed 50 length"};
+		}else{
+			socialRules[name] = {required: true}; 
+			socialMessages[name]= {required:"Please provide valid value"};
+		}
+		//socialRules[name] = {required: true}; 
+		//socialMessages[name]= {required:"Please provide valid value"};
 
 	});
 	socialValidation.resetForm();
@@ -823,6 +839,7 @@ $(document).ready(function () {
 		//$('#overlay').fadeIn();
 
 		event.preventDefault();
+		//alert()
 		if($('#social-form').valid()){
 
 			var socialList = new Array();
@@ -830,9 +847,8 @@ $(document).ready(function () {
 				var row = $(this);
 				var socialObj = {};
 				socialObj.type = row.find(".type").eq(0).val();  
-				socialObj.url = row.find(".url").eq(0).val();
-
-
+				socialObj.url = row.find(".profile").eq(0).val();
+				alert(socialObj.url);
 
 				socialList.push(socialObj);
 			});
@@ -848,6 +864,7 @@ $(document).ready(function () {
 
 					// $('#workExp').modal('hide');
 					if(data.httpStatus == "OK"){
+						
 						$('#overlay').fadeIn();
 						$('#overlay').fadeOut();
 						jQuery('#socialFragment').html('');
