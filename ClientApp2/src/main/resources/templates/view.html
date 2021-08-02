@@ -1452,7 +1452,7 @@ deg
 								<tr
 									th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
 									th:each="obj,iterator : ${candidateDto.hobbies}">
-									<td class="col-sm-3"><select th:name="'hobby'++${iterator.count}" class="form-control type">
+									<td class="col-sm-3"><select th:name="'hobby'+${iterator.count}" class="form-control type">
 											<option value="writing"
 												th:selected="${obj.type == 'writing'}">Writing</option>
 											<option value="cycling"
@@ -1464,7 +1464,7 @@ deg
 											<option value="games" th:selected="${obj.type == 'games'}">Games</option>
 											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text" th:name="'hobbyDes'++${iterator.count}"
+									<td class="col-sm-8"><input type="text" th:name="'hobbyDes'+${iterator.count}"
 										class="form-control hobby" th:value="${obj.hobby}" /></td>
 
 
