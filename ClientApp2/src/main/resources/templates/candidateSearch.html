@@ -161,9 +161,9 @@
 											}, 1);
 								});
 
-						$("#searchFirstName").blur(
+						$("#firstName").blur(
 								function() {
-									$("#searchFirstName").val(
+									$("#firstName").val(
 											$("#searchFirstName").val()
 													.toUpperCase());
 									//$("#candidateSearch-form").validate();
@@ -175,9 +175,10 @@
 			
 								});
 
-						$("#searchLastName").blur(
+						$("#lastName").blur(
 								function() {
-									$("#searchLastName")
+									//$("#candidateSearch-form").validate();
+									$("#lastName")
 									.val(
 											$("#searchLastName").val()
 													.toUpperCase());
@@ -396,7 +397,7 @@ a {
 																								<div class="form-group">
 																									<label for="first-name">First Name</label> <input
 																										type="text" class="form-control"
-																										th:name="searchFirstName" id="searchFirstName"
+																										th:name="firstName" id="searchFirstName"
 																										placeholder="Add First Name">
 																								</div>
 
@@ -406,7 +407,7 @@ a {
 																								<div class="form-group">
 																									<label for="last-name">Last Name</label> <input
 																										type="text" class="form-control"
-																										th:name="searchLastName" id="searchLastName"
+																										th:name="lastName" id="searchLastName"
 																										placeholder="Add Last Name">
 																								</div>
 																							</div>

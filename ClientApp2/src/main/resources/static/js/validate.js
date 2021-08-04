@@ -1,19 +1,16 @@
 
 
 $(function(){
-
-
-
-	jQuery.validator.addMethod("noNumberAllowed", function(value, element) {
-		// allow any non-whitespace characters as the host part
-		return this.optional( element ) || /^[^0-9]+$/i.test( value );
-	}, " Can not be Number");
-
 	$.validator.addMethod('filesize', function (value, element, param) {
 		return this.optional(element) || (element.files[0].size <= param * 1000000 )//* 1000000
 	}, 'File size must be less than {0} MB');
 
+	$.validator.addMethod("noNumberAllowed", function(value, element) {
+		// allow any non-whitespace characters as the host part
+		return this.optional( element ) || /^[^0-9]+$/i.test( value );
+	}, " Can not be Number");
 
+	
 	$("#summary-form").validate({
 
 		rules:{
@@ -162,25 +159,9 @@ $(function(){
 			}
 		}
 	});
-	$("#candidateSearch-form").validate({
-
-		rules:{
-			searchFirstName:{
-				
-				noNumberAllowed:true
-			},
-			searchLastName:{
-				
-				noNumberAllowed:true
-			},
-		},
-		messages:{
-			searchFirstName:{
-				noNumberAllowed:"Numbers are not allowed";
-			},
-			searchLastName:{
-				noNumberAllowed:"Numbers are not allowed";
-			},
-		}
-	});
+		
+	
+	
+	
+		
 });
