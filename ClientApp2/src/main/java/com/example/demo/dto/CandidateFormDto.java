@@ -67,9 +67,18 @@ public class CandidateFormDto implements Serializable{
 	private List<SocialProfiles>socialProfiles;
 	
 	private List<Hobby> hobbies;
+	private List<Language> languages;
 	
 	
 	
+
+	public List<Language> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
+	}
 
 	public Boolean getIsResumeUploaded() {
 		return isResumeUploaded;

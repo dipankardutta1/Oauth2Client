@@ -31,6 +31,7 @@ import com.example.demo.dto.DocumentsDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.HobbyDto;
+import com.example.demo.dto.LanguageDto;
 import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.PagableResponseDto;
 import com.example.demo.dto.ResponseDto;
@@ -136,7 +137,7 @@ public class CandidateService {
 		 
 		
 		 
-		System.out.print("data");
+		
 		//ResponseDto responseDto=new ResponseDto();
 		// responseDto = restTemplate.getForObject("http://localhost:9000/resource/candidate/find/fullCandidate/byEmail/"+email, ResponseDto.class);
 		return pojo;
@@ -328,6 +329,13 @@ public class CandidateService {
 		 return responseDto;
 	}
 
+	public ResponseEntity<ResponseDto> updateLanguages(@Valid List<LanguageDto> languageDtos) {
+		HttpEntity<List<LanguageDto>> httpEntity = new HttpEntity<List<LanguageDto>>(languageDtos);
+		
+		 ResponseEntity<ResponseDto> responseDto =  restTemplate.exchange("http://localhost:9000/resource/languages/saveMultiple", HttpMethod.POST,httpEntity, ResponseDto.class);
+		
+		 return responseDto;
+	}
 
 	public ResponseEntity<ResponseDto> updateAvatar(DocumentsDto documentsDto) {
 		/*

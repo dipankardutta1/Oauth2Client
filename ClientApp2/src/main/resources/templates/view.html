@@ -112,7 +112,43 @@ transform
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -161,8 +197,44 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (360
 deg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -408,6 +480,28 @@ deg
 														th:if="${obj.type=='other'}" class="fas fa-exclamation"></i>
 														<br> <span th:text="${obj.hobby}"></span></li>
 												</ul>
+
+
+												<!-- Language -->
+
+												<h4 class="ltitle">
+													Languages <a sec:authorize="hasAuthority('role_user')"
+														data-toggle="modal" data-target="#languageModel" href="#"
+														style="float: right; color: white;"><i
+														class="fas fa-edit"></i>Edit</a>
+												</h4>
+												<span th:text="Language"></span>&nbsp;&nbsp; <span
+													th:text="Read"></span>&nbsp;&nbsp; <span th:text="Write"></span>&nbsp;&nbsp;
+												<span th:text="speak"></span>
+												<div class="lnguage row no-margin" id="languageFragment">
+													<div th:if="${candidateDto.languages != null}"
+														th:each="obj : ${candidateDto.languages}">
+														<span th:text="${obj.language}"></span> --> &nbsp;<span
+															th:text="${obj.read}"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span
+															th:text="${obj.write}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<span th:text="${obj.speak}"></span> <br>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="col-md-8 rt-div">
@@ -643,87 +737,85 @@ deg
 			</div>
 
 		</div>
-		</div>
+	</div>
 
 
 
 
 
 
-		<!-- Summary Modal -->
-		<div class="modal fade" id="summary" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
+	<!-- Summary Modal -->
+	<div class="modal fade" id="summary" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
 
-			<div class="modal-dialog">
+		<div class="modal-dialog">
 
-				<div class="modal-content">
+			<div class="modal-content">
 
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Summary
+					</h4>
+				</div>
+
+				<!-- Modal Body -->
+				<div class="modal-body">
+
+					<div class="alert alert-success alert-dismissible" role="alert"
+						style="display: none">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Summary
-						</h4>
+						<strong>Congratulations!</strong> Now you're ready to do the <a
+							href="#" class="alert-link">next shoelace</a>.
 					</div>
 
-					<!-- Modal Body -->
-					<div class="modal-body">
-
-						<div class="alert alert-success alert-dismissible" role="alert"
-							style="display: none">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<strong>Congratulations!</strong> Now you're ready to do the <a
-								href="#" class="alert-link">next shoelace</a>.
+					<form id="summary-form">
+						<div class="form-group">
+							<label for="firstName">First Name(*)</label> <input type="text"
+								class="form-control" name="firstName" id="firstName"
+								th:value="${candidateDto.firstName}"
+								placeholder="Enter First Name" />
+						</div>
+						<div class="form-group">
+							<label for="lastName">Last Name(*)</label> <input type="text"
+								class="form-control" name="lastName" id="lastName"
+								th:value="${candidateDto.lastName}"
+								placeholder="Enter Last Name" />
+						</div>
+						<div class="form-group">
+							<label for="profileTitle">Profile Title(*)</label> <input
+								type="text" class="form-control" name="profileTitle"
+								id="profileTitle" th:value="${candidateDto.profileTitle}"
+								placeholder="Enter Profile Title" />
+						</div>
+						<div class="form-group">
+							<label for="summary">Summary(*)</label>
+							<textarea class="form-control" rows="5" id="summary"
+								name="summary">[[${candidateDto.summary}]]</textarea>
 						</div>
 
-						<form id="summary-form">
-							<div class="form-group">
-								<label for="firstName">First Name(*)</label> <input type="text"
-									class="form-control" name="firstName" id="firstName"
-									th:value="${candidateDto.firstName}"
-									placeholder="Enter First Name" />
-							</div>
-							<div class="form-group">
-								<label for="lastName">Last Name(*)</label> <input type="text"
-									class="form-control" name="lastName" id="lastName"
-									th:value="${candidateDto.lastName}"
-									placeholder="Enter Last Name" />
-							</div>
-							<div class="form-group">
-								<label for="profileTitle">Profile Title(*)</label> <input
-									type="text" class="form-control" name="profileTitle"
-									id="profileTitle" th:value="${candidateDto.profileTitle}"
-									placeholder="Enter Profile Title" />
-							</div>
-							<div class="form-group">
-								<label for="summary">Summary(*)</label>
-								<textarea class="form-control" rows="5" id="summary"
-									name="summary">[[${candidateDto.summary}]]</textarea>
-							</div>
+						<button type="submit" class="btn btn-primary">Save
+							changes</button>
 
-							<button type="submit" class="btn btn-primary">Save
-								changes</button>
-
-						</form>
+					</form>
 
 
 
 
-					</div>
+				</div>
 
-					<!-- Modal Footer -->
-					<div class="modal-footer">
+				<!-- Modal Footer -->
+				<div class="modal-footer">
 
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-
-					</div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
 
 				</div>
 
@@ -731,122 +823,122 @@ deg
 
 		</div>
 
+	</div>
 
 
 
-		<!-- Profile Modal -->
-		<div class="modal fade" id="profile" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
 
-			<div class="modal-dialog">
+	<!-- Profile Modal -->
+	<div class="modal fade" id="profile" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
 
-				<div class="modal-content">
+		<div class="modal-dialog">
 
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Profile
-						</h4>
-					</div>
+			<div class="modal-content">
 
-					<!-- Modal Body -->
-					<div class="modal-body">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Profile
+					</h4>
+				</div>
 
-						<form id="profile-form">
-							<div class="form-group">
-								<label for="aliasName">Alias Name(*)</label> <input type="text"
-									class="form-control" name="aliasName" id="aliasName"
-									th:value="${candidateDto.aliasName}"
-									placeholder="Enter Alias Name" />
-							</div>
-							<div class="form-group">
-								<label for="placeOfBirth">Place Of Birth(*)</label> <input
-									type="text" class="form-control" name="placeOfBirth"
-									id="placeOfBirth" th:value="${candidateDto.placeOfBirth}"
-									placeholder="Enter Place Of Birth" />
-							</div>
-							<div class="form-group">
-								<label for="maritalStatus">Marital Status(*)</label>
+				<!-- Modal Body -->
+				<div class="modal-body">
 
-								<!-- <input
+					<form id="profile-form">
+						<div class="form-group">
+							<label for="aliasName">Alias Name(*)</label> <input type="text"
+								class="form-control" name="aliasName" id="aliasName"
+								th:value="${candidateDto.aliasName}"
+								placeholder="Enter Alias Name" />
+						</div>
+						<div class="form-group">
+							<label for="placeOfBirth">Place Of Birth(*)</label> <input
+								type="text" class="form-control" name="placeOfBirth"
+								id="placeOfBirth" th:value="${candidateDto.placeOfBirth}"
+								placeholder="Enter Place Of Birth" />
+						</div>
+						<div class="form-group">
+							<label for="maritalStatus">Marital Status(*)</label>
+
+							<!-- <input
 									type="text" class="form-control" name="maritalStatus" 
 									id="maritalStatus"
 									th:value="${candidateDto.maritalStatus}"
 									placeholder="Enter Marital Status" /> -->
 
-								<select id="maritalStatus" class="form-control"
-									name="maritalStatus">
+							<select id="maritalStatus" class="form-control"
+								name="maritalStatus">
 
-									<option value="Single"
-										th:selected="${candidateDto.maritalStatus == 'Single'}">Single</option>
-									<option value="Married"
-										th:selected="${candidateDto.maritalStatus == 'Married'}">Married</option>
-									<option value="Widowed"
-										th:selected="${candidateDto.maritalStatus == 'Widowed'}">Widowed</option>
-									<option value="Divorced"
-										th:selected="${candidateDto.maritalStatus == 'Divorced'}">Divorced</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="birthDate">Birth Date(*)</label> <input type="text"
-									readonly="readonly" class="form-control" name="birthDate"
-									id="birthDate"
-									th:value="${#dates.format(candidateDto.birthDate,'MM/dd/yyyy')}"
-									placeholder="Enter Birth Date" />
-							</div>
-							<div class="form-group">
-								<label for="workExperience">Work Experience(*)</label> <input
-									type="text" class="form-control" name="workExperience"
-									id="workExperience" th:value="${candidateDto.workExperience}"
-									placeholder="Enter Wrok Experience" />
-							</div>
-							<div class="form-group">
-								<label for="releventExperience">Relevant Experience(*)</label> <input
-									type="text" class="form-control" name="releventExperience"
-									id="releventExperience"
-									th:value="${candidateDto.releventExperience}"
-									placeholder="Enter Relevent Experience" />
-							</div>
-							<div class="form-group">
-								<label for="hiringType">Hiring Type(*)</label> <select
-									id="hiringType" class="form-control" name="hiringType">
+								<option value="Single"
+									th:selected="${candidateDto.maritalStatus == 'Single'}">Single</option>
+								<option value="Married"
+									th:selected="${candidateDto.maritalStatus == 'Married'}">Married</option>
+								<option value="Widowed"
+									th:selected="${candidateDto.maritalStatus == 'Widowed'}">Widowed</option>
+								<option value="Divorced"
+									th:selected="${candidateDto.maritalStatus == 'Divorced'}">Divorced</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="birthDate">Birth Date(*)</label> <input type="text"
+								readonly="readonly" class="form-control" name="birthDate"
+								id="birthDate"
+								th:value="${#dates.format(candidateDto.birthDate,'MM/dd/yyyy')}"
+								placeholder="Enter Birth Date" />
+						</div>
+						<div class="form-group">
+							<label for="workExperience">Work Experience(*)</label> <input
+								type="text" class="form-control" name="workExperience"
+								id="workExperience" th:value="${candidateDto.workExperience}"
+								placeholder="Enter Wrok Experience" />
+						</div>
+						<div class="form-group">
+							<label for="releventExperience">Relevant Experience(*)</label> <input
+								type="text" class="form-control" name="releventExperience"
+								id="releventExperience"
+								th:value="${candidateDto.releventExperience}"
+								placeholder="Enter Relevent Experience" />
+						</div>
+						<div class="form-group">
+							<label for="hiringType">Hiring Type(*)</label> <select
+								id="hiringType" class="form-control" name="hiringType">
 
-									<option value="W2"
-										th:selected="${candidateDto.hiringType == 'W2'}">Full</option>
-									<option value="CONTRACT"
-										th:selected="${candidateDto.hiringType == 'CONTRACT'}">C2C</option>
-									<option value="CONTRACT TO HIRE"
-										th:selected="${candidateDto.hiringType == 'CONTRACT TO HIRE'}">C2H</option>
+								<option value="W2"
+									th:selected="${candidateDto.hiringType == 'W2'}">Full</option>
+								<option value="CONTRACT"
+									th:selected="${candidateDto.hiringType == 'CONTRACT'}">C2C</option>
+								<option value="CONTRACT TO HIRE"
+									th:selected="${candidateDto.hiringType == 'CONTRACT TO HIRE'}">C2H</option>
 
-								</select>
+							</select>
 
-								<!-- <input type="text"
+							<!-- <input type="text"
 									class="form-control" name="hiringType" id="hiringType"
 									th:value="${candidateDto.hiringType}"
 									placeholder="Enter Hiring Type" /> -->
-							</div>
+						</div>
 
-							<button type="submit" class="btn btn-primary">Save
-								changes</button>
+						<button type="submit" class="btn btn-primary">Save
+							changes</button>
 
-						</form>
-
-
+					</form>
 
 
-					</div>
 
-					<!-- Modal Footer -->
-					<div class="modal-footer">
 
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
+				</div>
 
-					</div>
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
 
 				</div>
 
@@ -854,95 +946,94 @@ deg
 
 		</div>
 
-		<!-- address Modal -->
-		<div class="modal fade" id="address" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Address
-						</h4>
-					</div>
-					<!-- Modal Body -->
+	</div>
 
-					<div class="modal-body">
-						<form id="address-form">
-							<table id="addressTable" class=" table order-list">
+	<!-- address Modal -->
+	<div class="modal fade" id="address" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Address
+					</h4>
+				</div>
+				<!-- Modal Body -->
 
-								<thead>
-									<tr>
-										<td>Country</td>
-										<td>State</td>
-										<td>City</td>
-										<td>Address</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}"
-										th:each="obj,iterator : ${candidateDto.addresses}">
-										<td class="col-sm-2"><input type="text"
-											th:name="'country'+${iterator.count}"
-											class="form-control country" th:value="${obj.country}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'state'+${iterator.count}"
-											class="form-control state" th:value="${obj.state}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'city'+${iterator.count}" class="form-control city"
-											th:value="${obj.city}" /></td>
-										<td class="col-sm-5"><input type="text"
-											th:name="'addressLine'+${iterator.count}"
-											class="form-control addressLine"
-											th:value="${obj.addressLine}" /></td>
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
+				<div class="modal-body">
+					<form id="address-form">
+						<table id="addressTable" class=" table order-list">
 
-
-									<tr
-										th:if="${(candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}">
-										<td class="col-sm-2"><input type="text" name="country1"
-											class="form-control country" /></td>
-										<td class="col-sm-2"><input type="text" name="state1"
-											class="form-control state" /></td>
-										<td class="col-sm-2"><input type="text" name="city1"
-											class="form-control city" /></td>
-										<td class="col-sm-5"><input type="text"
-											name="addressLine1" class="form-control addressLine" /></td>
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="5" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block " id="addrow"
-											value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-
-							<button type="submit" class="btn btn-primary" id="addressBtn">
-								Save changes</button>
-						</form>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
+							<thead>
+								<tr>
+									<td>Country</td>
+									<td>State</td>
+									<td>City</td>
+									<td>Address</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}"
+									th:each="obj,iterator : ${candidateDto.addresses}">
+									<td class="col-sm-2"><input type="text"
+										th:name="'country'+${iterator.count}"
+										class="form-control country" th:value="${obj.country}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'state'+${iterator.count}" class="form-control state"
+										th:value="${obj.state}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'city'+${iterator.count}" class="form-control city"
+										th:value="${obj.city}" /></td>
+									<td class="col-sm-5"><input type="text"
+										th:name="'addressLine'+${iterator.count}"
+										class="form-control addressLine" th:value="${obj.addressLine}" /></td>
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
 
 
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<tr
+									th:if="${(candidateDto.addresses == null or #lists.isEmpty(candidateDto.addresses))}">
+									<td class="col-sm-2"><input type="text" name="country1"
+										class="form-control country" /></td>
+									<td class="col-sm-2"><input type="text" name="state1"
+										class="form-control state" /></td>
+									<td class="col-sm-2"><input type="text" name="city1"
+										class="form-control city" /></td>
+									<td class="col-sm-5"><input type="text"
+										name="addressLine1" class="form-control addressLine" /></td>
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrow"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
 
-					</div>
+						<button type="submit" class="btn btn-primary" id="addressBtn">
+							Save changes</button>
+					</form>
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
 				</div>
 
@@ -950,114 +1041,114 @@ deg
 
 		</div>
 
-		<!-- Work Experience  Modal -->
-		<div class="modal fade" id="workExpModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
+	</div>
 
-			<div class="modal-dialog">
+	<!-- Work Experience  Modal -->
+	<div class="modal fade" id="workExpModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
 
-				<div class="modal-content">
+		<div class="modal-dialog">
 
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Work Experience
-						</h4>
-					</div>
+			<div class="modal-content">
 
-					<!-- Modal Body -->
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Work Experience
+					</h4>
+				</div>
 
-					<div class="modal-body">
-						<form id="workExp-form">
-							<table id="workExp" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Title</td>
-										<td>Start Date</td>
-										<td>End Date</td>
-										<td>Company</td>
-										<td>Industry</td>
-										<td>Summary</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}"
-										th:each="obj,iterator : ${candidateDto.experienceEntries}">
-										<td class="col-sm-1"><input type="text"
-											th:name="'title'+${iterator.count}"
-											class="form-control title" th:value="${obj.title}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'startDate'+${iterator.count}" readonly="readonly"
-											class="form-control startDate datepicker"
-											th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'endDate'+${iterator.count}" readonly="readonly"
-											class="form-control endDate datepicker"
-											th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
-										<td class="col-sm-1"><input type="text"
-											th:name="'company'+${iterator.count}"
-											class="form-control company" th:value="${obj.company}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'industry'+${iterator.count}"
-											class="form-control industry" th:value="${obj.industry}" /></td>
-										<td class="col-sm-3"><input type="text"
-											th:name="'summary'+${iterator.count}"
-											class="form-control summary" th:value="${obj.summary}" /></td>
+				<!-- Modal Body -->
 
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
+				<div class="modal-body">
+					<form id="workExp-form">
+						<table id="workExp" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Title</td>
+									<td>Start Date</td>
+									<td>End Date</td>
+									<td>Company</td>
+									<td>Industry</td>
+									<td>Summary</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}"
+									th:each="obj,iterator : ${candidateDto.experienceEntries}">
+									<td class="col-sm-1"><input type="text"
+										th:name="'title'+${iterator.count}" class="form-control title"
+										th:value="${obj.title}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'startDate'+${iterator.count}" readonly="readonly"
+										class="form-control startDate datepicker"
+										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'endDate'+${iterator.count}" readonly="readonly"
+										class="form-control endDate datepicker"
+										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
+									<td class="col-sm-1"><input type="text"
+										th:name="'company'+${iterator.count}"
+										class="form-control company" th:value="${obj.company}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'industry'+${iterator.count}"
+										class="form-control industry" th:value="${obj.industry}" /></td>
+									<td class="col-sm-3"><input type="text"
+										th:name="'summary'+${iterator.count}"
+										class="form-control summary" th:value="${obj.summary}" /></td>
 
-									<tr
-										th:if="${(candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}">
-										<td class="col-sm-1"><input type="text" name="title1"
-											class="form-control title" /></td>
-										<td class="col-sm-2"><input type="text" name="startDate1"
-											readonly="readonly" class="form-control startDate datepicker" /></td>
-										<td class="col-sm-2"><input type="text" name="endDate1"
-											readonly="readonly" class="form-control endDate datepicker" /></td>
-										<td class="col-sm-1"><input type="text" name="company1"
-											class="form-control company" /></td>
-										<td class="col-sm-2"><input type="text" name="industry1"
-											class="form-control industry" /></td>
-										<td class="col-sm-3"><input type="text" name="summary1"
-											class="form-control summary" /></td>
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
 
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block "
-											id="addrowWorkExp" value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
+								<tr
+									th:if="${(candidateDto.experienceEntries == null or #lists.isEmpty(candidateDto.experienceEntries))}">
+									<td class="col-sm-1"><input type="text" name="title1"
+										class="form-control title" /></td>
+									<td class="col-sm-2"><input type="text" name="startDate1"
+										readonly="readonly" class="form-control startDate datepicker" /></td>
+									<td class="col-sm-2"><input type="text" name="endDate1"
+										readonly="readonly" class="form-control endDate datepicker" /></td>
+									<td class="col-sm-1"><input type="text" name="company1"
+										class="form-control company" /></td>
+									<td class="col-sm-2"><input type="text" name="industry1"
+										class="form-control industry" /></td>
+									<td class="col-sm-3"><input type="text" name="summary1"
+										class="form-control summary" /></td>
 
-							<button type="submit" class="btn btn-primary"
-								id="workExperienceBtn">Save changes</button>
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrowWorkExp"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+
+						<button type="submit" class="btn btn-primary"
+							id="workExperienceBtn">Save changes</button>
 
 
-						</form>
+					</form>
 
-					</div>
+				</div>
 
-					<!-- Modal Footer -->
-					<div class="modal-footer">
+				<!-- Modal Footer -->
+				<div class="modal-footer">
 
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-					</div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
 				</div>
 
@@ -1065,400 +1156,400 @@ deg
 
 		</div>
 
+	</div>
 
 
-		<!-- Education  Modal -->
-		<div class="modal fade" id="educationModel" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
 
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Education
-						</h4>
-					</div>
+	<!-- Education  Modal -->
+	<div class="modal fade" id="educationModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
 
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<form id="education-form">
-							<table id="educationTable" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Degree</td>
-										<td>School</td>
-										<td>Field Of Study</td>
-										<td>Start Date</td>
-										<td>End Date</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
-										th:each="obj,iterator : ${candidateDto.educationEntries}">
-										<td class="col-sm-2"><input type="text"
-											th:name="'degree'+${iterator.count}"
-											class="form-control degree" th:value="${obj.degree}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'school'+${iterator.count}"
-											class="form-control school" th:value="${obj.school}" /></td>
-										<td class="col-sm-2"><input type="text"
-											th:name="'fieldOfStudy'+${iterator.count}"
-											class="form-control fieldOfStudy"
-											th:value="${obj.fieldOfStudy}" /></td>
-
-										<td class="col-sm-2"><input type="text"
-											th:name="'startDate'+${iterator.count}"
-											class="form-control startDate datepicker" readonly="readonly"
-											th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
-										<td class="col-sm-2"><input type="text" readonly="readonly"
-											th:name="'endDate'+${iterator.count}"
-											class="form-control endDate datepicker"
-											th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
-
-										<td class="col-sm-2"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
-									<tr
-										th:if="${(candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}">
-										<td class="col-sm-2"><input type="text" name="degree1"
-											class="form-control degree" /></td>
-										<td class="col-sm-2"><input type="text" name="school1"
-											class="form-control school" /></td>
-										<td class="col-sm-2"><input type="text"
-											name="fieldOfStudy1" class="form-control fieldOfStudy" /></td>
-
-										<td class="col-sm-2"><input type="text" name="startDate1" readonly="readonly"
-											class="form-control startDate datepicker" /></td>
-										<td class="col-sm-2"><input type="text" name="endDate1" readonly="readonly"
-											class="form-control endDate datepicker" /></td>
-
-										<td class="col-sm-2"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block "
-											id="addrowEducation" value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-							<button type="submit" class="btn btn-primary" id="EducationBtn">Save
-								changes</button>
-
-						</form>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Education
+					</h4>
 				</div>
 
-			</div>
-		</div>
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="education-form">
+						<table id="educationTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Degree</td>
+									<td>School</td>
+									<td>Field Of Study</td>
+									<td>Start Date</td>
+									<td>End Date</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}"
+									th:each="obj,iterator : ${candidateDto.educationEntries}">
+									<td class="col-sm-2"><input type="text"
+										th:name="'degree'+${iterator.count}"
+										class="form-control degree" th:value="${obj.degree}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'school'+${iterator.count}"
+										class="form-control school" th:value="${obj.school}" /></td>
+									<td class="col-sm-2"><input type="text"
+										th:name="'fieldOfStudy'+${iterator.count}"
+										class="form-control fieldOfStudy"
+										th:value="${obj.fieldOfStudy}" /></td>
 
+									<td class="col-sm-2"><input type="text"
+										th:name="'startDate'+${iterator.count}"
+										class="form-control startDate datepicker" readonly="readonly"
+										th:value="${#dates.format(obj.startDate,'MM/dd/yyyy')}" /></td>
+									<td class="col-sm-2"><input type="text"
+										readonly="readonly" th:name="'endDate'+${iterator.count}"
+										class="form-control endDate datepicker"
+										th:value="${#dates.format(obj.endDate,'MM/dd/yyyy')}" /></td>
 
+									<td class="col-sm-2"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.educationEntries == null or #lists.isEmpty(candidateDto.educationEntries))}">
+									<td class="col-sm-2"><input type="text" name="degree1"
+										class="form-control degree" /></td>
+									<td class="col-sm-2"><input type="text" name="school1"
+										class="form-control school" /></td>
+									<td class="col-sm-2"><input type="text"
+										name="fieldOfStudy1" class="form-control fieldOfStudy" /></td>
 
-		<div class="modal fade" id="skillModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
+									<td class="col-sm-2"><input type="text" name="startDate1"
+										readonly="readonly" class="form-control startDate datepicker" /></td>
+									<td class="col-sm-2"><input type="text" name="endDate1"
+										readonly="readonly" class="form-control endDate datepicker" /></td>
 
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Skill
-						</h4>
-					</div>
+									<td class="col-sm-2"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowEducation" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+						<button type="submit" class="btn btn-primary" id="EducationBtn">Save
+							changes</button>
 
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<form id="skill-form">
-							<table id="skillTable" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Skill Name</td>
-										<td>Proficient Level</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}"
-										th:each="obj,iterator : ${candidateDto.skils}">
-										<td class="col-sm-8"><input type="text"
-											th:name="'name'+${iterator.count}" class="form-control name"
-											th:value="${obj.name}" /></td>
-										<td class="col-sm-3"><input type="text"
-											th:name="'proficientLevel'+${iterator.count}"
-											class="form-control proficientLevel"
-											th:value="${obj.proficientLevel}" /></td>
-
-
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
-									<tr
-										th:if="${(candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}">
-										<td class="col-sm-8"><input type="text" th:name="name1"
-											class="form-control name" /></td>
-										<td class="col-sm-3"><input type="text"
-											th:name="proficientLevel1"
-											class="form-control proficientLevel" /></td>
-
-
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block " id="addrowSkill"
-											value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-
-							<button type="submit" class="btn btn-primary" id="skillBtn">Save
-								changes</button>
-
-						</form>
-
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-					</div>
+					</form>
 				</div>
 
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
+
 		</div>
-
-		<div class="modal fade" id="contactModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Contact
-						</h4>
-					</div>
-
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<form id="contact-form">
-							<table id="contactTable" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Country Code</td>
-										<td>Contact Number</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}"
-										th:each="obj,iterator : ${candidateDto.mobiles}">
-										<td class="col-sm-3"><input type="text"
-											th:name="'countryCode'+${iterator.count}"
-											class="form-control countryCode"
-											th:value="${obj.countryCode}" /></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="'mobileNumber'+${iterator.count}"
-											class="form-control mobileNumber"
-											th:value="${obj.mobileNumber}" /></td>
+	</div>
 
 
 
+	<div class="modal fade" id="skillModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
 
-
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
-									<tr
-										th:if="${(candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}">
-										<td class="col-sm-3"><input type="text"
-											th:name="countryCode1" class="form-control countryCode" /></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="mobileNumber1" class="form-control mobileNumber" /></td>
-
-
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block "
-											id="addrowContact" value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-							<button type="submit" class="btn btn-primary" id="contactBtn">Save
-								changes</button>
-						</form>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-					</div>
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Skill
+					</h4>
 				</div>
 
-			</div>
-		</div>
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="skill-form">
+						<table id="skillTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Skill Name</td>
+									<td>Proficient Level</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}"
+									th:each="obj,iterator : ${candidateDto.skils}">
+									<td class="col-sm-8"><input type="text"
+										th:name="'name'+${iterator.count}" class="form-control name"
+										th:value="${obj.name}" /></td>
+									<td class="col-sm-3"><input type="text"
+										th:name="'proficientLevel'+${iterator.count}"
+										class="form-control proficientLevel"
+										th:value="${obj.proficientLevel}" /></td>
 
 
-		<div class="modal fade" id="socialModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Social Profile
-						</h4>
-					</div>
-
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<form id="social-form">
-							<table id="socialTable" class=" table order-list">
-								<thead>
-									<tr>
-										<td>Type</td>
-										<td>Url</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										th:if="${not (candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}"
-										th:each="obj,iterator : ${candidateDto.socialProfiles}">
-										<td class="col-sm-3"><select
-											th:name="'domain'+${iterator.count}"
-											class="form-control type">
-												<option value="facebook"
-													th:selected="${obj.type == 'facebook'}">Facebook</option>
-												<option value="twitter"
-													th:selected="${obj.type == 'twitter'}">Twitter</option>
-												<option value="linkedin"
-													th:selected="${obj.type == 'linkedin'}">Linked-in</option>
-												<option value="github" th:selected="${obj.type == 'github'}">Github</option>
-												<option value="other" th:selected="${obj.type == 'other'}">Other</option>
-										</select></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="'profileDomain'+${iterator.count}"
-											class="form-control profile" th:value="${obj.url}" /></td>
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.skils == null or #lists.isEmpty(candidateDto.skils))}">
+									<td class="col-sm-8"><input type="text" th:name="name1"
+										class="form-control name" /></td>
+									<td class="col-sm-3"><input type="text"
+										th:name="proficientLevel1"
+										class="form-control proficientLevel" /></td>
 
 
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrowSkill"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
 
+						<button type="submit" class="btn btn-primary" id="skillBtn">Save
+							changes</button>
 
+					</form>
 
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
-									<tr
-										th:if="${(candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}">
-										<td class="col-sm-3"><select th:name="domain1"
-											class="form-control type">
-												<option value="facebook">Facebook</option>
-												<option value="twitter">Twitter</option>
-												<option value="linkedin">Linked-in</option>
-												<option value="github">Github</option>
-												<option value="other">Other</option>
-										</select></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="profileDomain1" class="form-control profile" /></td>
-
-
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block " id="addrowSocial"
-											value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-							<button type="submit" class="btn btn-primary" id="socialBtn">Save
-								changes</button>
-						</form>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-					</div>
 				</div>
 
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+				</div>
 			</div>
+
 		</div>
+	</div>
 
-		<div class="modal fade" id="hobbyModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
+	<div class="modal fade" id="contactModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
 
-				<div class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Hobbies
-						</h4>
-					</div>
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Contact
+					</h4>
+				</div>
 
-					<!-- Modal Body -->
-					<div class="modal-body">
-						<form id="hobby-form">
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="contact-form">
+						<table id="contactTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Country Code</td>
+									<td>Contact Number</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}"
+									th:each="obj,iterator : ${candidateDto.mobiles}">
+									<td class="col-sm-3"><input type="text"
+										th:name="'countryCode'+${iterator.count}"
+										class="form-control countryCode" th:value="${obj.countryCode}" /></td>
+									<td class="col-sm-8"><input type="text"
+										th:name="'mobileNumber'+${iterator.count}"
+										class="form-control mobileNumber"
+										th:value="${obj.mobileNumber}" /></td>
+
+
+
+
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.mobiles == null or #lists.isEmpty(candidateDto.mobiles))}">
+									<td class="col-sm-3"><input type="text"
+										th:name="countryCode1" class="form-control countryCode" /></td>
+									<td class="col-sm-8"><input type="text"
+										th:name="mobileNumber1" class="form-control mobileNumber" /></td>
+
+
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrowContact"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+						<button type="submit" class="btn btn-primary" id="contactBtn">Save
+							changes</button>
+					</form>
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="socialModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Social Profile
+					</h4>
+				</div>
+
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="social-form">
+						<table id="socialTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Type</td>
+									<td>Url</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}"
+									th:each="obj,iterator : ${candidateDto.socialProfiles}">
+									<td class="col-sm-3"><select
+										th:name="'domain'+${iterator.count}" class="form-control type">
+											<option value="facebook"
+												th:selected="${obj.type == 'facebook'}">Facebook</option>
+											<option value="twitter"
+												th:selected="${obj.type == 'twitter'}">Twitter</option>
+											<option value="linkedin"
+												th:selected="${obj.type == 'linkedin'}">Linked-in</option>
+											<option value="github" th:selected="${obj.type == 'github'}">Github</option>
+											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
+									</select></td>
+									<td class="col-sm-8"><input type="text"
+										th:name="'profileDomain'+${iterator.count}"
+										class="form-control profile" th:value="${obj.url}" /></td>
+
+
+
+
+
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.socialProfiles == null or #lists.isEmpty(candidateDto.socialProfiles))}">
+									<td class="col-sm-3"><select th:name="domain1"
+										class="form-control type">
+											<option value="facebook">Facebook</option>
+											<option value="twitter">Twitter</option>
+											<option value="linkedin">Linked-in</option>
+											<option value="github">Github</option>
+											<option value="other">Other</option>
+									</select></td>
+									<td class="col-sm-8"><input type="text"
+										th:name="profileDomain1" class="form-control profile" /></td>
+
+
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrowSocial"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+						<button type="submit" class="btn btn-primary" id="socialBtn">Save
+							changes</button>
+					</form>
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="hobbyModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Hobbies
+					</h4>
+				</div>
+
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="hobby-form">
 						<table id="hobbyTable" class=" table order-list">
 							<thead>
 								<tr>
@@ -1470,7 +1561,8 @@ deg
 								<tr
 									th:if="${not (candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}"
 									th:each="obj,iterator : ${candidateDto.hobbies}">
-									<td class="col-sm-3"><select th:name="'hobby'+${iterator.count}" class="form-control type">
+									<td class="col-sm-3"><select
+										th:name="'hobby'+${iterator.count}" class="form-control type">
 											<option value="writing"
 												th:selected="${obj.type == 'writing'}">Writing</option>
 											<option value="cycling"
@@ -1482,135 +1574,192 @@ deg
 											<option value="games" th:selected="${obj.type == 'games'}">Games</option>
 											<option value="other" th:selected="${obj.type == 'other'}">Other</option>
 									</select></td>
-									<td class="col-sm-8"><input type="text" th:name="'hobbyDes'+${iterator.count}"
+									<td class="col-sm-8"><input type="text"
+										th:name="'hobbyDes'+${iterator.count}"
 										class="form-control hobby" th:value="${obj.hobby}" /></td>
 
-										<td class="col-sm-1"><a th:if="${iterator.index == 0}"
-											class="deleteRow"></a> <input th:if="${iterator.index > 0}"
-											type="button" class="ibtnDel btn btn-md btn-danger "
-											value="Delete"></td>
-									</tr>
-									<tr
-										th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}">
-										<td class="col-sm-3"><select th:name="hobby1"
-											class="form-control type">
-												<option value="writing">Writing</option>
-												<option value="cycling">Cycling</option>
-												<option value="football">Football</option>
-												<option value="movies">Movies</option>
-												<option value="travel">Travel</option>
-												<option value="games">Games</option>
-												<option value="other">Other</option>
-										</select></td>
-										<td class="col-sm-8"><input type="text"
-											th:name="hobbyDes1" class="form-control hobby" /></td>
+									<td class="col-sm-1"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.hobbies))}">
+									<td class="col-sm-3"><select th:name="hobby1"
+										class="form-control type">
+											<option value="writing">Writing</option>
+											<option value="cycling">Cycling</option>
+											<option value="football">Football</option>
+											<option value="movies">Movies</option>
+											<option value="travel">Travel</option>
+											<option value="games">Games</option>
+											<option value="other">Other</option>
+									</select></td>
+									<td class="col-sm-8"><input type="text"
+										th:name="hobbyDes1" class="form-control hobby" /></td>
 
 
-										<td class="col-sm-1"><a class="deleteRow"></a></td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="12" style="text-align: left;"><input
-											type="button" class="btn btn-lg btn-block " id="addrowHobby"
-											value="Add Row" /></td>
-									</tr>
-									<tr>
-									</tr>
-								</tfoot>
-							</table>
-							<button type="submit" class="btn btn-primary" id="hobbyBtn">Save
-								changes</button>
-						</form>
-					</div>
-
-					<!-- Modal Footer -->
-					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
-					</div>
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block " id="addrowHobby"
+										value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+						<button type="submit" class="btn btn-primary" id="hobbyBtn">Save
+							changes</button>
+					</form>
 				</div>
 
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+				</div>
 			</div>
+
 		</div>
+	</div>
 
+	<!-- Language Model
+ -->
 
-		<div class="modal fade" id="avatarModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-				<form id="avatar-form">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">
-								<i class="far fa-user"></i> Avatar
-							</h4>
-						</div>
+	<div class="modal fade" id="languageModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
 
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<input id="avatarUpload" type="file" name="avatarUpload" />
-						</div>
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-pencil"></i> Languages
+					</h4>
+				</div>
 
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="uploadFile()">Save changes</button>
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</form>
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<form id="language-form">
+						<table id="languageTable" class=" table order-list">
+							<thead>
+								<tr>
+									<td>Language</td>
+									<td>&nbsp;Read</td>
+									<td>&nbsp;Write</td>
+									<td>&nbsp;Speak</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									th:if="${not (candidateDto.languages == null or #lists.isEmpty(candidateDto.languages))}"
+									th:each="obj,iterator : ${candidateDto.languages}">
+									<td class="col-sm-3"><input type="text"
+										th:name="'language'+${iterator.count}"
+										class="form-control language" th:value="${obj.language}" /></td>
+
+									<td class="col-sm-2"><select
+										th:name="'read'+${iterator.count}" class="form-control read">
+											<option value="YES" th:selected="${obj.read == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.read == 'NO'}">NO</option>
+									</select></td>
+
+									<td class="col-sm-2"><select
+										th:name="'write'+${iterator.count}" class="form-control write">
+											<option value="YES" th:selected="${obj.write == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.write == 'NO'}">NO</option>
+									</select></td>
+									<td class="col-sm-2"><select
+										th:name="'speak'+${iterator.count}" class="form-control speak">
+											<option value="YES" th:selected="${obj.speak == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.speak == 'NO'}">NO</option>
+									</select></td>
+
+									<td class="col-sm-2"><a th:if="${iterator.index == 0}"
+										class="deleteRow"></a> <input th:if="${iterator.index > 0}"
+										type="button" class="ibtnDel btn btn-md btn-danger "
+										value="Delete"></td>
+								</tr>
+								<tr
+									th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.languages))}">
+									<td class="col-sm-3"><input type="text"
+										th:name="languageFirst" class="form-control language"
+										th:value="${obj.language}" /></td>
+
+									<td class="col-sm-2"><select th:name="readFirst"
+										class="form-control read">
+											<option value="YES" th:selected="${obj.read == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.read == 'NO'}">NO</option>
+									</select></td>
+
+									<td class="col-sm-2"><select th:name="writeFirst"
+										class="form-control write">
+											<option value="YES" th:selected="${obj.write == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.write == 'NO'}">NO</option>
+									</select></td>
+									<td class="col-sm-2"><select th:name="speakFirst"
+										class="form-control speak">
+											<option value="YES" th:selected="${obj.speak == 'YES'}">YES</option>
+											<option value="NO" th:selected="${obj.speak == 'NO'}">NO</option>
+									</select></td>
+
+									<td class="col-sm-1"><a class="deleteRow"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" style="text-align: left;"><input
+										type="button" class="btn btn-lg btn-block "
+										id="addrowLanguage" value="Add Row" /></td>
+								</tr>
+								<tr>
+								</tr>
+							</tfoot>
+						</table>
+						<button type="submit" class="btn btn-primary" id="languageBtn">Save
+							changes</button>
+					</form>
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+				</div>
 			</div>
+
 		</div>
-
-		<div class="modal fade" id="uploadResumeModel" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-				<form id="resume-form">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">
-								<i class="far fa-user"></i> Upload Resume
-							</h4>
-						</div>
-
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<input id="resumeUpload" type="file" name="resumeUpload" />
-						</div>
-
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="uploadResume()">Save changes</button>
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
+	</div>
 
 
 
 
 
 
-		<div class="modal fade" id="downloadResumeModel" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-			data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
+
+
+
+
+
+
+
+
+
+	<div class="modal fade" id="avatarModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<form id="avatar-form">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
@@ -1618,60 +1767,128 @@ deg
 							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
 						</button>
 						<h4 class="modal-title" id="myModalLabel">
-							<i class="far fa-user"></i> Download Resume
+							<i class="far fa-user"></i> Avatar
 						</h4>
 					</div>
 
 					<!-- Modal Body -->
 					<div class="modal-body">
-						<table id="downloadResumeTable" class=" table order-list">
-							<thead>
-								<tr>
-									<td>Document Name</td>
-									<td>Download</td>
-									<td sec:authorize="hasAuthority('role_user')">Delete
-										Resume ?</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									th:if="${candidateDto.isResumeUploaded == true and obj.type == 'resume'}"
-									th:each="obj,iterator : ${candidateDto.documents}">
-									<td class="col-sm-9"><input type="hidden"
-										class="titleClazz" th:value="${obj.title}" /> <input
-										type="hidden" class="emailClazz"
-										th:value="${candidateDto.email}" /> <span
-										th:text="${obj.fileName}"></span></td>
-									<td class="col-sm-2"><a
-										th:href="@{|/candidateService/downloadResume?email=${candidateDto.email}&title=${obj.title}|}"><i
-											class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>
-
-									<td class="col-sm-1" sec:authorize="hasAuthority('role_user')">
-										<button type="button" class="iDelResume btn fa fa-trash"></button>
-
-
-
-									</td>
-								</tr>
-
-							</tbody>
-
-						</table>
+						<input id="avatarUpload" type="file" name="avatarUpload" />
 					</div>
 
 					<!-- Modal Footer -->
 					<div class="modal-footer">
-
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Close</button>
+						<button type="button" class="btn btn-primary"
+							onclick="uploadFile()">Save changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="uploadResumeModel" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<form id="resume-form">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<i class="far fa-user"></i> Upload Resume
+						</h4>
+					</div>
+
+					<!-- Modal Body -->
+					<div class="modal-body">
+						<input id="resumeUpload" type="file" name="resumeUpload" />
+					</div>
+
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="uploadResume()">Save changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="modal fade" id="downloadResumeModel" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<i class="far fa-user"></i> Download Resume
+					</h4>
+				</div>
+
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<table id="downloadResumeTable" class=" table order-list">
+						<thead>
+							<tr>
+								<td>Document Name</td>
+								<td>Download</td>
+								<td sec:authorize="hasAuthority('role_user')">Delete Resume
+									?</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								th:if="${candidateDto.isResumeUploaded == true and obj.type == 'resume'}"
+								th:each="obj,iterator : ${candidateDto.documents}">
+								<td class="col-sm-9"><input type="hidden"
+									class="titleClazz" th:value="${obj.title}" /> <input
+									type="hidden" class="emailClazz"
+									th:value="${candidateDto.email}" /> <span
+									th:text="${obj.fileName}"></span></td>
+								<td class="col-sm-2"><a
+									th:href="@{|/candidateService/downloadResume?email=${candidateDto.email}&title=${obj.title}|}"><i
+										class="fa fa-download" aria-hidden="true"></i> Click Here</a></td>
+
+								<td class="col-sm-1" sec:authorize="hasAuthority('role_user')">
+									<button type="button" class="iDelResume btn fa fa-trash"></button>
+
+
+
+								</td>
+							</tr>
+
+						</tbody>
+
+					</table>
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div id="overlay" style="display: none;">
-			<div class="spinner"></div>
-			<br /> Loading...
-		</div>
+	<div id="overlay" style="display: none;">
+		<div class="spinner"></div>
+		<br /> Loading...
+	</div>
 </body>
 </html>

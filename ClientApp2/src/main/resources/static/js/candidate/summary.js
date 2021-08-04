@@ -73,7 +73,8 @@ $(document).ready(function () {
 	var mobleCounter=$('#contactTable tbody tr').length;
 	var socialCounter=$('#socialTable tbody tr').length;
 	var hobbyCounter=$('#hobbyTable tbody tr').length;
-
+	var languageCounter=$('#languageTable tbody tr').length;
+	
 	var validation = $('#address-form').validate();
 	var workExpValidation = $('#workExp-form').validate();
 	var educationValidation=$("#education-form").validate();
@@ -81,6 +82,9 @@ $(document).ready(function () {
 	var mobileValidation=$("#contact-form").validate();
 	var socialValidation=$("#social-form").validate();
 	var hobbyValidation=$("#hobby-form").validate();
+	
+	var languageValidation=$("#language-form").validate();
+	
 	var rules = {};
 	var messages = {};
 	var rules1 = {};
@@ -117,7 +121,11 @@ $(document).ready(function () {
 	var hobbyMessages={};
 	var hobbyMessages1={};
 
-
+	var languageRules={};
+	var languageRules1={};
+	var languageMessages={};
+	var languageMessages1={};
+	
 	$("table.order-list").on("click", ".ibtnDel", function (event) {
 		$(this).closest("tr").remove();       
 		//counter -= 1
@@ -1057,6 +1065,135 @@ $(document).ready(function () {
 
 	});//end of form submit
 //	-------------------------------------------------------------hobby ends here------------------------------------------      
+	//------------------------------------------------------------Language start here-------------------------------------
+	
+	$("#addrowLanguage").on("click", function () {
+
+		languageCounter++;
+
+		var newRow = $("<tr>");
+		var cols = "";
+
+		cols += '<td class="col-sm-3"><input name="language' + languageCounter + '"type="text" class="form-control language"> </td>';
+		cols += '<td class="col-sm-2"><select name="read' + languageCounter + '"class="form-control read"><option value="YES" >YES</option><option value="NO" >NO</option></select></td>';
+		cols += '<td class="col-sm-2"><select name="write' + languageCounter + '"class="form-control write"><option value="YES" >YES</option><option value="NO" >NO</option></select></td>';
+		cols += '<td class="col-sm-2"><select name="speak' + languageCounter + '"class="form-control speak"><option value="YES" >YES</option><option value="NO" >NO</option></select></td>';
+		
+
+		cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+		newRow.append(cols);
+		$("#languageModel table.order-list").append(newRow);
+
+		var languageRules={};
+		var languageRules1={};
+		
+		var languageMessages={};
+		var languageMessages1={};
+		$("#language-form").find($("input:text")).each(function(){ 
+			var name = $(this).attr('name');
+			languageRules1[name] = {};
+			languageMessages1[name] = {};
+			languageRules1[name] = {required: true}; 
+			languageMessages1[name]= {required:"Please provide valid value"};
+
+		});
+		languageValidation.resetForm();
+		languageValidation.settings.rules =languageRules1;
+		languageValidation.settings.messages =languageMessages1;
+
+
+	});
+
+
+
+
+	$("#language-form").find($("input:text")).each(function(){ 
+		var name = $(this).attr('name');
+		languageRules[name] = {};
+		languageMessages[name] = {};
+		languageRules[name] = {required: true}; 
+		languageMessages[name]= {required:"Please provide valid value"};
+
+	});
+	languageValidation.resetForm();
+	languageValidation.settings.rules =languageRules;
+	languageValidation.settings.messages =languageMessages;
+
+
+
+	$("#language-form").on("submit", function (event) {
+
+
+		//$('#overlay').fadeIn();
+		event.preventDefault();
+
+		if($("#language-form").valid()){
+
+
+			var languageList = new Array();
+			$("#languageModel tbody tr").each(function () {
+				var row = $(this);
+				var languageObj = {};
+				languageObj.language = row.find(".language").eq(0).val();  
+				languageObj.read = row.find(".read").eq(0).val();
+				languageObj.write = row.find(".write").eq(0).val();  
+				languageObj.speak = row.find(".speak").eq(0).val();
+				
+				languageList.push(languageObj);
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "/api/candidate/language/update",
+				data: JSON.stringify(languageList),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+
+
+					// $('#workExp').modal('hide');
+					if(data.httpStatus == "OK"){
+						$('#overlay').fadeIn();
+						$('#overlay').fadeOut();
+						jQuery('#languageFragment').html('');
+
+						$.each(data.output, function(key,value) {
+
+						
+
+							$( "#languageFragment" ).append(
+									'<span>'+ value.language +'</span>'+' --> &nbsp;'+'<span>'+ value.read +'</span>'+
+									'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'<span>'
+									+ value.write +'</span>'+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'<span>'+ value.speak +'</span>'+'<br>'
+							)
+						}); 
+					}
+				},
+				error: function (e) {
+
+					 var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+	                     + e.responseText + "&lt;/pre&gt;";
+	                 $('#feedback').html(json);
+
+					//console.log("ERROR : ", e.responseText);
+					// $("#btn-search").prop("disabled", false);
+					window.location.href="/candidate/refresh";
+
+					$('#overlay').fadeOut();
+					// $('#workExp').modal('hide');
+				}
+			});
+
+		}//end of valid checking
+
+	});//end of form submit
+//-------------------------------------------------------------------------language ends here-------------------------------------------
+	
+	
+	
+	
+	
+	
 	/*
     $("#avatarBtn").on("click", function () {
 

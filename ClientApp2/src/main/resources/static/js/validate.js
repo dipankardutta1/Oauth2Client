@@ -123,6 +123,7 @@ $(function(){
 	$("#contact-form").validate();
 	$("#social-form").validate();
 	$("#hobby-form").validate();
+	$("#language-form").validate();
 	
 	$("#avatar-form").validate({
 		
