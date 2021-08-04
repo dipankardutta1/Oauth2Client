@@ -1153,6 +1153,7 @@ $(document).ready(function () {
 
 					// $('#workExp').modal('hide');
 					if(data.httpStatus == "OK"){
+						alert("Data Updated");
 						$('#overlay').fadeIn();
 						$('#overlay').fadeOut();
 						jQuery('#languageFragment').html('');

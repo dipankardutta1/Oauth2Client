@@ -15,6 +15,7 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
 <script th:src="@{/js/bootstrap3-typeahead.js}"></script>
+<script th:src="@{/js/validate.js}"></script>
 
 
 <!------ Include the above in your HEAD tag ---------->
@@ -110,19 +111,78 @@
 											}, 1);
 								});
 
-						$("#first-name").blur(
-								function() {
-									$("#first-name").val(
-											$("#first-name").val()
-													.toUpperCase());
+						$('input[name="languageSearch"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/language/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="languageSearch"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
 								});
 
-						$("#last-name").blur(
+						$('input[name="marital-status"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/maritalStatus/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="marital-status"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
+						$("#searchFirstName").blur(
 								function() {
-									$("#last-name")
-											.val(
-													$("#last-name").val()
-															.toUpperCase());
+									$("#searchFirstName").val(
+											$("#searchFirstName").val()
+													.toUpperCase());
+									//$("#candidateSearch-form").validate();
+									/* $("#candidateSearch-form").on("submit", function (event) {
+										alert("ok");
+										event.preventDefault();
+										
+									}); */
+			
+								});
+
+						$("#searchLastName").blur(
+								function() {
+									$("#searchLastName")
+									.val(
+											$("#searchLastName").val()
+													.toUpperCase());
+									//$("#candidateSearch-form").validate();
+									
 								});
 
 					});
@@ -249,8 +309,9 @@ a {
 
 													<section class="search-sec">
 														<div>
-															<form th:action="@{/candidateService/search}"
-																method="post" novalidate="novalidate">
+															<form id="candidateSearch-form"
+																 method="post" th:action="@{/candidateService/search}"
+																novalidate="novalidate">
 																<div class="row">
 																	<div class="col-lg-12">
 
@@ -322,8 +383,9 @@ a {
 																					<h4 class="panel-title">
 																						<a class="accordion-toggle" data-toggle="collapse"
 																							data-parent="#accordion" href="#collapseTwo">
-																							Personnel Details </a><i class="fa fa-user"
-																							aria-hidden="true"></i>
+																							<i class="fa fa-user" aria-hidden="true"></i>&nbsp;Personnel
+																							Details
+																						</a>
 																					</h4>
 																				</div>
 																				<div id="collapseTwo"
@@ -332,71 +394,82 @@ a {
 																						<div class="row">
 																							<div class="col-xs-7 col-sm-6 col-lg-8">
 																								<div class="form-group">
-																									<label for="first-name">First Name:</label> <input
+																									<label for="first-name">First Name</label> <input
 																										type="text" class="form-control"
-																										th:name="first-name" id="first-name">
+																										th:name="searchFirstName" id="searchFirstName"
+																										placeholder="Add First Name">
 																								</div>
 
 																							</div>
 																							<div class="col-xs-5 col-sm-6 col-lg-4">
 
 																								<div class="form-group">
-																									<label for="last-name">Last Name:</label> <input
+																									<label for="last-name">Last Name</label> <input
 																										type="text" class="form-control"
-																										th:name="last-name" id="last-name">
+																										th:name="searchLastName" id="searchLastName"
+																										placeholder="Add Last Name">
 																								</div>
 																							</div>
 																						</div>
-																						<br>
+
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="marital-status"
-																									class="form-control search-slt"
-																									placeholder="Add Marital Status">
+																								<div class="form-group">
+																									<label for="last-name">Marital Status </label>
+
+																									<input type="text" th:name="marital-status"
+																										class="form-control search-slt"
+																										placeholder="Add Marital Status">
+																								</div>
 																							</div>
 																						</div>
-																						<br>
+
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="locations"
-																									class="form-control search-slt"
-																									placeholder="Add Locations">
+																								<div class="form-group">
+																									<label for="last-name">Locations </label> <input
+																										type="text" th:name="locations"
+																										class="form-control search-slt"
+																										placeholder="Add Locations">
+																								</div>
 																							</div>
 																						</div>
-																						<br>
+
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="language-search"
-																									class="form-control search-slt"
-																									placeholder="Add Languages">
+																								<div class="form-group">
+																									<label for="last-name">Languages</label> <input
+																										type="text" th:name="languageSearch"
+																										class="form-control search-slt"
+																										placeholder="Add Languages">
+																								</div>
 																							</div>
 																						</div>
-																						<br>
+
 																						<div class="row">
 																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
-																							<label for="resume-uploaded">Resume Uploaded:</label>
-																								<select th:name="resume-uploaded" id="resume-uploaded"
+																								<label for="resume-uploaded">Resume
+																									Uploaded</label> <select th:name="resume-uploaded"
+																									id="resume-uploaded"
 																									class="form-control resume-upload">
-																									<option value="YES"
-																										>YES</option>
-																									<option value="NO"
-																										>NO</option>
+																									<option value="YES">YES</option>
+																									<option value="NO">NO</option>
 																								</select>
 																							</div>
 																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
-																							<label for="image-uploaded">Image Uploaded:</label>
-																								<select th:name="image-uploaded" id="image-uploaded"
+																								<label for="image-uploaded">Image
+																									Uploaded</label> <select th:name="image-uploaded"
+																									id="image-uploaded"
 																									class="form-control image-upload">
-																									<option value="YES"
-																										>YES</option>
-																									<option value="NO"
-																										>NO</option>
+																									<option value="YES">YES</option>
+																									<option value="NO">NO</option>
 																								</select>
 																							</div>
 																						</div>
 																					</div>
 																				</div>
-																			</div><!-- th:selected="" -->
+																			</div>
+																			<!-- th:selected="" -->
 																			<div class="panel panel-default">
 																				<div class="panel-heading">
 																					<h4 class="panel-title">

@@ -161,6 +161,64 @@ public class CandidateRestController {
         }
 	}
 	
+	@GetMapping("/api/candidate/maritalStatus/findAll")
+	public ResponseEntity<String> findAllMaritalStatus(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllMaritalStatus();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	@GetMapping("/api/candidate/language/findAll")
+	public ResponseEntity<String> findAllLanguage(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllLanguage();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+
+	
+	
 	
 	
 	@PostMapping("/api/candidate/resume/update")

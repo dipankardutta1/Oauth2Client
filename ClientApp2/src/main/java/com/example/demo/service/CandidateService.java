@@ -434,7 +434,25 @@ public class CandidateService {
 
 		return responseEntity;
 	}
+	public ResponseEntity<ResponseDto> findAllMaritalStatus() {
+		String url = resouceServerDomain+"/candidate/findAll/maritalStatus";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
 
+		return responseEntity;
+	}
+	
+	public ResponseEntity<ResponseDto> findAllLanguage() {
+		String url = resouceServerDomain+"/candidate/findAll/language";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+	
+	
 
 	public ResponseEntity<ResponseDto> updateResume(DocumentsDto documentsDto) {
 		MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
