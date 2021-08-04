@@ -217,7 +217,61 @@ public class CandidateRestController {
         }
 	}
 
+	@GetMapping("/api/candidate/companies/findAll")
+	public ResponseEntity<String> findAllCompanies(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllCompanies();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
 	
+	@GetMapping("/api/candidate/industries/findAll")
+	public ResponseEntity<String> findAllIndustries(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllIndustries();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
 	
 	
 	

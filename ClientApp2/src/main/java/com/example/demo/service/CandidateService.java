@@ -451,8 +451,22 @@ public class CandidateService {
 
 		return responseEntity;
 	}
-	
-	
+	public ResponseEntity<ResponseDto> findAllCompanies() {
+		String url = resouceServerDomain+"/candidate/findAll/companies";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+	public ResponseEntity<ResponseDto> findAllIndustries() {
+		String url = resouceServerDomain+"/candidate/findAll/industries";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
 
 	public ResponseEntity<ResponseDto> updateResume(DocumentsDto documentsDto) {
 		MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();

@@ -15,7 +15,9 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
 <script th:src="@{/js/bootstrap3-typeahead.js}"></script>
-<script th:src="@{/js/validate.js}"></script>
+<script th:src="@{/js/jquery.validate.js}"></script>
+
+<script th:src="@{/js/searchCandidate.js}"></script>
 
 
 <!------ Include the above in your HEAD tag ---------->
@@ -135,7 +137,7 @@
 														.val("");
 											}, 1);
 								});
-
+						
 						$('input[name="marital-status"]')
 								.tagsinput(
 										{
@@ -161,29 +163,78 @@
 											}, 1);
 								});
 
+						$('input[name="companies"]')
+						.tagsinput(
+								{
+									typeahead : {
+										minLength : 1,
+										delay : 400,
+										source : $
+												.getJSON('http://localhost:8000/api/candidate/companies/findAll')
+
+									},
+									freeInput : false
+								});
+				$('input[name="companies"]').on(
+						'itemAdded',
+						function(event) {
+							//here some set timeout to call function
+							setTimeout(
+									function() {
+										//just check inputbox here
+										$(">input[type=text]",
+												".bootstrap-tagsinput")
+												.val("");
+									}, 1);
+						});
+
+						
+				$('input[name="industry"]')
+				.tagsinput(
+						{
+							typeahead : {
+								minLength : 1,
+								delay : 400,
+								source : $
+										.getJSON('http://localhost:8000/api/candidate/industries/findAll')
+
+							},
+							freeInput : false
+						});
+		$('input[name="industry"]').on(
+				'itemAdded',
+				function(event) {
+					//here some set timeout to call function
+					setTimeout(
+							function() {
+								//just check inputbox here
+								$(">input[type=text]",
+										".bootstrap-tagsinput")
+										.val("");
+							}, 1);
+				});
+
+				
+						
+						
+						
 						$("#firstName").blur(
 								function() {
 									$("#firstName").val(
 											$("#searchFirstName").val()
 													.toUpperCase());
-									//$("#candidateSearch-form").validate();
-									/* $("#candidateSearch-form").on("submit", function (event) {
-										alert("ok");
-										event.preventDefault();
-										
-									}); */
-			
+									$("#candidateSearch-form").validate();
+
 								});
 
 						$("#lastName").blur(
 								function() {
 									//$("#candidateSearch-form").validate();
-									$("#lastName")
-									.val(
+									$("#lastName").val(
 											$("#searchLastName").val()
 													.toUpperCase());
-									//$("#candidateSearch-form").validate();
-									
+									$("#candidateSearch-form").validate();
+
 								});
 
 					});
@@ -192,6 +243,11 @@
 <style type="text/css">
 body {
 	background: #dcdcdc;
+}
+
+.error {
+	color: red;
+	font-style: italic;
 }
 
 .card-box {
@@ -310,8 +366,8 @@ a {
 
 													<section class="search-sec">
 														<div>
-															<form id="candidateSearch-form"
-																 method="post" th:action="@{/candidateService/search}"
+															<form id="candidateSearch-form" method="post"
+																th:action="@{/candidateService/search}"
 																novalidate="novalidate">
 																<div class="row">
 																	<div class="col-lg-12">
@@ -330,10 +386,12 @@ a {
 																					<div class="panel-body">
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="skillls"
-																									class="form-control search-slt"
-																									placeholder="Add Skills">
-
+																								<div class="form-group">
+																									<label for="first-name">Skills</label> <input
+																										type="text" th:name="skillls"
+																										class="form-control search-slt"
+																										placeholder="Add Skills">
+																								</div>
 																							</div>
 
 																						</div>
@@ -342,9 +400,12 @@ a {
 																						</div>
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="locations"
-																									class="form-control search-slt"
-																									placeholder="Add Locations">
+																								<div class="form-group">
+																									<label for="first-name">Locations</label> <input
+																										type="text" th:name="locations"
+																										class="form-control search-slt"
+																										placeholder="Add Locations">
+																								</div>
 																							</div>
 																						</div>
 																						<div class="row">
@@ -352,9 +413,12 @@ a {
 																						</div>
 																						<div class="row">
 																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<input type="text" th:name="workExp"
-																									class="form-control search-slt"
-																									placeholder="Add Work Experiance">
+																								<div class="form-group">
+																									<label for="first-name">Work Experience</label>
+																									<input type="text" th:name="workExp"
+																										class="form-control search-slt"
+																										placeholder="Add Work Experiance">
+																								</div>
 																							</div>
 
 																							<!-- <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
@@ -476,12 +540,79 @@ a {
 																					<h4 class="panel-title">
 																						<a class="accordion-toggle" data-toggle="collapse"
 																							data-parent="#accordion" href="#collapseThree">
-																							Search Criteria 3 </a>
+																							<i class="fa fa-id-card-o" aria-hidden="true"></i>
+																							&nbsp;Work Experience </a>
 																					</h4>
 																				</div>
 																				<div id="collapseThree"
 																					class="panel-collapse collapse">
-																					<div class="panel-body">//data3</div>
+																					<div class="panel-body">
+																																									<div class="row">
+																								<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																									<div class="form-group">
+																										<label for="skillls">Skills</label> <input
+																											type="text" th:name="skillls"
+																											class="form-control search-slt"
+																											placeholder="Add Skills">
+																									</div>
+																								</div>
+
+																							</div>
+
+																						<div class="row">
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workStart">Work Start
+																								</label> <select th:name="workStart" id="workStart"
+																									class="form-control workStart">
+																									<option value="0">0</option>
+																									<option value="60">60</option>
+																								</select>
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workEnd">Work End</label> <select
+																									th:name="workEnd" id="workEnd"
+																									class="form-control workEnd">
+																									<option value="0">0</option>
+																									<option value="60">60</option>
+																								</select>
+																							</div>
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="companies">Companies</label> <input
+																										type="text" th:name="companies" id="companies"
+																										class="form-control search-slt"
+																										placeholder="Add Companies">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="industry">Industry</label> <input
+																										type="text" th:name="industry" id="industry"
+																										class="form-control search-slt"
+																										placeholder="Add Industries">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																						<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<label for="companyInfo">Company Information</label> <select
+																									th:name="companyInfo" id="companyInfo"
+																									class="form-control companyInfo">
+																									<option value="ANY">ANY</option>
+																									<option value="CURRENT">CURRENT</option>
+																									<option value="PREVIOUS">PREVIOUS</option>
+																								</select>
+																							</div>
+																						
+																						</div>
+																						
+																					</div>
 																				</div>
 																			</div>
 																		</div>
