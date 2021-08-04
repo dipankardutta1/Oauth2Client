@@ -20,89 +20,112 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						$('[data-toggle="offcanvas"]').click(function() {
+							$("#navigation").toggleClass("hidden-xs");
+						});
 
-$(document).ready(function(){
-	   $('[data-toggle="offcanvas"]').click(function(){
-	       $("#navigation").toggleClass("hidden-xs");
-	   });
-	   
-	   
-	  /*  $('input[name="skillls"]').amsifySuggestags({
-       	suggestionsAction : { 		url: 'http://localhost:8000/api/candidate/skill/findAll' 	}
-       	
-       }); */
-       
-       $('input[name="skillls"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/skill/findAll')
-    		  
+						/*  $('input[name="skillls"]').amsifySuggestags({
+						 	suggestionsAction : { 		url: 'http://localhost:8000/api/candidate/skill/findAll' 	}
+						 	
+						 }); */
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="skillls"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       $('input[name="locations"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/country/findAll')
-    		  
+						$('input[name="skillls"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/skill/findAll')
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="locations"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       $('input[name="workExp"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/workexp/findAll')
-    		  
+											},
+											freeInput : false
+										});
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="workExp"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       
-	   
-	   
-	});
+						$('input[name="skillls"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
 
+						$('input[name="locations"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/country/findAll')
 
+											},
+											freeInput : false
+										});
 
+						$('input[name="locations"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
 
+						$('input[name="workExp"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/workexp/findAll')
+
+											},
+											freeInput : false
+										});
+
+						$('input[name="workExp"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
+						$("#first-name").blur(
+								function() {
+									$("#first-name").val(
+											$("#first-name").val()
+													.toUpperCase());
+								});
+
+						$("#last-name").blur(
+								function() {
+									$("#last-name")
+											.val(
+													$("#last-name").val()
+															.toUpperCase());
+								});
+
+					});
 </script>
 
 <style type="text/css">
@@ -224,17 +247,12 @@ a {
 											<div class="pt-3 pb-4">
 												<div>
 
-
-
-
-
 													<section class="search-sec">
 														<div>
 															<form th:action="@{/candidateService/search}"
 																method="post" novalidate="novalidate">
 																<div class="row">
 																	<div class="col-lg-12">
-
 
 																		<div class="panel-group" id="accordion">
 																			<div class="panel panel-default">
@@ -304,14 +322,81 @@ a {
 																					<h4 class="panel-title">
 																						<a class="accordion-toggle" data-toggle="collapse"
 																							data-parent="#accordion" href="#collapseTwo">
-																							Search Criteria 2 </a>
+																							Personnel Details </a><i class="fa fa-user"
+																							aria-hidden="true"></i>
 																					</h4>
 																				</div>
 																				<div id="collapseTwo"
 																					class="panel-collapse collapse">
-																					<div class="panel-body">//data2</div>
+																					<div class="panel-body">
+																						<div class="row">
+																							<div class="col-xs-7 col-sm-6 col-lg-8">
+																								<div class="form-group">
+																									<label for="first-name">First Name:</label> <input
+																										type="text" class="form-control"
+																										th:name="first-name" id="first-name">
+																								</div>
+
+																							</div>
+																							<div class="col-xs-5 col-sm-6 col-lg-4">
+
+																								<div class="form-group">
+																									<label for="last-name">Last Name:</label> <input
+																										type="text" class="form-control"
+																										th:name="last-name" id="last-name">
+																								</div>
+																							</div>
+																						</div>
+																						<br>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<input type="text" th:name="marital-status"
+																									class="form-control search-slt"
+																									placeholder="Add Marital Status">
+																							</div>
+																						</div>
+																						<br>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<input type="text" th:name="locations"
+																									class="form-control search-slt"
+																									placeholder="Add Locations">
+																							</div>
+																						</div>
+																						<br>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<input type="text" th:name="language-search"
+																									class="form-control search-slt"
+																									placeholder="Add Languages">
+																							</div>
+																						</div>
+																						<br>
+																						<div class="row">
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																							<label for="resume-uploaded">Resume Uploaded:</label>
+																								<select th:name="resume-uploaded" id="resume-uploaded"
+																									class="form-control resume-upload">
+																									<option value="YES"
+																										>YES</option>
+																									<option value="NO"
+																										>NO</option>
+																								</select>
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																							<label for="image-uploaded">Image Uploaded:</label>
+																								<select th:name="image-uploaded" id="image-uploaded"
+																									class="form-control image-upload">
+																									<option value="YES"
+																										>YES</option>
+																									<option value="NO"
+																										>NO</option>
+																								</select>
+																							</div>
+																						</div>
+																					</div>
 																				</div>
-																			</div>
+																			</div><!-- th:selected="" -->
 																			<div class="panel panel-default">
 																				<div class="panel-heading">
 																					<h4 class="panel-title">
@@ -391,8 +476,7 @@ a {
 																	th:text="${obj.email}"></span></a></span>
 														</p>
 														<p class="mb-0 font-13">
-															<b>Bio:</b> <br>
-															<span class="text-muted"><span
+															<b>Bio:</b> <br> <span class="text-muted"><span
 																th:text="${obj.summary}"></span></span>
 														</p>
 													</div>
