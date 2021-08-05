@@ -1,201 +1,333 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:og="http://ogp.me/ns#"
+	xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
 <meta charset="UTF-8">
 <title>Secured Page</title>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" >
-<link th:href="@{/css/dashboardui.css}" rel="stylesheet" >
-<link th:href="@{/css/custom.css}" rel="stylesheet" >
-<link th:href="@{/css/bootstrap-tagsinput.css}" rel="stylesheet" >
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	id="bootstrap-css">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/css/dashboardui.css}" rel="stylesheet">
+<link th:href="@{/css/custom.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap-tagsinput.css}" rel="stylesheet">
 
 <script th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/bootstrap-tagsinput.js}"></script>
 <script th:src="@{/js/bootstrap3-typeahead.js}"></script>
+<script th:src="@{/js/jquery.validate.js}"></script>
+
+<script th:src="@{/js/searchCandidate.js}"></script>
 
 
 <!------ Include the above in your HEAD tag ---------->
 
 <script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						$('[data-toggle="offcanvas"]').click(function() {
+							$("#navigation").toggleClass("hidden-xs");
+						});
 
-$(document).ready(function(){
-	   $('[data-toggle="offcanvas"]').click(function(){
-	       $("#navigation").toggleClass("hidden-xs");
-	   });
-	   
-	   
-	  /*  $('input[name="skillls"]').amsifySuggestags({
-       	suggestionsAction : { 		url: 'http://localhost:8000/api/candidate/skill/findAll' 	}
-       	
-       }); */
-       
-       $('input[name="skillls"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/skill/findAll')
-    		  
+						/*  $('input[name="skillls"]').amsifySuggestags({
+						 	suggestionsAction : { 		url: 'http://localhost:8000/api/candidate/skill/findAll' 	}
+						 	
+						 }); */
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="skillls"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       $('input[name="locations"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/country/findAll')
-    		  
+						$('input[name="skillls"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/skill/findAll')
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="locations"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       $('input[name="workExp"]').tagsinput({
-    	   typeahead: {
-    	     minLength: 1,
-    	     delay: 400,
-    	     source: $.getJSON('http://localhost:8000/api/candidate/workexp/findAll')
-    		  
+											},
+											freeInput : false
+										});
 
-    	   },
-    	   freeInput: false
-    	 });
-       
-       $('input[name="workExp"]').on('itemAdded', function(event) {
-    	   //here some set timeout to call function
-    	    setTimeout(function(){
-    	      //just check inputbox here
-    	        $(">input[type=text]",".bootstrap-tagsinput").val("");
-    	    }, 1);
-    	});
-       
-       
-       
-       
-	   
-	   
-	});
+						$('input[name="skillls"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
 
+						$('input[name="locations"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/country/findAll')
 
+											},
+											freeInput : false
+										});
 
+						$('input[name="locations"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
 
+						$('input[name="workExp"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/workexp/findAll')
+
+											},
+											freeInput : false
+										});
+
+						$('input[name="workExp"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
+						$('input[name="languageSearch"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/language/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="languageSearch"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+						
+						$('input[name="marital-status"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/maritalStatus/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="marital-status"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
+						$('input[name="companies"]')
+						.tagsinput(
+								{
+									typeahead : {
+										minLength : 1,
+										delay : 400,
+										source : $
+												.getJSON('http://localhost:8000/api/candidate/companies/findAll')
+
+									},
+									freeInput : false
+								});
+				$('input[name="companies"]').on(
+						'itemAdded',
+						function(event) {
+							//here some set timeout to call function
+							setTimeout(
+									function() {
+										//just check inputbox here
+										$(">input[type=text]",
+												".bootstrap-tagsinput")
+												.val("");
+									}, 1);
+						});
+
+						
+				$('input[name="industry"]')
+				.tagsinput(
+						{
+							typeahead : {
+								minLength : 1,
+								delay : 400,
+								source : $
+										.getJSON('http://localhost:8000/api/candidate/industries/findAll')
+
+							},
+							freeInput : false
+						});
+		$('input[name="industry"]').on(
+				'itemAdded',
+				function(event) {
+					//here some set timeout to call function
+					setTimeout(
+							function() {
+								//just check inputbox here
+								$(">input[type=text]",
+										".bootstrap-tagsinput")
+										.val("");
+							}, 1);
+				});
+
+				
+						
+						
+						
+						$("#firstName").blur(
+								function() {
+									$("#firstName").val(
+											$("#searchFirstName").val()
+													.toUpperCase());
+									$("#candidateSearch-form").validate();
+
+								});
+
+						$("#lastName").blur(
+								function() {
+									//$("#candidateSearch-form").validate();
+									$("#lastName").val(
+											$("#searchLastName").val()
+													.toUpperCase());
+									$("#candidateSearch-form").validate();
+
+								});
+
+					});
 </script>
 
 <style type="text/css">
+body {
+	background: #dcdcdc;
+}
 
-body{
-    background:#dcdcdc;
+.error {
+	color: red;
+	font-style: italic;
 }
+
 .card-box {
-    padding: 20px;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    background-color: #fff;
+	padding: 20px;
+	border-radius: 3px;
+	margin-bottom: 30px;
+	background-color: #fff;
 }
+
 .search-result-box .tab-content {
-    padding: 30px 30px 10px 30px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -moz-box-shadow: none
+	padding: 30px 30px 10px 30px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	-moz-box-shadow: none
 }
 
 .search-result-box .search-item {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e3eaef;
-    margin-bottom: 20px
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e3eaef;
+	margin-bottom: 20px
 }
+
 .text-success {
-    color: #0acf97!important;
+	color: #0acf97 !important;
 }
+
 a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
+	color: #007bff;
+	text-decoration: none;
+	background-color: transparent;
 }
+
 .btn-custom {
-    background-color: #02c0ce;
-    border-color: #02c0ce;
+	background-color: #02c0ce;
+	border-color: #02c0ce;
 }
 
-.btn-custom, .btn-danger, .btn-info, .btn-inverse, .btn-pink, .btn-primary, .btn-purple, .btn-success, .btn-warning {
-    color: #fff!important;
+.btn-custom, .btn-danger, .btn-info, .btn-inverse, .btn-pink,
+	.btn-primary, .btn-purple, .btn-success, .btn-warning {
+	color: #fff !important;
 }
-
-
-
-
 
 .profile-box {
-    width: 1050px;
-    margin: 30px auto;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    background-color: #FFF;
-    padding-left: 40px;
-    padding-right: 20px;
+	width: 1050px;
+	margin: 30px auto;
+	box-shadow: 0 2px 5px 0 rgb(0 0 0/ 16%), 0 2px 10px 0 rgb(0 0 0/ 12%);
+	background-color: #FFF;
+	padding-left: 40px;
+	padding-right: 20px;
 }
 
-
-
-
-.search-sec{
-    padding: 2rem;
-}
-.search-slt{
-    display: block;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: #55595c;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    height: calc(3rem + 2px) !important;
-    border-radius:0;
-}
-.wrn-btn{
-    width: 100%;
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: capitalize;
-    height: calc(3rem + 2px) !important;
-    border-radius:0;
+.search-sec {
+	padding: 2rem;
 }
 
+.search-slt {
+	display: block;
+	width: 100%;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: #55595c;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+}
 
+.wrn-btn {
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+	text-transform: capitalize;
+	height: calc(3rem + 2px) !important;
+	border-radius: 0;
+}
 
-
-.bootstrap-tagsinput{
+.bootstrap-tagsinput {
 	width: 100%
 }
-
-
-
-
-
-
-
 </style>
 
 
@@ -203,109 +335,135 @@ a {
 </head>
 <body class="home">
 
-	
+
 	<!-- Header -->
-<div th:insert="header.html :: header">  </div>
-<!-- /Header -->
-	
-	
-    <div class="container-fluid display-table">
-        <div class="row display-table-row">
-         <!-- menu -->
-		<div th:insert="nav.html :: nav">  </div>
-		<!-- /menu -->  
-            <div class="col-md-10 col-sm-11 display-table-cell v-align">
-                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
-                
-                
-                
-                
-               
-                
-                	<div class="content profile">
-					    <div class="container profile-box">
-					        <div class="row">
-					            <div class="col-lg-12">
-					                <div class="search-result-box card-box">
-					                    <div class="row">
-					                        <div class="col-md-12 offset-md-2">
-					                            <div class="pt-3 pb-4">
-					                                <div>
-					                                    
-					                                    
-					                                    
-					                                    
-					                                    
-					                                    <section class="search-sec">
-    <div>
-        <form th:action="@{/candidateService/search}" method="post" novalidate="novalidate" >
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                            <input type="text" th:name="skillls" class="form-control search-slt" placeholder="Add Skills">
-                           
-                        </div>
-                        
-                    </div>
-                     <div class="row">
-                     	<br/>
-                     </div>
-                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                            <input type="text" th:name="locations" class="form-control search-slt" placeholder="Add Locations">
-                        </div>
-                     </div>
-                     <div class="row">
-                     	<br/>
-                     </div>
-                     <div class="row">
-                     	 <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                            <input type="text" th:name="workExp" class="form-control search-slt" placeholder="Add Work Experiance">
-                        </div>
-                       
-                            <!-- <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
-                                <option value="">Select Work Experience</option>
-                                <option value="0">Fresher</option>
-                                <option value="1">1years</option>
-                                <option value="2">2years</option>
-                                <option value="3">3years</option>
-                                <option value="4">4years</option>
-                                <option value="5">5years</option>
-                                <option value="6">6years</option>
-                                <option value="6">7years</option>
-                                <option value="8">8years</option>
-                                <option value="9">9years</option>
-                                <option value="10">10years</option>
-                                
-                            </select> -->
-                       
-                       
-                    </div>
-                     <div class="row">
-                     	<br/>
-                     </div>
-                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                            <input type="text" th:name="jobtitles" class="form-control search-slt" placeholder="Add Locations">
-                        </div>
-                     </div>
-                     <div class="row">
-                     	<br/>
-                     </div>
-                    <div class="row">
-                    	 <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                            <button type="submit" class="btn btn-danger wrn-btn">Search</button>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                            <button type="button" class="btn btn-danger wrn-btn">Reset</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
+	<div th:insert="header.html :: header"></div>
+	<!-- /Header -->
+
+
+	<div class="container-fluid display-table">
+		<div class="row display-table-row">
+			<!-- menu -->
+			<div th:insert="nav.html :: nav"></div>
+			<!-- /menu -->
+			<div class="col-md-10 col-sm-11 display-table-cell v-align">
+				<!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+
+
+
+
+
+
+				<div class="content profile">
+					<div class="container profile-box">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="search-result-box card-box">
+									<div class="row">
+										<div class="col-md-12 offset-md-2">
+											<div class="pt-3 pb-4">
+												<div>
+
+													<section class="search-sec">
+														<div>
+															<form id="candidateSearch-form" method="post"
+																th:action="@{/candidateService/search}"
+																novalidate="novalidate">
+																<div class="row">
+																	<div class="col-lg-12">
+
+																		<div class="panel-group" id="accordion">
+																			<div class="panel panel-default">
+																				<div class="panel-heading">
+																					<h4 class="panel-title">
+																						<a class="accordion-toggle" data-toggle="collapse"
+																							data-parent="#accordion" href="#collapseOne">
+																							Search Criteria 1 </a>
+																					</h4>
+																				</div>
+																				<div id="collapseOne"
+																					class="panel-collapse collapse in">
+																					<div class="panel-body">
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="first-name">Skills</label> <input
+																										type="text" th:name="skillls"
+																										class="form-control search-slt"
+																										placeholder="Add Skills">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																							<br />
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="first-name">Locations</label> <input
+																										type="text" th:name="locations"
+																										class="form-control search-slt"
+																										placeholder="Add Locations">
+																								</div>
+																							</div>
+																						</div>
+																						<div class="row">
+																							<br />
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="first-name">Work Experience</label>
+																									<input type="text" th:name="workExp"
+																										class="form-control search-slt"
+																										placeholder="Add Work Experiance">
+																								</div>
+																							</div>
+
+																							<!-- <select class="form-control search-slt" id="exampleFormControlSelect1" th:name="workExp">
+																	                                <option value="">Select Work Experience</option>
+																	                                <option value="0">Fresher</option>
+																	                                <option value="1">1years</option>
+																	                                <option value="2">2years</option>
+																	                                <option value="3">3years</option>
+																	                                <option value="4">4years</option>
+																	                                <option value="5">5years</option>
+																	                                <option value="6">6years</option>
+																	                                <option value="6">7years</option>
+																	                                <option value="8">8years</option>
+																	                                <option value="9">9years</option>
+																	                                <option value="10">10years</option>
+																	                                
+																	                            </select> -->
+																	
+																	                       
+																	                       
+																	                    </div>
+																	                     <div class="row">
+																	                     	<br/>
+																	                     </div>
+																	                     <div class="row">
+																	                        <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																	                            <input type="text" th:name="jobtitles" class="form-control search-slt" placeholder="Add Locations">
+																	                        </div>
+																	                     </div>
+																	                     <div class="row">
+																	                     	<br/>
+																	                     </div>
+																	                    <div class="row">
+																	                    	 <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+																	                            <button type="submit" class="btn btn-danger wrn-btn">Search</button>
+																	                        </div>
+																	                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+																	                            <button type="button" class="btn btn-danger wrn-btn">Reset</button>
+																	                        </div>
+																	                    </div>
+																	                </div>
+																	            </div>
+																	        </form>
+																	    </div>
+																	</section>
 					                                    
 					                                    
 					                                    
@@ -389,6 +547,313 @@ a {
             </div>
         </div>
 
-    </div>
+
+
+																						</div>
+
+																					</div>
+																				</div>
+																			</div>
+																			<div class="panel panel-default">
+																				<div class="panel-heading">
+																					<h4 class="panel-title">
+																						<a class="accordion-toggle" data-toggle="collapse"
+																							data-parent="#accordion" href="#collapseTwo">
+																							<i class="fa fa-user" aria-hidden="true"></i>&nbsp;Personnel
+																							Details
+																						</a>
+																					</h4>
+																				</div>
+																				<div id="collapseTwo"
+																					class="panel-collapse collapse">
+																					<div class="panel-body">
+																						<div class="row">
+																							<div class="col-xs-7 col-sm-6 col-lg-8">
+																								<div class="form-group">
+																									<label for="first-name">First Name</label> <input
+																										type="text" class="form-control"
+																										th:name="firstName" id="searchFirstName"
+																										placeholder="Add First Name">
+																								</div>
+
+																							</div>
+																							<div class="col-xs-5 col-sm-6 col-lg-4">
+
+																								<div class="form-group">
+																									<label for="last-name">Last Name</label> <input
+																										type="text" class="form-control"
+																										th:name="lastName" id="searchLastName"
+																										placeholder="Add Last Name">
+																								</div>
+																							</div>
+																						</div>
+
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="last-name">Marital Status </label>
+
+																									<input type="text" th:name="marital-status"
+																										class="form-control search-slt"
+																										placeholder="Add Marital Status">
+																								</div>
+																							</div>
+																						</div>
+
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="last-name">Locations </label> <input
+																										type="text" th:name="locations"
+																										class="form-control search-slt"
+																										placeholder="Add Locations">
+																								</div>
+																							</div>
+																						</div>
+
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="last-name">Languages</label> <input
+																										type="text" th:name="languageSearch"
+																										class="form-control search-slt"
+																										placeholder="Add Languages">
+																								</div>
+																							</div>
+																						</div>
+
+																						<div class="row">
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="resume-uploaded">Resume
+																									Uploaded</label> <select th:name="resume-uploaded"
+																									id="resume-uploaded"
+																									class="form-control resume-upload">
+																									<option value="YES">YES</option>
+																									<option value="NO">NO</option>
+																								</select>
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="image-uploaded">Image
+																									Uploaded</label> <select th:name="image-uploaded"
+																									id="image-uploaded"
+																									class="form-control image-upload">
+																									<option value="YES">YES</option>
+																									<option value="NO">NO</option>
+																								</select>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<!-- th:selected="" -->
+																			<div class="panel panel-default">
+																				<div class="panel-heading">
+																					<h4 class="panel-title">
+																						<a class="accordion-toggle" data-toggle="collapse"
+																							data-parent="#accordion" href="#collapseThree">
+																							<i class="fa fa-id-card-o" aria-hidden="true"></i>
+																							&nbsp;Work Experience </a>
+																					</h4>
+																				</div>
+																				<div id="collapseThree"
+																					class="panel-collapse collapse">
+																					<div class="panel-body">
+																																									<div class="row">
+																								<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																									<div class="form-group">
+																										<label for="skillls">Skills</label> <input
+																											type="text" th:name="skillls"
+																											class="form-control search-slt"
+																											placeholder="Add Skills">
+																									</div>
+																								</div>
+
+																							</div>
+
+																						<div class="row">
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workStart">Work Start
+																								</label> <select th:name="workStart" id="workStart"
+																									class="form-control workStart">
+																									<option value="0">0</option>
+																									<option value="60">60</option>
+																								</select>
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workEnd">Work End</label> <select
+																									th:name="workEnd" id="workEnd"
+																									class="form-control workEnd">
+																									<option value="0">0</option>
+																									<option value="60">60</option>
+																								</select>
+																							</div>
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="companies">Companies</label> <input
+																										type="text" th:name="companies" id="companies"
+																										class="form-control search-slt"
+																										placeholder="Add Companies">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="industry">Industry</label> <input
+																										type="text" th:name="industry" id="industry"
+																										class="form-control search-slt"
+																										placeholder="Add Industries">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																						<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<label for="companyInfo">Company Information</label> <select
+																									th:name="companyInfo" id="companyInfo"
+																									class="form-control companyInfo">
+																									<option value="ANY">ANY</option>
+																									<option value="CURRENT">CURRENT</option>
+																									<option value="PREVIOUS">PREVIOUS</option>
+																								</select>
+																							</div>
+																						
+																						</div>
+																						
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="row">
+																			<br />
+																		</div>
+																		<div class="row">
+																			<div class="col-lg-2 col-md-2 col-sm-12 p-0">
+																				<button type="submit" class="btn btn-danger wrn-btn">Search</button>
+																			</div>
+																			<div class="col-lg-2 col-md-2 col-sm-12 p-0">
+																				<button type="button" class="btn btn-danger wrn-btn">Reset</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</section>
+
+
+												</div>
+												<!--  <div class="mt-4 text-center">
+					                                    <h4>Search Results For "Admin Dashboard"</h4></div> -->
+											</div>
+										</div>
+									</div>
+									<!-- end row -->
+									<ul class="nav nav-tabs tabs-bordered">
+										<li class="nav-item"><a href="#users" data-toggle="tab"
+											aria-expanded="true" class="nav-link active">Users <span
+												class="badge badge-danger ml-1"></span></a></li>
+									</ul>
+									<div class="tab-content"
+										th:unless="${#lists.isEmpty(candidateDtos)}">
+
+										<!-- end All results tab -->
+										<!-- Users tab -->
+										<div class="tab-pane active" id="users">
+
+
+
+											<div class="search-item" th:each="obj: ${candidateDtos}">
+												<div class="media mt-1">
+													<img
+														th:if="${obj.isAvatarUploaded == null or obj.isAvatarUploaded == false}"
+														src="/images/avatar.png" alt="Generic placeholder image"
+														class="d-flex mr-3 rounded-circle" height="54"></img> <img
+														th:if="${obj.isAvatarUploaded == true and objImg.type == 'avatar'}"
+														th:each="objImg: ${obj.documents}"
+														th:src="'data:image/jpg;base64,' + ${objImg.image}"
+														alt="Generic placeholder image"
+														class="d-flex mr-3 rounded-circle" height="54"></img>
+
+
+													<div class="media-body">
+														<h5 class="media-heading mt-0">
+															<a
+																th:href="@{'/candidateService/profile/search?email=' + ${obj.email}}"
+																class="text-dark"><span
+																th:text="${obj.firstName + ' ' + obj.lastName}"></span></a>
+														</h5>
+														<p class="font-13">
+															<b>Email:</b> <span><a href="#" class="text-muted"><span
+																	th:text="${obj.email}"></span></a></span>
+														</p>
+														<p class="mb-0 font-13">
+															<b>Bio:</b> <br> <span class="text-muted"><span
+																th:text="${obj.summary}"></span></span>
+														</p>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<ul
+												class="pagination justify-content-end pagination-split mt-0"
+												th:if="${totalPages > 1}">
+												<li class="page-item"><a class="page-link"
+													th:if="${currentPage > 1}"
+													th:href="@{'/candidateService/search/paginate?page=' + ${currentPage - 1}}"
+													aria-label="Previous"><span aria-hidden="true">«</span>
+														<span class="sr-only">Previous</span></a> <span
+													style="color: black;" class="page-link"
+													th:unless="${currentPage > 1}" aria-label="Previous"><span
+														aria-hidden="true">«</span> <span class="sr-only">Previous</span></span>
+												</li>
+
+
+												<li th:each="i: ${#numbers.sequence(1, totalPages)}"
+													class="page-item"><a class="page-link"
+													th:if="${currentPage != i}"
+													th:href="@{'/candidateService/search/paginate?page=' + ${i}}">[[${i}]]</a>
+													<span th:unless="${currentPage != i}" style="color: black">[[${i}]]</span]></li>
+
+
+
+
+												<li class="page-item"><a class="page-link"
+													th:if="${currentPage < totalPages}"
+													th:href="@{'/candidateService/search/paginate?page=' + ${currentPage + 1}}"
+													aria-label="Next"><span aria-hidden="true">»</span> <span
+														class="sr-only">Next</span></a> <span style="color: black;"
+													class="page-link" th:unless="${currentPage < totalPages}"
+													aria-label="Next"><span aria-hidden="true">»</span>
+														<span class="sr-only">Next</span></span></li>
+											</ul>
+											<div class="clearfix"></div>
+										</div>
+										<!-- end Users tab -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end row -->
+					</div>
+					<!-- container -->
+				</div>
+
+
+
+
+
+
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>

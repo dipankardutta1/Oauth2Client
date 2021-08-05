@@ -29,6 +29,7 @@ import com.example.demo.dto.DocumentsDto;
 import com.example.demo.dto.EducationEntryDto;
 import com.example.demo.dto.ExperienceEntryDto;
 import com.example.demo.dto.HobbyDto;
+import com.example.demo.dto.LanguageDto;
 import com.example.demo.dto.MobileDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SkillDto;
@@ -146,6 +147,118 @@ public class CandidateRestController {
         	
 
     		ResponseEntity<ResponseDto> responseDto=candidateService.findAllWorkExp();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	@GetMapping("/api/candidate/maritalStatus/findAll")
+	public ResponseEntity<String> findAllMaritalStatus(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllMaritalStatus();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	@GetMapping("/api/candidate/language/findAll")
+	public ResponseEntity<String> findAllLanguage(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllLanguage();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+
+	@GetMapping("/api/candidate/companies/findAll")
+	public ResponseEntity<String> findAllCompanies(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllCompanies();
+    		
+    				
+    		String json = new Gson().toJson(responseDto.getBody().getOutput());
+			
+    		return ResponseEntity.ok(json);
+    		
+        }else {
+        	ResponseEntity<String> responseDto=new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+	}
+	
+	@GetMapping("/api/candidate/industries/findAll")
+	public ResponseEntity<String> findAllIndustries(Principal principal) {
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.findAllIndustries();
     		
     				
     		String json = new Gson().toJson(responseDto.getBody().getOutput());
@@ -645,5 +758,54 @@ public class CandidateRestController {
 		
 		
 	}
+	
+	
+	
+	@PostMapping("/api/candidate/language/update")
+	public ResponseEntity<?> saveCandidateLanguages(Principal principal, @Valid @RequestBody List<LanguageDto> languageDtos, Errors errors) {
+		
+		OAuth2AuthenticationToken token = OAuth2AuthenticationToken.class.cast(SecurityContextHolder.getContext().getAuthentication());
+		
+		OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+				token.getAuthorizedClientRegistrationId(),
+				token.getName());
+        
+        
+        
+        if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
+        	if (errors.hasErrors()) {
+    			ResponseDto responseDto = new ResponseDto();
+
+    			responseDto.setMsg(errors.getAllErrors()
+    					.stream().map(x -> x.getDefaultMessage())
+    					.collect(Collectors.joining(",")));
+
+    			return ResponseEntity.badRequest().body(responseDto);
+
+    		}
+
+        	languageDtos.forEach((languageDto)->{
+        		languageDto.setCandidateId(principal.getName());
+        		System.out.println(languageDto.getLanguage());
+        		System.out.println(languageDto.getRead());
+        		System.out.println(languageDto.getSpeak());
+        		System.out.println(languageDto.getWrite());
+    		});
+
+    		ResponseEntity<ResponseDto> responseDto=candidateService.updateLanguages(languageDtos);
+    		responseDto.getBody().setOutput(languageDtos);
+
+    		return responseDto;
+        }else {
+        	//throw new TokenExpireJsonException();
+        	ResponseEntity<ResponseDto> responseDto=new ResponseEntity<ResponseDto>(HttpStatus.UNAUTHORIZED);
+        	
+        	return responseDto;
+        	
+        }
+		
+		
+	}
+
 
 }

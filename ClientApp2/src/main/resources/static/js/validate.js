@@ -1,19 +1,16 @@
 
-	
+
 $(function(){
-	
-	
-	
-	jQuery.validator.addMethod("noNumberAllowed", function(value, element) {
+	$.validator.addMethod('filesize', function (value, element, param) {
+		return this.optional(element) || (element.files[0].size <= param * 1000000 )//* 1000000
+	}, 'File size must be less than {0} MB');
+
+	$.validator.addMethod("noNumberAllowed", function(value, element) {
 		// allow any non-whitespace characters as the host part
 		return this.optional( element ) || /^[^0-9]+$/i.test( value );
 	}, " Can not be Number");
 
-	$.validator.addMethod('filesize', function (value, element, param) {
-	    return this.optional(element) || (element.files[0].size <= param * 1000000 )//* 1000000
-	}, 'File size must be less than {0} MB');
-
-
+	
 	$("#summary-form").validate({
 
 		rules:{
@@ -110,22 +107,23 @@ $(function(){
 			}
 		}
 	});
-	
-	
+
+
 	$("#address-form").validate();
-	
+
 	$("#workExp-form").validate();
-	
+
 	$("#education-form").validate();
-	
+
 	$("#skill-form").validate();
-	
+
 	$("#contact-form").validate();
 	$("#social-form").validate();
 	$("#hobby-form").validate();
-	
+	$("#language-form").validate();
+
 	$("#avatar-form").validate({
-		
+
 		rules:{
 			avatarUpload:{
 				required:true,
@@ -143,9 +141,9 @@ $(function(){
 			}
 		}
 	});
-	
-$("#resume-form").validate({
-		
+
+	$("#resume-form").validate({
+
 		rules:{
 			resumeUpload:{
 				required:true,
@@ -161,5 +159,6 @@ $("#resume-form").validate({
 			}
 		}
 	});
-	
-})
+		
+		
+});
