@@ -114,6 +114,7 @@ public class CandidateController {
 	public String candidateSearch(Model model,Principal principal,@RequestParam(required = false) String locations,
 			@RequestParam(required = false) String skillls,
 			@RequestParam(required = false)String workExp,
+			@RequestParam(required = false)String jobtitles,
 			@RequestParam(required = false,defaultValue = "1")Integer page) {
 
 		
@@ -126,7 +127,7 @@ public class CandidateController {
         
         
         if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
-        	ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(locations,skillls,workExp,page);
+        	ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(locations,skillls,workExp,jobtitles,page);
     		
         	
     		model.addAttribute("currentPage", page);
@@ -159,7 +160,7 @@ public class CandidateController {
         
         
         if(client.getAccessToken().getExpiresAt().compareTo(Instant.now()) > 0) {
-        	ResponseEntity<PagableResponseDto> responseDto=candidateService.searchCandidate(email,name,workexp, page);
+        	ResponseEntity<PagableResponseDto> responseDto=null;
     		
     		
     		model.addAttribute("currentPage", page);

@@ -203,8 +203,8 @@ public class CandidateService {
 	}
 
 
-	public ResponseEntity<PagableResponseDto> searchCandidate(String locations,String skillls,String workExp,Integer page) {
-		String url = resouceServerDomain+"/candidate/search/candidate?locations="+locations+"&skillls="+skillls+"&workExp="+workExp+"&page="+page;
+	public ResponseEntity<PagableResponseDto> searchCandidate(String locations,String skillls,String workExp,String jobtitles,Integer page) {
+		String url = resouceServerDomain+"/candidate/search/candidate?locations="+locations+"&skillls="+skillls+"&workExp="+workExp+"&jobtitles="+jobtitles+"&page="+page;
 		
 		ResponseEntity<PagableResponseDto> responseDto =  restTemplate.exchange(url, HttpMethod.GET, null, PagableResponseDto.class);
 
