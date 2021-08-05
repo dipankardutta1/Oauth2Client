@@ -1690,26 +1690,25 @@ deg
 										value="Delete"></td>
 								</tr>
 								<tr
-									th:if="${(candidateDto.hobbies == null or #lists.isEmpty(candidateDto.languages))}">
-									<td class="col-sm-3"><input type="text"
-										th:name="languageFirst" class="form-control language"
-										th:value="${obj.language}" /></td>
+									th:if="${(candidateDto.languages == null or #lists.isEmpty(candidateDto.languages))}">
+									<td class="col-sm-3">
+										<input type="text" th:name="language1" class="form-control language" /></td>
 
-									<td class="col-sm-2"><select th:name="readFirst"
+									<td class="col-sm-2"><select th:name="read1"
 										class="form-control read">
-											<option value="YES" th:selected="${obj.read == 'YES'}">YES</option>
-											<option value="NO" th:selected="${obj.read == 'NO'}">NO</option>
+											<option value="YES" >YES</option>
+											<option value="NO" >NO</option>
 									</select></td>
 
-									<td class="col-sm-2"><select th:name="writeFirst"
+									<td class="col-sm-2"><select th:name="write1"
 										class="form-control write">
-											<option value="YES" th:selected="${obj.write == 'YES'}">YES</option>
-											<option value="NO" th:selected="${obj.write == 'NO'}">NO</option>
+											<option value="YES" >YES</option>
+											<option value="NO" >NO</option>
 									</select></td>
-									<td class="col-sm-2"><select th:name="speakFirst"
+									<td class="col-sm-2"><select th:name="speak1"
 										class="form-control speak">
-											<option value="YES" th:selected="${obj.speak == 'YES'}">YES</option>
-											<option value="NO" th:selected="${obj.speak == 'NO'}">NO</option>
+											<option value="YES" >YES</option>
+											<option value="NO" >NO</option>
 									</select></td>
 
 									<td class="col-sm-1"><a class="deleteRow"></a></td>
