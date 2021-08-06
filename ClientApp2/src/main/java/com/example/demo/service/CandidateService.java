@@ -443,6 +443,23 @@ public class CandidateService {
 		return responseEntity;
 	}
 	
+	public ResponseEntity<ResponseDto> findAllSchools() {
+		String url = resouceServerDomain+"/candidate/findAll/schools";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+	public ResponseEntity<ResponseDto> findAllDegree() {
+		String url = resouceServerDomain+"/candidate/findAll/degree";
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ResponseDto> responseEntity =  restTemplate.exchange(url, HttpMethod.GET, null, ResponseDto.class);
+
+		return responseEntity;
+	}
+	
 	public ResponseEntity<ResponseDto> findAllLanguage() {
 		String url = resouceServerDomain+"/candidate/findAll/language";
 		

@@ -18,7 +18,10 @@
 <script th:src="@{/js/jquery.validate.js}"></script>
 
 <script th:src="@{/js/searchCandidate.js}"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/jquery-ui.css}" />
 
+<script th:src="@{/assets/js/jquery-ui.js}"></script>
 
 <!------ Include the above in your HEAD tag ---------->
 
@@ -137,7 +140,7 @@
 														.val("");
 											}, 1);
 								});
-						
+
 						$('input[name="marital-status"]')
 								.tagsinput(
 										{
@@ -164,60 +167,105 @@
 								});
 
 						$('input[name="companies"]')
-						.tagsinput(
-								{
-									typeahead : {
-										minLength : 1,
-										delay : 400,
-										source : $
-												.getJSON('http://localhost:8000/api/candidate/companies/findAll')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/companies/findAll')
 
-									},
-									freeInput : false
+											},
+											freeInput : false
+										});
+						$('input[name="companies"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
 								});
-				$('input[name="companies"]').on(
-						'itemAdded',
-						function(event) {
-							//here some set timeout to call function
-							setTimeout(
-									function() {
-										//just check inputbox here
-										$(">input[type=text]",
-												".bootstrap-tagsinput")
-												.val("");
-									}, 1);
-						});
 
-						
-				$('input[name="industry"]')
-				.tagsinput(
-						{
-							typeahead : {
-								minLength : 1,
-								delay : 400,
-								source : $
-										.getJSON('http://localhost:8000/api/candidate/industries/findAll')
+						$('input[name="industry"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/industries/findAll')
 
-							},
-							freeInput : false
-						});
-		$('input[name="industry"]').on(
-				'itemAdded',
-				function(event) {
-					//here some set timeout to call function
-					setTimeout(
-							function() {
-								//just check inputbox here
-								$(">input[type=text]",
-										".bootstrap-tagsinput")
-										.val("");
-							}, 1);
-				});
+											},
+											freeInput : false
+										});
+						$('input[name="industry"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
 
-				
-						
-						
-						
+						$('input[name="schools"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/schools/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="schools"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
+						$('input[name="degree"]')
+								.tagsinput(
+										{
+											typeahead : {
+												minLength : 1,
+												delay : 400,
+												source : $
+														.getJSON('http://localhost:8000/api/candidate/degree/findAll')
+
+											},
+											freeInput : false
+										});
+						$('input[name="degree"]').on(
+								'itemAdded',
+								function(event) {
+									//here some set timeout to call function
+									setTimeout(
+											function() {
+												//just check inputbox here
+												$(">input[type=text]",
+														".bootstrap-tagsinput")
+														.val("");
+											}, 1);
+								});
+
 						$("#firstName").blur(
 								function() {
 									$("#firstName").val(
@@ -234,6 +282,36 @@
 											$("#searchLastName").val()
 													.toUpperCase());
 									$("#candidateSearch-form").validate();
+
+								});
+
+						$("#graduationStartDate").datepicker(
+								{
+									dateFormat : 'mm/dd/yy',
+
+									changeMonth : true,
+									changeYear : true,
+
+									onSelect : function(selected) {
+										var dt = new Date(selected);
+										dt.setDate(dt.getDate() + 1);
+										$("#graduationEndDate").datepicker(
+												"option", "minDate", dt);
+									}
+								});
+
+						$("#graduationEndDate").datepicker(
+								{
+									dateFormat : 'mm/dd/yy',
+
+									changeMonth : true,
+									changeYear : true,
+									onSelect : function(selected) {
+										var dt = new Date(selected);
+										dt.setDate(dt.getDate() - 1);
+										$("#graduationStartDate").datepicker(
+												"option", "maxDate", dt);
+									}
 
 								});
 
@@ -378,7 +456,7 @@ a {
 																					<h4 class="panel-title">
 																						<a class="accordion-toggle" data-toggle="collapse"
 																							data-parent="#accordion" href="#collapseOne">
-																							Search Criteria 1 </a>
+																							Basic Informative Search </a>
 																					</h4>
 																				</div>
 																				<div id="collapseOne"
@@ -541,28 +619,29 @@ a {
 																						<a class="accordion-toggle" data-toggle="collapse"
 																							data-parent="#accordion" href="#collapseThree">
 																							<i class="fa fa-id-card-o" aria-hidden="true"></i>
-																							&nbsp;Work Experience </a>
+																							&nbsp;Work Experience
+																						</a>
 																					</h4>
 																				</div>
 																				<div id="collapseThree"
 																					class="panel-collapse collapse">
 																					<div class="panel-body">
-																																									<div class="row">
-																								<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																									<div class="form-group">
-																										<label for="skillls">Skills</label> <input
-																											type="text" th:name="skillls"
-																											class="form-control search-slt"
-																											placeholder="Add Skills">
-																									</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="skillls">Skills</label> <input
+																										type="text" th:name="skillls"
+																										class="form-control search-slt"
+																										placeholder="Add Skills">
 																								</div>
-
 																							</div>
+
+																						</div>
 
 																						<div class="row">
 																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
-																								<label for="workStart">Work Start
-																								</label> <select th:name="workStart" id="workStart"
+																								<label for="workStart">Work Start </label> <select
+																									th:name="workStart" id="workStart"
 																									class="form-control workStart">
 																									<option value="0">0</option>
 																									<option value="60">60</option>
@@ -600,21 +679,86 @@ a {
 
 																						</div>
 																						<div class="row">
-																						<div class="col-lg-12 col-md-12 col-sm-12 p-0">
-																								<label for="companyInfo">Company Information</label> <select
-																									th:name="companyInfo" id="companyInfo"
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<label for="companyInfo">Company
+																									Information</label> <select th:name="companyInfo"
+																									id="companyInfo"
 																									class="form-control companyInfo">
 																									<option value="ANY">ANY</option>
 																									<option value="CURRENT">CURRENT</option>
 																									<option value="PREVIOUS">PREVIOUS</option>
 																								</select>
 																							</div>
-																						
+
 																						</div>
-																						
+
 																					</div>
 																				</div>
 																			</div>
+
+																			<div class="panel panel-default">
+																				<div class="panel-heading">
+																					<h4 class="panel-title">
+																						<a class="accordion-toggle" data-toggle="collapse"
+																							data-parent="#accordion" href="#collapseFour">
+																							<i class="fa fa-pencil" aria-hidden="true"></i>
+																							&nbsp;Education Informative Search
+																						</a>
+																					</h4>
+																				</div>
+																				<div id="collapseFour"
+																					class="panel-collapse collapse">
+																					<div class="panel-body">
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="schools">Schools</label> <input
+																										type="text" th:name="schools" id="schools"
+																										class="form-control search-slt"
+																										placeholder="Add Schools">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-12 col-md-12 col-sm-12 p-0">
+																								<div class="form-group">
+																									<label for="degree">Degree</label> <input
+																										type="text" th:name="degree" id="degree"
+																										class="form-control search-slt"
+																										placeholder="Add Degree">
+																								</div>
+																							</div>
+
+																						</div>
+																						<div class="row">
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workStart">Graduation Start
+																								</label> <input type="text" class="form-control"
+																									th:name="graduationStartDate"
+																									id="graduationStartDate" readonly
+																									placeholder="Add Graduation Start Date">
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-sm-6 p-0">
+																								<label for="workEnd">Graduation End</label> <input
+																									type="text" class="form-control"
+																									th:name="graduationEndDate"
+																									id="graduationEndDate" readonly
+																									placeholder="Add Graduation End Date">
+																							</div>
+																						</div>
+
+																						<div class="row"></div>
+
+																					</div>
+																				</div>
+																			</div>
+
+
+
+
+
+
 																		</div>
 
 																		<div class="row">
